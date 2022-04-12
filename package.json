@@ -16,12 +16,5 @@
 		"nextra-theme-docs": "^1.2.6",
 		"react": "^18.0.0",
 		"react-dom": "^18.0.0"
-	},
-	"devDependencies": {
-		"prettier": "^2.0.5"
-	},
-	"prettier": {
-		"semi": false,
-		"singleQuote": true
 	}
 }
