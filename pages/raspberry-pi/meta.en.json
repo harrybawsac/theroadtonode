@@ -1,0 +1,12 @@
+{
+	"connect-hardware": "Connect hardware",
+	"flash-software": "Flash software",
+	"boot-from-ssd": "Boot from SSD",
+	"transfer-public-key": "Transfer public key",
+	"updating": "Updating",
+	"install-tor": "Install tor",
+	"monitoring": "Monitoring",
+	"common-dependencies": "Common dependencies",
+	"firewall": "Firewall",
+	"port-overview": "Port overview"
+}

@@ -1,0 +1,12 @@
+{
+	"connect-hardware": "Hardware aansluiten",
+	"flash-software": "Software flashen",
+	"boot-from-ssd": "Boot vanaf SSD",
+	"transfer-public-key": "Public key overzetten",
+	"updating": "Updaten",
+	"install-tor": "Tor installeren",
+	"monitoring": "Monitoring",
+	"common-dependencies": "Algemene dependencies",
+	"firewall": "Firewall",
+	"port-overview": "Port overzicht"
+}
