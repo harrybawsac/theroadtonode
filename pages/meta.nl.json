@@ -1,7 +1,11 @@
 {
-	"index": "Introduction",
-	"get-started": "Get Started",
-	"features": "Features",
-	"themes": "Themes",
-	"advanced": "Advanced"
+	"index": "Overzicht",
+	"introduction": "Introductie",
+	"raspberry-pi": "Raspberry Pi",
+	"bitcoin-core": "Bitcoin Core",
+	"bitcoin-core-extension": "Bitcoin Core Extensies",
+	"lightning": "Lightning",
+	"lightning-extension": "Lightning Extensies",
+	"wallets": "Wallets",
+	"changelog": "Changelog"
 }
