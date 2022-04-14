@@ -1,0 +1,166 @@
+
+import Callout from "nextra-theme-docs/callout";
+
+# Electrs
+
+<Callout emoji="&#x2139;">
+	Tijd: 30 minuten en na een uur of 12 zou alles geindexeerd moeten zijn.
+</Callout>
+
+The Road to Node geeft je de keuze tussen drie verschillende implementaties van Electrum Server. Met alle drie de implementaties bereik je hetzelfde, namelijk dat je een Electrum Server host. Ze verschillen van elkaar in ontwikkeltaal, performance en hoe publiek de servers zijn. [Electrs](https://github.com/romanz/electrs) onderscheidt zich van de rest omdat het geschreven is in Rust. Performance-wise zou je even moeten opzoeken wat de verschillen zijn tussen Electrum Personal Server, Elctrum X en Electrs.
+
+Electrs wacht totdat Bitcoin Core klaar is met synchroniseren. Je kunt dus geen gebruik maken van Electrs tot de synchronisatie klaar is.
+
+## Installatie
+
+Begin met het installeren van de dependencies.
+
+```bash
+sudo apt install -y clang cmake cargo
+```
+
+Zorg dat je in de home directory bent en haal Electrs binnen via Git.
+
+```bash
+git clone https://github.com/romanz/electrs
+```
+
+Ga de Electrs map in.
+
+```bash
+cd electrs
+```
+
+Installeer tot slot Electrs met Cargo.
+
+```bash
+cargo build --locked --release
+```
+
+Test of het werkt. De verwachte output is `v0.9.5`.
+
+```bash
+./target/release/electrs --version
+```
+
+## Configuratie
+
+Electrs kun je instellen door middel van een configuratie bestand. Maak hem aan met `mkdir ~/.electrs && mkdir ~/.electrs/db && nano ~/.electrs/config.toml`. Plak vervolgens het onderstaande erin.
+
+```toml
+cookie_file = "/home/ubuntu/.bitcoin/.cookie"
+daemon_rpc_addr = "127.0.0.1:8332"
+daemon_p2p_addr = "127.0.0.1:8333"
+db_dir = "/home/ubuntu/.electrs/db"
+network = "bitcoin"
+electrum_rpc_addr = "0.0.0.0:50001"
+log_filters = "INFO"
+```
+
+Sla het op met `Ctrl + X` en bevestig met `Y`. Je kunt je even kijken of het werk met hetzelde commando als daarnet: `./target/release/electrs`. Als het goed is komt er nu een output op je scherm waaruit blijkt dat Electrs gestart is en begonnen is met indexeren.
+
+## Firewall
+
+Het Electrum protocol communiceert over een vaste set poorten. Je kunt 50001 open zetten als je met bijvoorbeeld Sparrow wallet op je laptop wil praten met je Electrum Server.
+
+```bash
+sudo ufw allow 50001 comment "Port voor Electrum Server"
+```
+
+Wil je van afstand Electrs monitoren dien je ook 4224 open te zetten. Dit is optioneel.
+
+```bash
+sudo ufw allow 4224 comment "Port voor monitoring van Electrs"
+```
+
+## Automatiseren
+
+Ook Electrs is te automatiseren zodat het in de achtergrond draait en je het niet handmatig hoeft op te starten. Maak eerst een service aan.
+
+```bash
+sudo nano /etc/systemd/system/electrs.service
+```
+
+Zet daar de volgende tekst in.
+
+```toml
+[Unit]
+Description=electrs
+Requires=bitcoind.service
+After=bitcoind.service
+
+[Service]
+WorkingDirectory=/home/ubuntu/electrs
+ExecStart=/home/ubuntu/electrs/target/release/electrs
+User=ubuntu
+Group=ubuntu
+Type=simple
+Restart=on-failure
+TimeoutSec=120
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Sla het op met `Ctrl + X` en bevestigen met `Y`.
+
+Enable en start de service met deze twee commando's:
+
+```bash
+sudo systemctl enable electrs
+
+sudo systemctl start electrs
+```
+
+Met `sudo systemctl status electrs` kun je zien of alles goed draait en krijg je een output die lijkt op het onderstaande.
+
+```bash
+● electrs.service - electrs
+     Loaded: loaded (/etc/systemd/system/electrs.service; enabled; vendor preset: enabled)
+     Active: active (running) since Fri 2022-01-14 20:36:59 UTC; 35s ago
+   Main PID: 67163 (electrs)
+      Tasks: 20 (limit: 4203)
+     CGroup: /system.slice/electrs.service
+             └─67163 /home/ubuntu/electrs/target/release/electrs
+```
+
+## Updaten
+
+Ga naar de applicatie directory.
+
+```bash
+cd ~/electrs
+```
+
+Update de repository met de laatste wijzigingen via Git.
+
+```bash
+git fetch --all
+```
+
+Toon de laatste versie/tag/release.
+
+```bash
+git describe --tags `git rev-list --tags --max-count=1`
+```
+
+Haal de wijzigingen op van de laatste versie.
+
+```bash
+git checkout <OUTPUT VAN DE VORIGE STAP> # bijvoorbeeld 0.9.5
+```
+
+Installeer de software.
+
+```bash
+cargo build --locked --release
+```
+
+Herstart de Electrs service.
+
+```bash
+sudo systemctl restart electrs
+```
+
+Electrs is nu bijgewerkt! Het kan zijn dat tijdens het herstarten - iets dat enkele minuten kan duren - je node niks anders kan doen.
