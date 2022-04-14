@@ -3,9 +3,9 @@
 	"introduction": "Introductie",
 	"raspberry-pi": "Raspberry Pi",
 	"bitcoin-core": "Bitcoin Core",
-	"bitcoin-core-extension": "Bitcoin Core Extensies",
+	"bitcoin-core-extensions": "Bitcoin Core Extensies",
 	"lightning": "Lightning",
-	"lightning-extension": "Lightning Extensies",
+	"lightning-extensions": "Lightning Extensies",
 	"wallets": "Wallets",
 	"changelog": "Changelog"
 }
