@@ -22,7 +22,7 @@ De instellingen van Bitcoin Core zetten we in een bestand in de .bitcoin map gen
 nano ~/.bitcoin/bitcoin.conf
 ```
 
-Net als bij het [torrc bestand](https://docs.theroadtonode.com/bitcoin-core/tor-aanpassen) moeten we wat regels copy-pasten. Je kunt alle regels, inclusief de commentaar regels aangegeven met een `#`, kopiëren en plakken.
+Net als bij het [torrc bestand](/bitcoin-core/change-tor) moeten we wat regels copy-pasten. Je kunt alle regels, inclusief de commentaar regels aangegeven met een `#`, kopiëren en plakken.
 
 ```bash
 # Maak het mogelijk JSON-RPC commando's te accepteren
@@ -151,7 +151,7 @@ bitcoin-cli getnetworkinfo
 Met dit commando krijg je wat informatie over het netwerk. Als het goed is ziet het er ongeveer zo uit als je enkel van tor gebruik maakt.
 
 <Callout emoji="&#x2139;">
-	Het onion-adres wijkt af van het adres dat je in [de vorige stap](https://docs.theroadtonode.com/bitcoin-core/tor-aanpassen#onion-adres) hebt aangemaakt \(als je dat hebt aangemaakt\). Dat het afwijkt is juist goed. Het onion-adres uit de vorige stap is enkel voor het uitvoeren van commando's op je node van buitenaf en gaat over port 8332. Het onderstaande onion-adres wordt door bitcoind zelf aangemaakt en gaat over port 8333. Dit wordt gebruikt om met andere nodes te communiceren.
+	Het onion-adres wijkt af van het adres dat je in [de vorige stap](/bitcoin-core/change-tor) hebt aangemaakt \(als je dat hebt aangemaakt\). Dat het afwijkt is juist goed. Het onion-adres uit de vorige stap is enkel voor het uitvoeren van commando's op je node van buitenaf en gaat over port 8332. Het onderstaande onion-adres wordt door bitcoind zelf aangemaakt en gaat over port 8333. Dit wordt gebruikt om met andere nodes te communiceren.
 </Callout>
 
 ```json

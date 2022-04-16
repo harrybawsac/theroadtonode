@@ -6,7 +6,7 @@ import Callout from "nextra-theme-docs/callout";
 	Tijd: 15 minuten en 7 dagen wachten op synchronisatie/indexering
 </Callout>
 
-Met behulp van Electrum X kun je gebruik maken van het [Electrum protocol](https://electrumx-spesmilo.readthedocs.io/en/latest/protocol-basics.html). Dit protocol laat wallets en andere software met nodes communiceren. Op andere plekken in de guide kun je tools en wallets die via het Electrum protocol communiceren direct aansluiten op je node. Een functionaliteit die de privacy bevordert. Zo kun je de [BTC RPC Explorer](/bitcoin-core-extensies/btc-rpc-explorer) ook aansluiten op je eigen Electrum X server. Als je dan in het vervolg informatie over je transacties of adressen van jezelf opzoekt, zal niemand dat kunnen zien. Zo kan niemand transacties aan jou linken en geniet je meer privacy.
+Met behulp van Electrum X kun je gebruik maken van het [Electrum protocol](https://electrumx-spesmilo.readthedocs.io/en/latest/protocol-basics.html). Dit protocol laat wallets en andere software met nodes communiceren. Op andere plekken in de guide kun je tools en wallets die via het Electrum protocol communiceren direct aansluiten op je node. Een functionaliteit die de privacy bevordert. Zo kun je de [BTC RPC Explorer](/bitcoin-core-extensions/btc-rpc-explorer) ook aansluiten op je eigen Electrum X server. Als je dan in het vervolg informatie over je transacties of adressen van jezelf opzoekt, zal niemand dat kunnen zien. Zo kan niemand transacties aan jou linken en geniet je meer privacy.
 
 Het kan zo'n 7 dagen duren voordat Electrum X volledig geïndexeerd en bruikbaar is. Tot die tijd kan je er niks mee.
 
@@ -100,11 +100,11 @@ SSL_KEYFILE=/home/ubuntu/.electrumx/server.key
 SERVICES=tcp://:50001,ssl://:50002,wss://:50004,rpc://
 ```
 
-Voordat je het opslaat moet je een tweetal aanpassingen maken. Vul op de plekken `USERNAME` en `PASSWORD` de gebruikersnaam-wachtwoord combinatie die je hebt aangemaakt in het [authenticatie deel van de Bitcoin Core configuratie](/bitcoin-core/configuratie-en-starten). Zodra alles goed staat kun je het bestand opslaan met `Ctrl + X` en bevestigen met `Y`.
+Voordat je het opslaat moet je een tweetal aanpassingen maken. Vul op de plekken `USERNAME` en `PASSWORD` de gebruikersnaam-wachtwoord combinatie die je hebt aangemaakt in het [authenticatie deel van de Bitcoin Core configuratie](/bitcoin-core/configure-and-start). Zodra alles goed staat kun je het bestand opslaan met `Ctrl + X` en bevestigen met `Y`.
 
 ## Firewall en router
 
-In principe kun je een lokale tool zoals [BTC RPC Explorer](/bitcoin-core-extensies/btc-rpc-explorer) direct aansluiten op Electrum X. Hier hoef je geen ports voor open te zetten, aangezien lokale connecties \(dus van de Pi naar de Pi\) altijd worden toegestaan. Wil je echter gebruik maken van Electrum X in een app zoals BlueWallet, dan dien je de volgende commando's uit te voeren om twee ports open te zetten.
+In principe kun je een lokale tool zoals [BTC RPC Explorer](/bitcoin-core-extensions/btc-rpc-explorer) direct aansluiten op Electrum X. Hier hoef je geen ports voor open te zetten, aangezien lokale connecties \(dus van de Pi naar de Pi\) altijd worden toegestaan. Wil je echter gebruik maken van Electrum X in een app zoals BlueWallet, dan dien je de volgende commando's uit te voeren om twee ports open te zetten.
 
 ```bash
 sudo ufw allow 50001
