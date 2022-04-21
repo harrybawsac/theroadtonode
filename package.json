@@ -1,6 +1,6 @@
 {
 	"name": "theroadtonode",
-	"version": "4.0.0",
+	"version": "4.0.1",
 	"description": "",
 	"main": "index.js",
 	"scripts": {
@@ -14,7 +14,7 @@
 		"next": "^12.1.5",
 		"nextra": "^1.1.0",
 		"nextra-theme-docs": "^1.2.6",
-		"react": "^17.0.1",
-		"react-dom": "^17.0.1"
+		"react": "^17.0.2",
+		"react-dom": "^17.0.2"
 	}
 }
