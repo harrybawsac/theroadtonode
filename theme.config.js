@@ -67,5 +67,6 @@ export default {
 	footer: true,
 	footerEditLink: "Edit this page on GitHub",
 	footerText: <>{new Date().getFullYear()} © The Road to Node.</>,
-	unstable_faviconGlyph: "👋",
+	floatTOC: true,
+	defaultMenuCollapsed: true
 }
