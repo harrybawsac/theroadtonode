@@ -50,15 +50,15 @@ Nu kunnen we verder gaan met het downloaden van de source en het installeren van
 Download vanaf de Github de [nieuwste release](https://github.com/chris-belcher/electrum-personal-server/releases) van Electrum Personal Server. Kopiëer de link van Source code \(tar.gz\), pak deze uit en gooi de download weg.
 
 ```bash
-wget https://github.com/chris-belcher/electrum-personal-server/archive/eps-v0.2.2.tar.gz
-tar -xvf eps-v0.2.2.tar.gz
-rm eps-v0.2.2.tar.gz
+wget https://github.com/chris-belcher/electrum-personal-server/archive/eps-v0.2.3.tar.gz
+tar -xvf eps-v0.2.3.tar.gz
+rm eps-v0.2.3.tar.gz
 ```
 
 Maak een kopie van het configuratie bestand en pas deze aan.
 
 ```bash
-cp electrum-personal-server-eps-v0.2.2/config.ini_sample config.cfg
+cp electrum-personal-server-eps-v0.2.3/config.ini_sample config.cfg
 nano config.cfg
 ```
 
@@ -74,7 +74,7 @@ Deze config-file bevat veel commentaar en tips wat je waar moet invullen. Kijk i
 </Callout>
 
 ```bash
-cd electrum-personal-server-eps-v0.2.2
+cd electrum-personal-server-eps-v0.2.3
 pip3 install wheel
 pip3 install use .
 ```
@@ -183,13 +183,13 @@ Download vanaf de Github de tarball van de [nieuwste release](https://github.com
 ```bash
 cd ~/.eps
 
-wget https://github.com/chris-belcher/electrum-personal-server/archive/eps-v0.2.2.tar.gz
+wget https://github.com/chris-belcher/electrum-personal-server/archive/eps-v0.2.3.tar.gz
 
-tar -xvf eps-v0.2.2.tar.gz
+tar -xvf eps-v0.2.3.tar.gz
 
-rm eps-v0.2.2.tar.gz
+rm eps-v0.2.3.tar.gz
 
-cd electrum-personal-server-eps-v0.2.2
+cd electrum-personal-server-eps-v0.2.3
 
 pip3 install use .
 ```
