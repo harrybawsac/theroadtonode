@@ -3,30 +3,30 @@ import Callout from "nextra-theme-docs/callout";
 # Command line interface
 
 <Callout emoji="&#x2139;">
-	Tijd: 5 minuten
+	Time: 5 minutes
 </Callout>
 
-Nu je Core hebt opgestart en draaien op de achtergrond, wil je waarschijnlijk ook zien wat het doet. Een leeg scherm zegt zo weinig. Daar is de bitcoin-cli voor in het leven geroepen. Hiermee kun je allerlei commando's afvuren op bitcoind en kun je antwoorden verwachten. Alles is hiermee mogelijk; van het inzien van informatie over het Bitcoin netwerk, tot het aanmaken van complexe multi-sig constructies.
+Now that Core is running in the background, you'd probably want to see what it's doing. An empty screen doesn't see much though. For those kinds of things the bitcoin-cli exists. Using this you can fire off commands to bitcoind and get responses back. You can do everything through the CLI; from getting information about the Bitcoin network, until creating complex multi-signature constructions.
 
-Een handig commando wat een overzicht van de mogelijkheden geeft, is "help".
+The most useful command which will get you information about everything that's possible, is "help".
 
 ```bash
 bitcoin-cli help
 ```
 
-Wil je een uitgebreidere uitleg, kun je terecht op websites zoals [Chainquery](https://chainquery.com/bitcoin-cli). Hier wordt de werking van de commando's uitvoerig beschreven.
+For more information about the different commands you can go to websites like [Chainquery](https://chainquery.com/bitcoin-cli). The way the different commands work are explained in depth.
 
-Een paar handige commando's op een rij.
+A few useful commands are listed below.
 
 ```bash
-# Kijken op welk block we nu zitten
+# To check out the current block height
 bitcoin-cli getblockcount
 
-# Een kort netwerk overzicht van jouw node
+# A short summary about the bitcoin network
 bitcoin-cli getnetworkinfo
 
-# Blockchain statistieken
+# Blockchain statistics
 bitcoin-cli getblockchaininfo
 ```
 
-Core is continu in verandering. Het kan zijn dat bovenstaande commando's in de toekomst niet meer werken of anders heten.
+Core is changing continuously. So it could be possible that some of commands above won't work in the future or are named differently.

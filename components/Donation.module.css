@@ -1,14 +1,17 @@
 .container {
-	width: 60%;
+	width: 65%;
 	border-radius: 0.5rem;
-	background: rgb(252, 210, 138);
-	background: linear-gradient(158deg, rgb(252, 218, 159) 0%, rgb(245, 207, 140) 100%);
-	color: #333333;
 	margin: 2.4rem auto 0;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	padding: 1rem;
+	filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+	border-width: 0.1rem;
+
+	background-color: white;
+	border-color: rgb(209 213 219);
+	color: #333333;
 }
 
 @media only screen and (max-width: 1075px) {
@@ -17,9 +20,15 @@
 	}
 }
 
-@media only screen and (max-width: 950px) {
+@media only screen and (max-width: 1075px) {
 	.container {
 		width: 75%;
+	}
+}
+
+@media only screen and (max-width: 950px) {
+	.container {
+		width: 80%;
 	}
 }
 
@@ -31,7 +40,7 @@
 
 @media only screen and (max-width: 768px) {
 	.container {
-		width: 70%;
+		width: 75%;
 	}
 }
 
@@ -63,7 +72,7 @@
 .header__icon {
 	height: 2rem;
 	width: 2rem;
-	fill: #3333FF !important;
+	fill: #333;
 }
 
 .button {
@@ -84,27 +93,85 @@
 .options {
 	display: flex;
 	flex-direction: column;
-	margin: 1rem 0 1.6rem 0;
+	margin: 1rem 0 1.9rem 0;
 }
 
 .option-container {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 }
 
 .option-container:not(:last-child) {
-	margin-bottom: 0.7rem;
+	margin-bottom: 1rem;
 }
 
 .option-info {
 	display: flex;
 	flex-direction: column;
-	font-size: 0.85rem;
-	line-height: 0.3rem;
+	font-size: 0.9rem;
 }
 
-.option-info__title {
+.option-input {
+	height: 100%;
+	width: 30%
+}
+
+.option-info__text {
+	line-height: 1.5rem;
+}
+
+.option-info__text--title {
 	font-weight: 600;
 }
 
-.option-info__subtitle {}
+.option-info__text--subtitle {
+	margin: 0 !important;
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border-width: 0;
+}
+
+.number-input-container {
+	height: 100%;
+	border-width: 0.1rem;
+	border-radius: 0.3rem;
+	border-color: rgb(106, 109, 109);
+}
+
+.number-input {
+	all: unset;
+	-webkit-appearance: none;
+	margin: 0;
+	height: 100%;
+	padding: 0.5rem 0.8rem;
+}
+
+.number-input::placeholder {
+	color: #555;
+}
+
+.number-input[type=number] {
+	-moz-appearance: textfield;
+}
+
+@media (prefers-color-scheme: dark) {
+	.container {
+		background-color: #222;
+		border-color: rgb(106, 109, 109);
+		color: white;
+	}
+
+	.header__icon {
+		fill: white;
+	}
+}

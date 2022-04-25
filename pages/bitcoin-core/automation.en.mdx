@@ -1,24 +1,24 @@
 import Callout from "nextra-theme-docs/callout";
 
-# Automatiseren
+# Automation
 
 <Callout emoji="&#x2139;">
-	Tijd: 5 minuten
+	Time: 5 minutes
 </Callout>
 
-Het mooiste is als bitcoind automatisch opstart, in plaats van dat je het handmatig moet doen. Dit kan handig zijn na het opnieuw opstarten van je Pi of als bitcoind crasht. Linux heeft daar systemd services voor. Zorg voordat je aan de slag gaat met de automatisering, dat Bitcoin Core \(bitcoind\) uit staat. Doe dit met:
+Instead of needing to start Bitcoin Core manually, it would be nice to start it automatically. This could be useful after restarting your Pi or if bitcoind crashes for some reason. Linux has systemd services for automated tasks like that. Before you start automating, please make sure Bitcoin Core \(bitcoind\) is turned off. You can do it this way:
 
 ```bash
 bitcoin-cli stop
 ```
 
-Zodra bitcoind uit staat kunnen we een service aanmaken.
+When bitcoind is turned off we can start creating the service.
 
 ```bash
 sudo nano /etc/systemd/system/bitcoind.service
 ```
 
-Plak er dit in.
+Paste this in there.
 
 ```bash
 [Unit]
@@ -37,9 +37,9 @@ RestartSec=30
 WantedBy=multi-user.target
 ```
 
-Sla het weer op met `Ctrl + X` en bevestig met `Y`.
+Save the file with `Crtl + X` and confirm with `Y`.
 
-Het systeem moet op de hoogte gesteld worden van de nieuwe service en kan daarna gestart worden.
+The system needs to be notified about the new service which can afterwards be started.
 
 ```bash
 sudo systemctl enable bitcoind
@@ -49,13 +49,13 @@ sudo systemctl enable bitcoind
 sudo systemctl start bitcoind
 ```
 
-Wil je zien of alles goed is opgestart, voer dan onderstaande uit. Let op: het kan even een minuutje duren voordat je te zien krijgt dat alles naar behoren werkt.
+If you'd want to see whether it started correctly, run the command below. Note: it can take a minute or so before you get a response that tells you everything is alright.
 
 ```bash
 systemctl status bitcoind
 ```
 
-Het zou kunnen dat het niet in een keer werkt. Je output zal dan hierop lijken:
+It could be possible things don't work from the get-go. That would be the case if your output **doesn't** looks like this:
 
 ```bash
 ● bitcoind.service - Bitcoin Daemon
@@ -70,9 +70,9 @@ Jan 14 12:20:53 ubuntu systemd[1]: Started Bitcoin Daemon.
 Jan 14 12:20:53 ubuntu bitcoind[40482]: Bitcoin Core starting
 ```
 
-Probeer het commando een paar keer uit te voeren, want het duurt hooguit een minuutje voordat bitcoind goed is opgestart middels de service.
+Try the same command another few times, because it could take up to a minute before bitcoind is started correctly by the service.
 
-Wil je een overzicht van de status over meerdere sessie, gebruik dan dit:
+If you'd like to see an overview of the status over multiple sessions, use this:
 
 ```bash
 sudo journalctl -f -u bitcoind

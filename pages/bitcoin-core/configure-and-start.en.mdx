@@ -1,60 +1,60 @@
 import Callout from "nextra-theme-docs/callout";
 
-# Configuratie en starten
+# Configure and start
 
 <Callout emoji="&#x2139;">
-	Tijd: 5 minuten
+	Time: 5 minutes
 </Callout>
 
-Bitcoin Core heeft [allerhande instellingen](https://en.bitcoinwiki.org/wiki/Running_Bitcoind) net zoals jouw mobiel instellingen heeft. Het mooie aan het mobieltje is dat de instellingen overzichtelijk gegroepeerd onder elkaar staan. Je kunt ze makkelijk wijzigen met een druk op de knop. Bij Core werkt dat net even anders. Je moet eerst een lijst vinden met mogelijke instellingen, je inlezen en daarna bepalen wat je nodig hebt. Best wel een gedoe, daarom staat hieronder een configuratie bestand wat zou moeten werken voor deze guide. Wil je meer customizen dan is [deze site](https://jlopp.github.io/bitcoin-core-config-generator) van Lopp een hele goede resource.
+Bitcoin Core has [lots of settings](https://en.bitcoinwiki.org/wiki/Running_Bitcoind) just like your mobile phone. The nice thing about your mobile phone's settings is that they're nicely grouped together in a visual overview. You can easily change them with the push of a button. But changing settings of Bitcoin Core works a bit differently. First you should get a list of all possible settings, then read up on them and decide what to set. Quite a hassle for just a few settings, that's why the configuration below should get you up to speed. It's tweaked for this guide and if you'd want to customize a bit more you could use [this resource](https://jlopp.github.io/bitcoin-core-config-generator) by Lopp.
 
-## Configuratie
+## Configuration
 
-Gezien vanuit de home directory \(`/home/ubuntu`\) hebben we nu een map genaamd `bitcoin` met de broncode. Naast deze map hebben we een map nodig genaamd `.bitcoin` dus maak hem aan.
+In the home directory of your Pi \(`/home/ubuntu`\) there's a folder named `bitcoin` with the source code. You should create a folder named `.bitcoin` next to that one.
 
 ```bash
 mkdir ~/.bitcoin
 ```
 
-De instellingen van Bitcoin Core zetten we in een bestand in de .bitcoin map genaamd bitcoin.conf.
+The settings of Bitcoin Core are placed in a file named bitcoin.conf inside the .bitcoin folder.
 
 ```bash
 nano ~/.bitcoin/bitcoin.conf
 ```
 
-Net als bij het [torrc bestand](/bitcoin-core/change-tor) moeten we wat regels copy-pasten. Je kunt alle regels, inclusief de commentaar regels aangegeven met een `#`, kopiëren en plakken.
+Just as with the [torrc file](https://docs.theroadtonode.com/bitcoin-core/tor-changes) you should copy-paste some information. You can just copy and paste all lines, including the ones with comments starting with a `#`.
 
 ```bash
-# Maak het mogelijk JSON-RPC commando's te accepteren
+# Accepts JSON-RPC commands
 server=1
 
-# Draai Bitcoin Core (bitcoind) in de achtergrond
+# Run Bitcoin Core in the background
 daemon=1
 
-# Listening mode aan
+# Turn listening mode on
 listen=1
 
-# Zorg ervoor dat Core een index bijhoudt van alle txs
+# Make sure Core keeps an index of all txs
 txindex=1
 
-# Als je wil dat Specter sneller werkt
+# This makes sure Specter works faster
 blockfilterindex=1
 
-# Als je Specter (zie Bitcoin Core extensies hoofdstuk in de guide) wil draaien
+# If you'd want to run Specter (checkout Bitcoin Core extensions chapter of this guide)
 disablewallet=0
 
-# Cache grootte in MB's voor de database. Ophogen naar 3000 is wel lekker voor de IBD.
-# Later kan het teruggeschroeft worden naar 500.
+# Cache size set in MBs for the database. Raising this to 3000 helps speed up the IBD.
+# You can dail this down to 500 after IBD.
 dbcache=3000
 
-# Wil je jouw node op zowel tor als clearnet, laat de instellingen dan voor wat het is.
-# Wil je jouw node enkel op tor? Doe dan het volgende:
-# - Haal # weg voor onlynet=onion. Je zegt hiermee dat alleen tor toegestaan is.
-# - Haal # weg voor proxy=127.0.0.1:9050. Je zegt hiermee dat alles via tor moet lopen.
-# - Haal # weg voor bind=127.0.0.1.
-# - Zet # voor onion=127.0.0.1:9050. Je hebt immers met proxy aangegeven dat ALLES via tor moet.
-# - Zet # voor discover=1. Je zet hiermee de discover functie uit.
-# - Zet # voor upnp=1. Je zet hiermee de UPnP functie uit.
+# If you'd want to run your node on both tor and clearnet, leave the setting below as is.
+# If you'd want to run your node only on tor, do the following:
+# - Remove the # in front of onlynet=onion. This was you tell Core to only use tor.
+# - Remove the # in front of proxy=127.0.0.1:9050. This way you tell Core to route traffic through tor.
+# - Remove the # in front of bind=127.0.0.1.
+# - Place a # in front of onion=127.0.0.1:9050. You already told Core to run everything through tor already.
+# - Place a # in front of discover=1. You turn off the discover function of Core.
+# - Place a # in front of upnp=1. You turn off the UPnP function this way.
 
 #onlynet=onion
 #proxy=127.0.0.1:9050
@@ -63,35 +63,35 @@ onion=127.0.0.1:9050
 discover=1
 upnp=1
 
-# Nodig voor Lightning in een later stadium van de guide
+# You'll need this for Lightning later on
 zmqpubrawblock=tcp://127.0.0.1:28332
 zmqpubrawtx=tcp://127.0.0.1:28333
 
-# Standaard gebruik maken van native segwit (bech32) adressen
+# Use native segwit addresses by default
 addresstype=bech32
 changetype=bech32
 ```
 
-Wacht even met gulzig op `Ctrl + X` drukken om op te slaan! Wil je dat jouw node enkel bereikbaar is via tor? Doe dan het onderstaande. Wil je dat jouw node ook via het normale internet bereikbaar is, laat de instellingen dan voor wat het is en sla het bestand op.
+Wait a minute before hitting `Ctrl + X` instantly. If you'd want your node to only be reachable through tor you should follow the step detailed below. If you'd also want your node to be reachable through the normal internet, then leave it as is and save the file.
 
-* Haal de `#` weg voor `onlynet=onion`. Je zegt hiermee dat alleen tor toegestaan is.
-* Haal de `#` weg voor `proxy=127.0.0.1:9050`. Je zegt hiermee dat alles via tor moet lopen.
-* Haal de `#` weg voor `bind=127.0.0.1`.
-* Zet een `#` voor `onion=127.0.0.1:9050`. Je hebt immers met proxy aangegeven dat ALLES via tor moet.
-* Zet een `#` voor `discover=1`. Je zet hiermee de discover functie uit.
-* Zet een `#` voor `upnp=1`. Je zet hiermee de UPnP functie uit.
+* Remove the `#` in front of `onlynet=onion`. This was you tell Core to only use tor.
+* Remove the `#` in front of `proxy=127.0.0.1:9050`. This way you tell Core to route traffic through tor.
+* Remove the `#` in front of `bind=127.0.0.1`.
+* Place a `#` in front of `onion=127.0.0.1:9050`. You already told Core to run everything through tor already.
+* Place a `#` in front of `discover=1`. You turn off the discover function of Core.
+* Place a `#` in front of `upnp=1`. You turn off the UPnP function this way.
 
-Druk na alle veranderingen op `Ctrl + X` en daarna `Y` om op te slaan.
+When you're ready to save the changes to the configuration file, hit `Ctrl + X` and afterwards `Y` to save it.
 
-## Authenticatie
+## Authentication
 
-We willen een gebruiker aanmaken om deze toegang verlenen tot bitcoind. Dit doen we met een scriptje. In het volgende commando wordt de gebruiker `XXX` meegegeven. Maar dit kun je veranderen in iets wat je leuk vindt.
+In order for other application to make use of bitcoind as a backend, you'll need to create a new Bitcoin Core user. You can do this with a little script. The following command will create a user named `XXX`, but you can change this to whatever you like.
 
 ```bash
 python3 ~/bitcoin/share/rpcauth/rpcauth.py XXX
 ```
 
-De output zal hierop lijken:
+The output will look something like:
 
 ```bash
 String to be appended to bitcoin.conf:
@@ -100,58 +100,58 @@ Your password:
 sdflkashf93hfhalfhasdfjh3ejfhb=
 ```
 
-Wat staat hier? De eerste regel geeft aan dat we iets moeten toevoegen aan het `bitcoin.conf` bestand. De volledige regel die begint met `rpcauth` moeten we dus toevoegen. We hebben een wachtwoord toebedeeld gekregen. Daar heb je het mee te doen. Open `bitcoin.conf` opnieuw.
+So what does this say? The first like tells you to add something to the `bitcoin.conf` configuration file. The next line starting with `rpcauth` needs to be added to the file. You also got a password which you can't change and need to remember or store somewhere save. Now add the line to `bitcoin.conf`. 
 
 ```bash
 nano ~/.bitcoin/bitcoin.conf
 ```
 
-Voeg onderaan het bestand de `rpcauth=user:salt$hash` regel toe, maar dan met alle cijfers en letters zoals het commando je gaf. Sla het op met `Ctrl + X` en bevestig met `Y`. We hebben nu aan bitcoind verteld dat de gebruiker genaamd `xxx` mag inloggen met het wachtwoord `sdflkashf93hfhalfhasdfjh3ejfhb=`. Sla dit wachtwoord dus op, je zal het later nodig hebben.
+At the bottom of the file add the line `rpcauth=user:salt$hash` but then with all of the characters the previous command gave you. Save the file by hitting `Ctrl + X` and confirm with `Y`. You now told bitcoind that user `XXX` may login using the password `sdflkashf93hfhalfhasdfjh3ejfhb=`. So please don't lose the password.
 
-Je kunt meerdere rpcauth regels toevoegen. Zo kun je verschillende gebruikers aanmaken en toegang geven.
+You can add as many rpcauth lines to the configuration file as you like. This way you can authorize different users.
 
-## Firewall en router
+## Firewall and router
 
-Als je UFW hebt ingesteld is het belangrijk om port 8333 open te zetten. Dit zorgt ervoor dat andere nodes kunnen verbinden met die van jou. Het openzetten van deze port is alleen noodzakelijk als je je node \(ook\) over clearnet draait. Draai je jouw node enkel over tor, dan kun je deze paragraaf overslaan en verder naar "starten".
+If you've setup UFW it's important to open port 8333. This makes sure other nodes in the network can connect with yours. Opening this port is only neccesary if you're \(also\) running your node on cleannet. If you're only running your node on tor, you can skip this step and continue with "start".
 
 ```bash
-sudo ufw allow 8333 comment "Port voor Bitcoin Core peers"
+sudo ufw allow 8333 comment "Port for Bitcoin Core peers"
 ```
 
-In het configuratie bestand een paar paragraven hierboven staat `upnp=1`. Dit houdt in dat als jouw router UPnP ondersteunt, Bitcoin Core die port zal openzetten op je router. Ondersteunt jouw router UPnP niet of heb je het uitgezet? Dan moet je even op [portforward.com](https://portforward.com/) kijken hoe jij op jouw specifieke router port 8333 openzet en het verkeer doorsluist naar je Pi.
+In the configuration file there's a line that says `upnp=1`. This means that - as long as your router supports it - Bitcoin Core also opens port 8333 on your router automatically. If your router doesn't support UPnP or you've turned it off, you should open that port manually. Go to [portforward.com](https://portforward.com) and look up your specific router to find out how to open port 8333 and send the traffic to your Pi.
 
-## Starten
+## Start
 
-Dan is het nu tijd om deel te nemen aan het Bitcoin netwerk! Knal dit je Pi in:
+It's time to take part in the network! Run this on your Pi:
 
 ```bash
 bitcoind
 ```
 
-Done! Je kunt live bijhouden wat er gebeurt met:
+Done! You can follow what's happening with `tail`:
 
 ```bash
 tail -n 200 -f ~/.bitcoin/debug.log
 ```
 
-Per block dat gecontroleerd wordt, zie je de tekst `progress=X.XXXXX` voorbij komen. Dit is een getal van 0 tot 1. Nul betekent dat je nog niets gesynchroniseerd hebt, 1 betekent dat je klaar bent. Met `Ctrl + C` zet je de live feed weer stop.
+Everytime a block is verified, you'll see a line appearing that says something like `progress=X.XXXXX`. This is a number from 0 to 1. Zero means nothing is synchonized, one means you're done synchronizing. With `Crtl + C` you can stop the live feed.
 
-De initiële block download \(IBD\) zal zo'n 60 tot 80 uur duren.
+The initial block download \(IBD\) will take somewhere between 60 and 80 hours. 
 
-Met de installatie van Core heb je ook een tool geïnstalleerd genaamd `bitcoin-cli`. Hiermee kun je met bitcoind praten.
+Together with the installation of Bitcoin Core you also got a tool named `bitcoin-cli`. You can talk with bitcoind using this tool.
 
-## Instellingen checken
+## Check settings
 
-Maak gebruik van de `bitcoin-cli` om netwerk informatie op te halen van jouw node.
+Make use of `bitcoin-cli` to get information about the network using your own node.
 
 ```bash
 bitcoin-cli getnetworkinfo
 ```
 
-Met dit commando krijg je wat informatie over het netwerk. Als het goed is ziet het er ongeveer zo uit als je enkel van tor gebruik maakt.
+With this command you can get information about the netwerk. If everything is alright, the output will look similar to the one below if you only use tor.
 
 <Callout emoji="&#x2139;">
-	Het onion-adres wijkt af van het adres dat je in [de vorige stap](/bitcoin-core/change-tor) hebt aangemaakt \(als je dat hebt aangemaakt\). Dat het afwijkt is juist goed. Het onion-adres uit de vorige stap is enkel voor het uitvoeren van commando's op je node van buitenaf en gaat over port 8332. Het onderstaande onion-adres wordt door bitcoind zelf aangemaakt en gaat over port 8333. Dit wordt gebruikt om met andere nodes te communiceren.
+	The onion-address will be different from the one you created in [the last step](https://docs.theroadtonode.com/bitcoin-core/tor-changes#onion-address) \(if you created that one\). It won't match the onion-address you'll see in your output and that's good. The onion-address from the last step is only for applications to make use of your node as their backend from outside of your own network. The onion-address below is created by bitcoind itself and is used for communication with other nodes instead of applications.
 </Callout>
 
 ```json
@@ -187,14 +187,14 @@ Met dit commando krijg je wat informatie over het netwerk. Als het goed is ziet 
 ]
 ```
 
-Hieraan zie je het volgende:
+It'll tell you the following:
 
-* IPv4 is niet bereikbaar
-* IPv6 is niet bereikbaar
-* Onion is wel bereikbaar \(tor\)
-* Jouw onion-adres binnen het "localaddresses" blok
+* IPv4 is unreachable
+* IPv6 is unreachable
+* Onion is reachable \(tor\)
+* Your onion-address within the "localaddresses" block
 
-Heb je zowel tor als clearnet aan staan, dan zal je output er zo uit zien:
+If you're running your node on both tor and clearnet, you ouput will look similar to this:
 
 ```json
 "networks": [
@@ -234,10 +234,10 @@ Heb je zowel tor als clearnet aan staan, dan zal je output er zo uit zien:
 ]
 ```
 
-Hieraan zie je het volgende:
+It'll tell you the following:
 
-* IPv4, IPv6 en onion \(tor\) zijn bereikbaar
-* Jouw IP-adres binnen het "localaddresses" blok
-* Jouw onion-adres binnen het "localaddresses" blok
+* IPv4, IPv6 and onion \(tor\) are all reachable
+* Your IP-address within the "localaddresses" block
+* Your onion-address within the "localaddresses" block
 
-Wijkt jouw output af? Ga terug naar start.
+If none of the outputs match yours, you should start over.

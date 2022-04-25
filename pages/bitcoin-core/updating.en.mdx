@@ -29,7 +29,7 @@ git describe --tags `git rev-list --tags --max-count=1`
 Haal de wijzigingen op van de laatste versie.
 
 ```bash
-git checkout -f <OUTPUT VAN DE VORIGE STAP> #voorbeeld: v22.0
+git checkout -f <OUTPUT VAN DE VORIGE STAP> #voorbeeld: v23.0
 ```
 
 Build bitcoin core opnieuw op basis van de zojuist uitgecheckte versie van de broncode. Door de toevoeging van `-j $(nproc)` worden alle cores gebruikt van de CPU en zou de build sneller verlopen dan zonder deze toevoeging.
@@ -66,7 +66,7 @@ Check de huidige versie van bitcoin core.
 bitcoin-cli --version
 ```
 
-De output zal lijken op `Bitcoin Core RPC client v22.0` en Core is nu bijgewerkt!
+De output zal lijken op `Bitcoin Core RPC client v23.0` en Core is nu bijgewerkt!
 
 Start de andere services die je eventueel hebt uitgezet. Let wel op dat als je LND opstart, dat het unlocken van LND pas kan nadat de blockchain van bitcoin weer gesynchroniseerd is. Controleer met `tail -f -n 200 .bitcoin/debug.log` hoe ver deze is. Services start je op deze manier:
 
