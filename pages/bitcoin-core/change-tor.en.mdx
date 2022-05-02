@@ -3,22 +3,22 @@ import Callout from "nextra-theme-docs/callout";
 # Tor aanpassen
 
 <Callout emoji="&#x2139;">
-	Tijd: 5 minuten
+	Time: 5 minutes
 </Callout>
 
-De instellingen van tor moeten een beetje aangepast worden mits je commando's wil geven over RPC van buiten je eigen netwerk. Hiervoor moeten we een bestand wijzigen. Er staat veel troep in dus het is handig om het bestand eerst weg te gooien. Dat doe je met het `rm` commando.
+The settings of tor need to be slightly tweaked if you'd like to send commands over RPC from outside of your home netwerk. For this we need to change a file. There's lots of useless stuff in there, so it's recommended to throw away the file first. You can do so with the `rm` command.
 
 ```bash
 sudo rm /etc/tor/torrc
 ```
 
-Daarna maak je het bestand opnieuw aan.
+After that recreate the file.
 
 ```bash
 sudo nano /etc/tor/torrc
 ```
 
-Eenmaal in dit bestand voeg je deze regels toe:
+Once you're in the file, add the following:
 
 ```bash
 ControlPort 9051
@@ -26,9 +26,9 @@ CookieAuthentication 1
 CookieAuthFileGroupReadable 1
 ```
 
-Sla het bestand op met de toetsencombinatie `Ctrl + X`. Geef `Y` als antwoord op de vraag of je op wil slaan.
+Save the file with `Ctrl + X` and hit `Y` when asked to save it.
 
-Tor moet nu opnieuw opgestart worden.
+Tor has to be restarted now.
 
 ```bash
 sudo systemctl restart tor
@@ -36,19 +36,19 @@ sudo systemctl restart tor
 
 ## RPC via tor
 
-Je kunt via het RPC protocol van bitcoind verschillende commando's uitvoeren met betrekking tot Bitcoin Core. Zo kun je bijvoorbeeld transacties ondertekenen of informatie opvragen over het netwerk. Core staat het standaard niet toe om op afstand dit soort commando's uit te voeren. Standaard mag dat alleen vanaf de Pi zelf, de localhost. Wil je de commando's kunnen uitvoeren op afstand, dan zou je bepaalde IP-adressen expliciet moeten toevoegen in de configuratie van Core. Maar een makkelijkere manier om dit mogelijk te maken is via tor. Core ziet commando's via tor aan als localhost waardoor het mogelijk is.
+You can use the RPC protocol of bitcoind to execute various commands in relation to Bitcoin Core. You can sign transactions or retrieve information regarding the network, for example. Normally Core doesn't allow any commands when coming from another network. By default it only allows commands coming from the Pi itself, localhost. If you like to send commands from outside of your network, you'd have to whitelist certain specific IP-addresses. A more simple way is through enabling tor. Core will treat commands through tor as if they were coming from the Pi itself.
 
 <Callout type="warning" emoji="&#x26A0;">
-	Ondanks dat het RPC protocol van Core beveiligd is met een wachtwoord, wordt het niet per se aangeraden om Core van buitenaf benaderbaar te maken. Het brengt simpelweg beveiligingsrisico's met zich mee. Komt het wachtwoord in handen van de verkeerde persoon, moet je er rekening mee houden dat al je funds op je node weg kunnen zijn. Zie deze stap daarom als optioneel.
+	Although the RPC protocol of Core is secured with a password, it is discouraged to make Core accessible from outside. It simply adds too many security risks. When the password is leaked, please understand your funds can be lost. Consider these step as optional.
 </Callout>
 
-Open het torrc bestand.
+Open hthe torrc file.
 
 ```bash
 sudo nano /etc/tor/torrc
 ```
 
-Voeg de volgende drie regels onderaan toe:
+Add the three lines below:
 
 ```bash
 HiddenServiceDir /var/lib/tor/bitcoin/bitcoinrpc
@@ -56,7 +56,7 @@ HiddenServiceVersion 3
 HiddenServicePort 8332 127.0.0.1:8332
 ```
 
-Maak de nodige mappen aan met de volgende twee commando's. Hier komt informatie in te staan omtrent de tor hidden service.
+Create the next two files with these commands. The information related to the tor hidden services will be stored here.
 
 ```bash
 sudo mkdir /var/lib/tor/bitcoin
@@ -66,7 +66,7 @@ sudo mkdir /var/lib/tor/bitcoin
 sudo mkdir /var/lib/tor/bitcoin/bitcoinrpc
 ```
 
-Geef de juiste rechten met:
+Assign the correct rights.
 
 ```bash
 sudo chown -R debian-tor:debian-tor /var/lib/tor/bitcoin/bitcoinrpc
@@ -76,18 +76,18 @@ sudo chown -R debian-tor:debian-tor /var/lib/tor/bitcoin/bitcoinrpc
 sudo chmod 700 /var/lib/tor/bitcoin/bitcoinrpc
 ```
 
-Tor moet nu opnieuw opgestart worden.
+Tor has to be restarded now.
 
 ```bash
 sudo systemctl restart tor
 ```
 
-### Onion-adres
+### Onion-address
 
-Met onderstaand commando krijg je het onion-adres terug van je Bitcoin node. Dit adres heb je later nodig als je wil communiceren met je node via het tor netwerk. In vervolg onderdelen van de guide \(zoals tijdens het opzetten van Lightning\) zul je een soortgelijk commando moeten invoeren.
+You can get the onion-address for your Bitcoin node with the command below. You'll need this address later on when communication with you node over tor. In next chapters of the guide \(like while setting up Lightning\) you'll also see this command pop up.
 
 <Callout emoji="&#x2139;">
-	Dit onion-adres maakt het mogelijk om vanaf buitenaf bepaalde commando's uit te voeren op je node. Dit adres is niet gelijk aan het onion-adres dat bitcoind gebruikt om met andere nodes te communiceren over het tor netwerk!
+	This onion-address enables the possibility of sending commands to your node from outside of your network. This address is not the same as the onion-address created by bitcoind to communicate with other nodes over tor!
 </Callout>
 
 ```bash
