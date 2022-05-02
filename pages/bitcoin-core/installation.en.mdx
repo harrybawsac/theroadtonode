@@ -15,29 +15,29 @@ This part of the guide will take a while, so be prepared. The goal is to compile
 
 ## Dependencies
 
-Voer het volgende uit om de dependencies te installeren. Dependencies zijn precies wat het zegt; afhankelijkheden. Het zelf samenstellen van Bitcoin Core is afhankelijk van andere software.
+Execute the command below to install all required dependencies. Dependencies are software package other software depends on. Bitcoin Core also depends on other software for its compilation.
 
 ```bash
 sudo apt install git automake autoconf autotools-dev build-essential make pkg-config protobuf-compiler libminiupnpc-dev libprotobuf-dev libdb++-dev libzmq3-dev libsqlite3-dev libboost-thread-dev libboost-test-dev libboost-all-dev libevent-dev libtool libssl-dev libboost-system-dev libboost-filesystem-dev -y
 ```
 
-## Broncode
+## Source code
 
-Zorg allereerst dat je in de "home directory" zit. Om er zeker van te zijn voer je `cd ~` uit. De tilde \(`~`\) is een afkorting voor `/home/ubuntu` in dit geval. Voer daarna het volgende uit om de broncode binnen te halen en in je home directory neer te zetten. Automatisch zal hier een map aangemaakt worden genaamd bitcoin met daarin de broncode.
+Make sure you are in you "home directory". To be sure, exucute `cd ~`. The tilde sign \(`~`\) is a short cut for `/home/ubuntu` in this case. After that, execute the following command to get Bitcoin Core's source code and place it in a folder inside the home directory. A folder named "bitcoi" will automatically be created.
 
 ```bash
 git clone https://github.com/bitcoin/bitcoin
 ```
 
-Duik de bitcoin map in. Dit is nodig tijdens de volledige installatie van Core.
+Go inside that folder. This is needed for the installation of Core.
 
 ```bash
 cd bitcoin
 ```
 
-Gezien de [git-flow van Bitcoin Core](https://github.com/bitcoin/bitcoin/blob/master/CONTRIBUTING.md#decision-making-process) kun je er vanuit gaan dat alles in de master branch correct en foutloos functioneert. Het release proces van Bitcoin Core hakt de master branch af op een vaste datum. Alles wat op die branch zat op moment van afhakken, zal meegenomen in de release. Alles dat daarna in de branch komt, zal in een volgende release komen.
+Due to the [git-flow of Bitcoin Core](https://github.com/bitcoin/bitcoin/blob/master/CONTRIBUTING.md#decision-making-process) you could argue that everything inside the `master` branch is correct and functional. The release process of Bitcoin Core cuts off the `master` branch at a certain predefined date. Everything on that branch at that momen, will make it into the release. Everything that is added to the branch afterward, will be included in the new release.
 
-Zou je toch een specifieke release willen \(wat op zich wel aan te raden is\), kun je het onderstaande commando uitvoeren. Op moment van schrijven is versie 22 de nieuwste versie.
+If you'd like to specify a certain release \(which is recommended\), you can execute the command below. At the momen v23 is the latest version of Bitcoin Core.
 
 ```bash
 git checkout v23.0
@@ -45,7 +45,7 @@ git checkout v23.0
 
 ## Database
 
-In de repository van Core is een script aanwezig waarmee de database geïnstalleerd kan worden. Dit heeft Bitcoin Core nodig om te werken. Blijf in de huidige map \(`/home/ubuntu/bitcoin`\) zitten en voer het script uit met het onderstaande commando. Alle volgende commando's moeten ook uitgevoerd worden vanuit deze map.
+Inside of the repository of Core is a script to install the database. Bitcoin Core needs this to function. Stay in the current directory \(`/home/ubuntu/bitcoin`\) and execute the command below. All of the subsequent command will also be executed from within this directory.
 
 ```bash
 ./contrib/install_db4.sh `pwd`
@@ -55,40 +55,40 @@ In de repository van Core is een script aanwezig waarmee de database geïnstalle
 export BDB_PREFIX='/home/ubuntu/bitcoin/db4'
 ```
 
-## Bitcoin Core samenstellen
+## Compiling Bitcoin Core
 
-Tot slot het samenstellen van Bitcoin Core.
+Finish it off by compiling Bitcoin Core.
 
 ```bash
 ./autogen.sh
 ```
 
 <Callout emoji="&#x2139;">
-Met het onderstaande commando configureren we de installatie van Bitcoin Core. Het is mogelijk om Bitcoin Core te draaien zonder wallet functionaliteit en dus puur te gebruiken als backend voor je andere wallets. Weet je zeker dat je de ingebouwde wallet functionaliteit van Core _**niet**_ zal gebruiken, draai dan:
+With the command below we configure the installation process of Bitcoin Core. It is possible to run Bitcoin Core without wallet functionality for examplke, and purely use it as a backend for other wallet software. If you're sure you _**WON'T**_ be using the wallet functionality, then run:
 
 `./configure --enable-upnp-default --without-gui --disable-wallet BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"`
 
-Aan bovenstaand commando is de instelling `--disable-wallet` meegegeven. Weet je het niet zeker, draai dan onderstaand commando.
+The above command has an additional flag `--disable-wallet`. If you're not sure whether you need the wallet functionality, run the command below.
 
-Heb je Bitcoin Core geconfigureerd zónder wallet functionaliteit en wil je dit later toch toevoegen, voer dan alles vanaf onderstaand commando nóg een keer uit.
+Did you configure Bitcoin Core without the wallet functionality but still want to add it, execute all commands starting with the one below and work your way down.
 </Callout>
 
 ```bash
 ./configure --enable-upnp-default --without-gui BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"
 ```
 
-Na op enter drukken van het volgende commando kun je wat voor jezelf gaan doen. **Uit ervaring blijkt deze stap bijna een uur te duren.**
+After hitting enter for the following command, you can go do something else. **From experience we can tell this stel will take around one and a half hour.**
 
 ```bash
 make -j $(nproc)
 ```
 
-Als je wat testjes wil draaien om te kijken of alles goed zit, kun je `make check` uitvoeren. Dit is optioneel en duurt zo'n vijftien minuten.
+If you'd like to run some test to check whether everything is alright, run `make check`. This is optional and can take up to fifteen minutes.
 
-Rond het geheel af met:
+Finalize the installation process with the following:
 
 ```bash
 sudo make install
 ```
 
-Dat was het voor het installeren van Core. Je kunt terug naar de home directory met `cd ~`.
+That's it for installing Bitcoin Core! You can go back to your home directory with `cd ~`.

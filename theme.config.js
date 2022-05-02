@@ -10,35 +10,33 @@ export default {
 		<>
 			<span className="mr-2 font-extrabold hidden md:inline">The Road to Node</span>
 			<span className="text-gray-600 font-normal hidden md:inline">
-				A Bitcoin and Lightning node guide
+				A thorough guide for making your own Bitcoin and Lightning node
 			</span>
 		</>
 	),
 	head: (
 		<>
+			<meta charset="utf-8"></meta>
 			<meta name="msapplication-TileColor" content="#ffffff" />
 			<meta name="theme-color" content="#ffffff" />
+			<meta name="color-scheme" content="dark light" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-			<meta httpEquiv="Content-Language" content="en" />
-			<meta name="description" content="The Road to Node: A Bitcoin and Lightning node guide" />
-			<meta name="og:description" content="The Road to Node: A Bitcoin and Lightning node guide" />
+			<meta httpEquiv="Content-Language" content="en, nl" />
+			<meta name="description" content="A thorough guide for making your own Bitcoin and Lightning node" />
+			<meta name="og:description" content="A thorough guide for making your own Bitcoin and Lightning node" />
+			<meta name="og:title" content="The Road to Node" />
+			<meta name="og:image" content="https://theroadtonode.com/thermal-paste.png" />
+			<meta name="og:url" content="https://theroadtonode.com" />
 			<meta name="twitter:card" content="summary_large_image" />
-			<meta name="twitter:image" content="https://nextra.vercel.app/og.png" />
-			<meta name="twitter:site:domain" content="https://github.com/harrybawsac/theroadtonode" />
-			<meta name="twitter:url" content="https://github.com/harrybawsac/theroadtonode" />
-			<meta name="og:title" content="The Road to Node: A Bitcoin and Lightning node guide" />
-			<meta name="og:image" content="https://nextra.vercel.app/og.png" />
+			<meta name="twitter:image" content="https://theroadtonode.com/thermal-paste.png" />
+			<meta name="twitter:site:domain" content="https://theroadtonode.com" />
+			<meta name="twitter:url" content="https://theroadtonode.com" />
 			<meta name="apple-mobile-web-app-title" content="The Road to Node" />
-			<link
-				rel="apple-touch-icon"
-				sizes="180x180"
-				href="/apple-icon-180x180.png"
-			/>
 			<link
 				rel="icon"
 				type="image/png"
 				sizes="192x192"
-				href="/android-icon-192x192.png"
+				href="/favicon-192x192.png"
 			/>
 			<link
 				rel="icon"
@@ -49,16 +47,9 @@ export default {
 			<link
 				rel="icon"
 				type="image/png"
-				sizes="96x96"
-				href="/favicon-96x96.png"
-			/>
-			<link
-				rel="icon"
-				type="image/png"
 				sizes="16x16"
 				href="/favicon-16x16.png"
 			/>
-			<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
 		</>
 	),
 	search: true,
