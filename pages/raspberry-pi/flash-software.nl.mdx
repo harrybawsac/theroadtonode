@@ -23,11 +23,11 @@ touch /Volumes/boot/ssh
 Zit je [op Windows](https://arjanlobbezoo.nl/windows-10-programma-administrator-mode-openen), dan zou iets in de trant van het volgende moeten werken. In dit voorbeeld zou je de D-schijf moeten aanpassen naar wat voor jou van toepassing is.
 
 ```bash
-cd D:\
+d:
 ```
 
 ```bash
-type ssh
+type nul > ssh
 ```
 
 Met bovenstaande commando's wordt een bestand aangemaakt op de microSD. Het bestand heet "ssh" en als de Pi opstart met dit bestand aan boord, maakt de Pi het mogelijk om zich te laten aansturen van buitenaf. We gaan namelijk met behulp van SSH de Pi aansturen vanaf onze computer. Werp tot slot de microSD uit en stop hem in de Pi.
