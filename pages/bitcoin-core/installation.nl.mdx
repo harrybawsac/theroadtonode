@@ -73,8 +73,16 @@ Aan bovenstaand commando is de instelling `--disable-wallet` meegegeven. Weet je
 Heb je Bitcoin Core geconfigureerd zónder wallet functionaliteit en wil je dit later toch toevoegen, voer dan alles vanaf onderstaand commando nóg een keer uit.
 </Callout>
 
+Wil je alle opties zien die te maken hebben met de installatie van Bitcoin Core, draai dan `./configure --help`.
+
 ```bash
 ./configure --enable-upnp-default --without-gui BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"
+```
+
+Voor een iets snellere variant zonder dependency tracking, tests en benchmarks:
+
+```bash
+./configure --enable-upnp-default --without-gui --disable-maintainer-mode --disable-dependency-tracking --disable-tests --disable-gui-tests --disable-bench BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"
 ```
 
 Na op enter drukken van het volgende commando kun je wat voor jezelf gaan doen. **Uit ervaring blijkt deze stap bijna een uur te duren.**
