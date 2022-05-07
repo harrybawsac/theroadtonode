@@ -3,29 +3,29 @@ import Callout from "nextra-theme-docs/callout";
 # LND Connect
 
 <Callout emoji="&#x2139;">
-	Tijd: 5 minuten
+        Time: 5 minutes
 </Callout>
 
-LND Connect \(vaak [lndconnect](https://github.com/LN-Zap/lndconnect) genoemd\) is een tool ontwikkeld door de makers van Zap wallet. De tool genereert een QR code of stuk tekst waarmee een wallet gekoppeld kan worden aan je node. In dit onderdeel van de guide zullen we enkel lndconnect installeren. Het gebruik komt terug in wallet onderdelen van deze guide, zoals het [Zap \(iOS\)](/wallets/zap) onderdeel.
+LND Connect (often called [lndconnect](https://github.com/LN-Zap/lndconnect)) is a tool developed by the creators of Zap wallet. The tool generates a QR code or piece of text that can be used to connect a wallet to your node. In this part of the guide we will only install lndconnect. Usage will come back in wallet sections of this guide, such as the [Zap](/wallets/zap) section.
 
-SSH om te beginnen in je Pi. Als het goed is heb je [Go](/raspberry-pi/common-dependencies#golang) al op je machine staan. Dat is mooi, want dan kunnen we direct van start. Ga eerst naar je home directory.
+SSH to start in your Pi. If all goes well, you already have [Go](/raspberry-pi/common-dependencies#golang) on your machine. That's good, because then we can get started right away. First go to your home directory.
 
 ```bash
 cd ~
 ```
 
-Haal de broncode van lndconnect binnen.
+Get the source code from lndconnect.
 
 ```bash
 git clone https://github.com/LN-Zap/lndconnect
 ```
 
-Na het binnenhalen moeten we naar de juiste map. We moeten ook een paar extra go-commando's geven, omdat de sourcecode nog niet is aangepast voor recente versies van go.
+After downloading this, we need to go to the right directory. We also need to issue a few additional go commands because the source code has not yet been updated for recent versions of go.
 
 ```bash
 cd lndconnect
 
-rm go.mod
+rm go.mod 
 
 go mod init github.com/LN-Zap/lndconnect
 
@@ -34,22 +34,23 @@ go get github.com/lightningnetwork/lnd/tor@v0.14.3-beta
 go mod tidy
 ```
 
-Ten slotte kunnen we het installeren.
+Finally, we can install.
 
 ```bash
 make
-```
+``` 
 
-En testen of het werkt.
-
-```bash
-lndconnect --host IP-ADRES-VAN-JE-PI -j
-```
-
-Als het goed is, krijg je output die lijkt op het volgende.
+And test if it works.
 
 ```bash
-lndconnect://192.168.1.6:10009?macaroon=[EEN_LANGE_REGEL_MET_WILLEKEURIG_AANDOENDE_LETTERS_EN_CIJFERS]
+lndconnect --host IP-ADRES-Of-You-PI -j
 ```
 
-Met deze output kun je naar Zap wallet om te verbinden met je node.
+If all goes well, you'll get output similar to the following.
+
+```bash
+lndconnect://192.168.1.6:10009?macaroon=[ONE_LANGE_REGLE_MET_WILL_AANDOUS_LETTERS_AND_CIJFERS]
+```
+
+With this output, you can go to Zap wallet to connect to your node.
+

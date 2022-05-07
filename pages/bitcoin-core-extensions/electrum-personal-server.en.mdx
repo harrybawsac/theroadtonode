@@ -3,39 +3,39 @@ import Callout from "nextra-theme-docs/callout";
 # Electrum Personal Server
 
 <Callout emoji="&#x2139;">
-	Tijd: 30 minuten
+        Time: 30 minutes
 </Callout>
 
-Als je de wallet software van [Electrum](https://electrum.org/#home) gebruikt is het een logische stap om ervoor te zorgen dat Electrum babbelt met je eigen node. Dit kan niet rechtstreeks maar moet verlopen via een Electrum Server. De Electrum wallet software connect namelijk normaal gesproken met Electrum Servers waarvan je niet weet wie die in de gaten houdt. De wallet houdt namelijk de adressen in de gaten waar je Bitcoin op hebt ontvangen en zo kunnen verschillende adressen terug te herleiden zijn naar jouw IP. Dat wil je natuurlijk niet. De oplossing: draai je eigen Electrum Server. Er zijn verschillende forks beschikbaar zoals [ElectrumX](https://github.com/spesmilo/electrumx), [ElectRS](https://github.com/romanz/electrs) en Electrum Personal Server. Dit document beschrijft de installatie van [Electrum Personal Server](https://github.com/chris-belcher/electrum-personal-server) omdat dit momenteel de meest lightweight implementatie is. In TRTN is ook een handleiding opgenomen voor het installeren voor [ElectrumX](/bitcoin-core-extensions/electrum-x). Je hebt niet beide nodig dus bedenk vooraf welke fork je nodig hebt. Een voordeel van EPS is dat deze vrij licht en simpel is. Een nadeel is dat er maar 1 connectie tegelijk mogelijk is. Dat kan een nadeel zijn wanneer je op een later moment misschien met zowel een desktop client als Blue Wallet tegelijk wilt verbinden.
+If you are using [Electrum's](https://electrum.org/#home) wallet software, a logical step is to ensure that Electrum talks to your own node. This cannot be done directly but has to be done through an Electrum Server. This is because the Electrum wallet software normally connects to Electrum Servers of which you don't know who is tracking their use. The Electrum server keeps track of the addresses you have received Bitcoin from and this way several addresses can be traced back to your IP. You don't want that to happen. The solution: run your own Electrum Server. There are several forks available such as [ElectrumX](https://github.com/spesmilo/electrumx), [ElectRS](https://github.com/romanz/electrs) and Electrum Personal Server. This document describes the installation of [Electrum Personal Server](https://github.com/chris-belcher/electrum-personal-server) because it is currently the most lightweight implementation. TRTN also includes a guide to installing for [ElectrumX](/bitcoin-core-extensions/electrum-x). You don't need both so think about which fork you need in advance. One advantage of EPS is that it is quite light and simple. A disadvantage is that it only allows 1 connection at a time. This can be a disadvantage if at a later time you might want to connect to both a desktop client and Blue Wallet at the same time.
 
-## Voorbereidingen
+## Preparations
 
-SSH in je Pi en voer het installatie commando uit voor de nodige tools.
+SSH into your Pi and run the install command for the necessary tools.
 
 ```bash
 sudo apt install -y python3 python3-pip
 sudo pip3 install setuptools
 ```
 
-Check dat er in `bitcoin.conf` een regel staat `disablewallet = 0`.
+Check that in `bitcoin.conf` there is a line `disablewallet = 0`.
 
 ```bash
 nano /home/ubuntu/.bitcoin/bitcoin.conf
 ```
 
-Als dat nog niet het geval is voeg je deze toe, sla je het bestand op \(met `Ctrl + X`\) en herstart je de bitcoind service.
+If it is not there already, add it, save the file (using ``Ctrl + X`) and restart the bitcoind service.
 
 ```bash
 sudo systemctl restart bitcoind
 ```
 
-EPS heeft een wallet nodig in Bitcoin Core. Maak deze aan als deze nog niet aanwezig is.
+EPS needs a wallet in Bitcoin Core. Create one if it is not already present.
 
 ```bash
 bitcoin-cli createwallet electrumpersonalserver true
 ```
 
-Maak tot slot de volgende map in je homedir aan en ga erin.
+Finally, create the following folder in your homedir and go into it.
 
 ```bash
 cd ~
@@ -43,11 +43,11 @@ mkdir .eps
 cd .eps
 ```
 
-## Installatie
+## Installation
 
-Nu kunnen we verder gaan met het downloaden van de source en het installeren van Electrum Personal Server. Zorg er voor dat je de meest recente versie van EPS hebt.
+Now we can proceed to download the source and install Electrum Personal Server. Make sure you have the most recent version of EPS.
 
-Download vanaf de Github de [nieuwste release](https://github.com/chris-belcher/electrum-personal-server/releases) van Electrum Personal Server. Kopiëer de link van Source code \(tar.gz\), pak deze uit en gooi de download weg.
+From the Github, download the [latest release](https://github.com/chris-belcher/electrum-personal-server/releases) of Electrum Personal Server. Copy the link from Source code (tar.gz), unzip it and discard the download.
 
 ```bash
 wget https://github.com/chris-belcher/electrum-personal-server/archive/eps-v0.2.3.tar.gz
@@ -55,22 +55,22 @@ tar -xvf eps-v0.2.3.tar.gz
 rm eps-v0.2.3.tar.gz
 ```
 
-Maak een kopie van het configuratie bestand en pas deze aan.
+Make a copy of the configuration file and modify it.
 
 ```bash
 cp electrum-personal-server-eps-v0.2.3/config.ini_sample config.cfg
 nano config.cfg
 ```
 
-Deze config-file bevat veel commentaar en tips wat je waar moet invullen. Kijk in ieder geval even naar de volgende secties:
+This config-file contains a lot of comments and tips on what to enter where. In any case, take a look at the following sections:
 
-* `[master-public-keys]` — zoek in Electrum je xpub op via het menu `Wallet` &gt; `Information`
-* `[bitcoin-rpc]` — `datadir = /home/ubuntu/.bitcoin`
-* `[electrum-server]` — kies hier voor `host = 0.0.0.0` \(ipv 127.0.0.1\)
-* `wallet_filename` — maak daar `wallet_filename = electrumpersonalserver` van als je eerder hier een speciale wallet voor hebt aangemaakt. Of vul hier `wallet.dat` in als je gebruikt maakt van de default wallet van Bitcoin Core zodat het voor EPS duidelijk is welke walletfile hij moet gebruiken. Mocht je namelijk later ook `Specter` willen gebruiken dan maakt die ook wallets aan en als je dan geen `wallet_filename` hebt opgegeven start EPS niet.
+* `[master-public-keys]` - in Electrum, look up your xpub via the `Wallet` &gt; `Information` menu.
+* `[bitcoin-rpc]` - `datadir = /home/ubuntu/.bitcoin`
+* `[electrum-server]` - here choose `host = 0.0.0.0` (instead of 127.0.0.1)
+* `wallet_filename` - make this `wallet_filename = electrumpersonalserver` if you have previously created a special wallet for this. Or enter `wallet.dat` here if you are using the default wallet from Bitcoin Core so that it is clear to EPS which wallet file to use. If you want to use `Specter` later on, it will also create wallets and if you did not specify a `wallet_filename`, EPS will not start.
 
-<Callout emoji="&#x2139;">
-	Let bij het laatste commando in onderstaand blokje op de punt \(.\) aan het einde van de regel
+<Callout emoji="&#x2139;">.
+        For the last command in the block below, pay attention to the dot at the end of the line
 </Callout>
 
 ```bash
@@ -79,35 +79,34 @@ pip3 install wheel
 pip3 install use .
 ```
 
-## Opstarten
+## Startup
 
-Electrum Personal Server is nu geïnstalleerd \(in ~/.local/bin\) en klaar om voor het eerst te worden gestart. Deze roep je aan door ook het pad naar de config-file mee te geven. Dit kan ~10 minuten duren. Daarna zal het programma stoppen.
+Electrum Personal Server is now installed (in ~/.local/bin) and ready to be started for the first time. You invoke it by also providing the path to the config file. This may take ~10 minutes. After that, the program will stop.
 
 ```bash
 ~/.local/bin/electrum-personal-server ~/.eps/config.cfg
 ```
 
-Nu moet EPS de blockchain scannen op zoek naar adressen en transacties horend bij de xpubs die je in de `config.cfg` hebt opgenomen. Als er wordt gevraagd naar de startdatum is het handig dat je de datum opgeeft van de eerste transactie naar een adres horend bij die wallet. Dan hoeft EPS geen blokken te scannen waar toch geen transacties in staan die horen bij jouw xpub.
+Now EPS should scan the blockchain looking for addresses and transactions belonging to the xpubs you included in the `config.cfg`. If you are asked for the start date, it is useful that you give the date of the first transaction to an address belonging to that wallet. Then EPS does not need to scan blocks that do not contain transactions belonging to your xpub.
 
 ```bash
 ~/.local/bin/electrum-personal-server --rescan ~/.eps/config.cfg
 ```
 
-Je kunt de voorgang monitoren door de log-file van bitcoin in de gaten te houden via een tweede Putty venster:
+You can monitor the progress by keeping an eye on bitcoin's log file through a second Putty window:
 
 ```bash
 sudo tail -f -n 200 /home/ubuntu/.bitcoin/debug.log
 ```
-
-Als deze klaar is start je EPS nog een keer.
+When it is finished start EPS again.
 
 ```bash
 ~/.local/bin/electrum-personal-server ~/.eps/config.cfg
 ```
 
-## Automatiseren
+## Automate
 
-Nu moeten we alleen nog zorgen de EPS als een Service gaat draaien. Je hebt als het goed is twee vensters open. Eentje met de output van de bitcoin log en eentje waarin EPS draait.
+Now we just need to make sure the EPS starts running as a Service. You should have two windows open. One with the output of the bitcoin log and one where EPS is running.
 
 ```bash
 sudo nano /etc/systemd/system/eps.service
@@ -133,14 +132,14 @@ RestartSec=60
 WantedBy=multi-user.target
 ```
 
-Sluit het bestand af en sla de wijzigingen op. Vervolgens de service inschakelen en starten.
+Close the file and save the changes. Next, enable and start the service.
 
 ```bash
 sudo systemctl enable eps
 sudo systemctl start eps
 ```
 
-Je kunt de voortgang van het opstarten van EPS volgen door het log-bestand te bekijken:
+You can follow the progress of EPS startup by viewing the log file:
 
 ```bash
 sudo tail -f -n 200 /tmp/electrumpersonalserver.log
@@ -148,7 +147,7 @@ sudo tail -f -n 200 /tmp/electrumpersonalserver.log
 
 ## Firewall
 
-Ook hier dient de firewall geüpdate te worden. De port waarover Electrum Personal Server zich toont is 50002.
+Again, the firewall needs to be updated. The port over which Electrum Personal Server shows up is 50002.
 
 ```bash
 sudo ufw allow 50002
@@ -156,29 +155,29 @@ sudo ufw allow 50002
 
 ## Electrum Wallet
 
-1. Start nu Electrum Wallet op je PC met `"C:\Program Files (x86)\Electrum\electrum-4.1.5.exe" --server IP-ADRES VAN PI:50002:s --oneserver`
-2. Kies in het Tools-menu voor Network
-3. Open de Server-tab
-4. Haal het vinkje weg bij “select server automatically”
-5. Vul bij server het IP-adres in van je RPi4
-6. Klik op Close
+1. Now start Electrum Wallet on your PC with ``C:˜Program Files (x86)``Electrum-4.1.5.exe'' --server IP ADDRESS OF PI:50002:s --oneserver``.
+2. From the Tools menu, choose Network
+3. Open the Server tab
+4. Uncheck the box next to "select server automatically".
+5. At server, enter the IP address of your RPi4
+6. Click on Close
 
-Als alles goed is gegaan heb je rechtsonder in het venster van Electrum een groene cirkel die aangeeft verbonden te zijn. Je kunt ook nog
+If all went well, you will have a green circle in the lower right corner of the Electrum window indicating that you are connected. You can also
 
-1. Kies in het View-menu voor Show Console
-2. Klik op de Console tab
+1. From the View menu, choose Show Console
+2. Click on the Console tab
 
-Hier zie je nu dat je bent verbonden met een EPS en jouw Bitcoin Node!
+Here you will now see that you are connected to an EPS and your Bitcoin Node!
 
-## Updaten
+## Updating
 
-Stop de service.
+Stop the service.
 
 ```bash
 sudo systemctl stop eps
 ```
 
-Download vanaf de Github de tarball van de [nieuwste release](https://github.com/chris-belcher/electrum-personal-server/releases) van Electrum Personal Server. Kopiëer de link van source code \(tar.gz\), pak deze uit en gooi de download weg. **Vervang hier natuurlijk de versienummers met de meest recente.**
+From the Github, download the tarball of the [latest release](https://github.com/chris-belcher/electrum-personal-server/releases) of Electrum Personal Server. Copy the link from source code ``(tar.gz), unzip it and discard the download. **Replace the version numbers here with the most recent, of course.**
 
 ```bash
 cd ~/.eps
@@ -194,8 +193,9 @@ cd electrum-personal-server-eps-v0.2.3
 pip3 install use .
 ```
 
-Start de service weer.
+Start the service again.
 
 ```bash
 sudo systemctl start eps
 ```
+

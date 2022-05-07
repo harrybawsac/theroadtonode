@@ -1,18 +1,18 @@
 import Callout from "nextra-theme-docs/callout";
 
-# Automatiseren
+# Automate
 
 <Callout emoji="&#x2139;">
-	Tijd: 5 minuten
+        Time: 5 minutes
 </Callout>
 
-Het open hebben van twee terminals is irritant. LND wil je in de achtergrond hebben draaien, net als bitcoind.
+Having two terminals open is irritating. You want LND running in the background, just like bitcoind.
 
 ```bash
 sudo nano /etc/systemd/system/lnd.service
 ```
 
-Plak er dit in.
+Paste this in there.
 
 ```toml
 [Unit]
@@ -32,11 +32,12 @@ RestartSec=60
 WantedBy=multi-user.target
 ```
 
-Sla het weer op met `Ctrl + X` en bevestig met `Y`.
+Save it again with `Ctrl + X` and confirm with `Y`.
 
-Het systeem moet op de hoogte gesteld worden van de nieuwe service en kan daarna gestart worden.
+The system should be notified of the new service and can then be started.
 
 ```bash
+sudo systemctl daemon-reload
 sudo systemctl enable lnd
 ```
 
@@ -44,16 +45,16 @@ sudo systemctl enable lnd
 sudo systemctl start lnd
 ```
 
-Wil je zien of alles goed is opgestart, voer dan dit uit:
+If you want to see if everything started up properly, run this:
 
 ```bash
 systemctl status lnd
 ```
 
-De output zou er ongeveer zo uit moeten zien:
+The output should look something like this:
 
 ```bash
-● lnd.service - Lightning Network Daemon
+lnd.service - Lightning Network Daemon
      Loaded: loaded (/etc/systemd/system/lnd.service; enabled; vendor preset: enabled)
      Active: active (running) since Sat 2022-01-15 11:19:18 UTC; 1min 24s ago
    Main PID: 73287 (lnd)
@@ -64,13 +65,13 @@ De output zou er ongeveer zo uit moeten zien:
 Nov 25 17:45:10 raspberrypi systemd[1]: Started Lightning Network Daemon.
 ```
 
-Met `q` ga je weer uit het scherm.
+Press `q` to exit the screen again.
 
-Wil je een overzicht van de status over meerdere sessie, gebruik dan dit:
+If you want an overview of the status over multiple sessions, use this:
 
 ```bash
 sudo journalctl -f -u lnd
 ```
 
-Om het geheel af te ronden moet je LND unlocken met je wachtwoord net als voorheen. Het fijne is dat je nu niet twee terminal open hoeft te hebben. Met `lncli unlock` is alles afgerond.
+To finish up, you have to unlock LND with your password just like before. The nice thing is that now you don't have to have two terminals open. With `lncli unlock` everything is completed.
 

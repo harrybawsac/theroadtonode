@@ -1,43 +1,44 @@
 import Callout from "nextra-theme-docs/callout";
 
-# Installatie
+# Installing
 
 <Callout emoji="&#x2139;">
-	Tijd: 5 minuten
+        Time: 5 minutes
 </Callout>
 
-[Lighting Network Daemon](https://github.com/lightningnetwork/lnd#lightning-network-daemon) \(LND\) is een implementatie van het Lightning Network protocol. Het is een tweede laag op Bitcoin, waarbij bitcoind \(of software equivalent\) de eerste laag vormt. Maar als je LND wil installeren dan wist je dat waarschijnlijk al.
+[Lighting Network Daemon](https://github.com/lightningnetwork/lnd#lightning-network-daemon) is an implementation of the Lightning Network protocol. It is a second layer on Bitcoin, where bitcoind is the first layer. But if you want to install LND then you probably already knew that.
 
 <Callout emoji="&#x2139;">
-	Let op: dit onderdeel is afhankelijk van de [Golang installatie](/raspberry-pi/common-dependecies#golang). Je kunt niet verder als je Golang niet geïnstalleerd hebt op de Raspberry Pi. En natuurlijk heb je eerst een installatie van Bitcoin Core nodig.
+        Note that this section is dependent on the [Golang installation](/raspberry-pi/common-dependecies#golang). You can't proceed if you don't have Golang installed on the Raspberry Pi. And of course you need an installation of Bitcoin Core first.
 </Callout>
 
-Zorg dat je in de home directory bent.
+Make sure you are in the home directory.
 
 ```bash
-cd ~
+cd ~ 
 ```
 
-Haal de broncode binnen.
+Get the source code in.
 
 ```bash
 git clone https://github.com/lightningnetwork/lnd
 ```
 
-Ga de LND map in.
+Enter the LND directory.
 
 ```bash
 cd lnd
 ```
 
-Stap over naar de laatste release.
+Switch to the latest release.
 
 ```bash
 git checkout v0.14.3-beta
 ```
 
-En installeer LND. De tags zijn handig om alvast mee te geven, mocht je later gebruik willen maken van [Lightning Terminal](/lightning-extensions/lightning-terminal) en andere tools.
+And install LND. The tags are useful to provide in advance if you want to use [Lightning Terminal](/lightning-extensions/lightning-terminal) and other tools later.
 
 ```bash
 make install tags="autopilotrpc signrpc walletrpc chainrpc invoicesrpc routerrpc watchtowerrpc monitoring"
 ```
+

@@ -1,63 +1,63 @@
 import Callout from "nextra-theme-docs/callout";
 
-# Starten en CLI
+# Start and CLI
 
 <Callout emoji="&#x2139;">
-	Tijd: 5 minuten
+        Time: 5 minutes
 </Callout>
 
-Het is tijd om LND te starten en te initialiseren. Hier heb je twee terminals nodig en met allebei ben je met SSH in de Pi. Op terminal 1 start je LND met het `lnd` commando.
+It's time to start and initialize LND. Here you need two terminals and with both you are using SSH to get into the Pi. On terminal 1 you start LND with the `lnd` command.
 
 ```bash
-lnd
+lnd     
 ```
 
-Op de tweede terminal gaan we een wallet aanmaken. Typ:
+On the second terminal we are going to create a wallet. Type:
 
 ```bash
 lncli create
 ```
 
-Je komt een proces in waarbij je een wachtwoord moet opgeven van minimaal 8 karakters lang. Je krijgt de vraag of je een bestaande seed hebt. Kies `N` \(of `Y` als je een seed wil invoeren\). Hierna krijg je de vraag of je de seed wil versleutelen met een wachtwoord. Gewoon doen 😉 Tot slot krijg je de seed te zien. Sla hem goed op, maar dat wordt ook duidelijk vermeld in de terminal.
+You will enter a process that requires you to provide a password at least 8 characters long. You will be asked if you have an existing seed. Choose `N` (or `Y` if you want to enter an existing seed). After this you will be asked if you want to encrypt the seed with a password. Just do it 😉 Finally you will see the seed. Save it well, as you see instructed in the terminal.
 
-Nadat je een wallet geïnitialiseerd hebt, zal op het eerste terminal scherm meer tekst verschijnen.
+After you initialize a wallet, more text will appear on the first terminal screen.
 
-Druk in het eerste terminal scherm op `Ctrl + C` om LND af te sluiten.
+On the first terminal screen, press `Ctrl + C` to exit LND.
 
-## Opnieuw opstarten
+## Restarting
 
-In het eerste terminal scherm start je LND.
+On the first terminal screen, start LND.
 
 ```bash
 lnd
 ```
 
-Op het tweede terminal scherm unlock je je wallet.
+On the second terminal screen, unlock your wallet.
 
 ```bash
 lncli unlock
 ```
 
-Vul je wachtwoord in.
+Enter your password.
 
-## Informatie over jouw node
+## Information about your node
 
-Om een overzicht te krijgen van jouw node met onder andere de public key en de URL naar de buitenwereld, typ je het volgende commando.
+To get an overview of your node including the public key and the URL to the outside world, type the following command.
 
 ```bash
 lncli getinfo
 ```
 
-Het onderstaande is een deel van de output die je te zien krijgt.
+The following is some of the output you will see.
 
 ```javascript
 {
-    "identity_pubkey": "JOUW_PUBLIC_KEY",
-    "alias": "JOUW_ZELF_VERZONNEN_B",
-    "color": "JOUW_ZELF_VERZONNEN_A",
-    "uris": ["JOUW_PUBLIC_KEY@JOUW_TOR_URL.onion:9735"]
+    "identity_pubkey": "YOUR_PUBLIC_KEY",
+    "alias": "YOURSETTING_A",
+    "color": "YOURSETTING_B",
+    "uris": ["YOUR_PUBKEY@YOUR_URL.onion:9735" ]
 }
 ```
 
-In de output is onder andere jouw public key en onion-adres te zien. Deze dingen kun je met mensen delen om te verbinden.
+The output includes your public key and onion address. These things you can share with people to connect.
 

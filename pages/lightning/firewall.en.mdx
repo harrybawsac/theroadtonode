@@ -1,11 +1,12 @@
 # Firewall
 
-Ook voor LND moeten de nodige ports opengezet worden. Dit zijn **8080** voor de REST API, **9735** voor connecties met andere Lightning nodes en **10009** voor de RPC API.
+The necessary ports must also be opened for LND. These are **8080** for the REST API, **9735** for connections to other Lightning nodes and **10009** for the RPC API.
 
 ```bash
-sudo ufw allow 8080 comment "Port voor LND REST API"
-sudo ufw allow 9735 comment "Port voor LND P2P connecties"
-sudo ufw allow 10009 comment "Port voor LND RPC"
+sudo ufw allow 8080 comment "Port for LND REST API"
+sudo ufw allow 9735 comment "Port for LND P2P connections"
+sudo ufw allow 10009 comment "Port for LND RPC"
 ```
 
-Het is belangrijk om port 9735 ook open te zetten op je router en verkeer door te sturen naar je Pi. Voor de andere twee ports is dat niet per se nodig, tenzij je van buitenaf met je node wil communiceren.
+It is important to also open port 9735 on your router and forward traffic to your Pi. For the other two ports, this is not necessarily necessary unless you want to communicate with your node from the outside.
+
