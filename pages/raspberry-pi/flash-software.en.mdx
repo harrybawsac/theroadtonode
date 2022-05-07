@@ -1,29 +1,26 @@
 import Callout from "nextra-theme-docs/callout";
 
-# XXX TO BE TRANSLATED XXX
-
-
-# Software flashen
+# Flashing software
 
 <Callout emoji="&#x2139;">
-	Tijd: 15 minuten
+	Time: 15 minutes
 </Callout>
 
-Het is tijd om iets met een beeldscherm te doen. De Pi moet een besturingssysteem hebben, namelijk [Ubuntu Server 20 LTS](https://ubuntu.com/download/raspberry-pi). [Raspberry Pi OS Lite](https://downloads.raspberrypi.org/raspios\_lite\_armhf\_latest) is ook nodig voor het eenmalig instellen van de Pi. Om de besturingssystemen op zowel de SSD als de microSD te krijgen, gebruiken we het programma [Balena Etcher](https://www.balena.io/etcher). Gebruik je Windows dan zou je ook [Rufus](https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe) kunnen gebruiken.
+It's time to do something with a monitor. The Pi should have an operating system, namely [Ubuntu Server 20 LTS](https://ubuntu.com/download/raspberry-pi). [Raspberry Pi OS Lite](https://downloads.raspberrypi.org/raspios) is also required to set up the Pi once. To get the operating systems on both the SSD and the microSD, we use the program [Balena Etcher](https://www.balena.io/etcher). If you use Windows then you could also use [Rufus](https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe).
 
 ## Raspberry Pi OS
 
-We beginnen met het flashen van Raspberry Pi OS naar de microSD. Open Balena Etcher, selecteer de Raspberry Pi OS image en microSD en druk op de knop "Flash!".
+We start by flashing Raspberry Pi OS to the microSD. Open Balena Etcher, select the Raspberry Pi OS image and microSD and press the "Flash!" button.
 
-![Raspberry Pi OS flashen naar de microSD](/flash-pi-os.png)
+![Flashing Raspberry Pi OS to the microSD](/flash-pi-os.png)
 
-Zodra het klaar is zal de microSD uitgeworpen worden. Haal hem uit je computer en steek hem er opnieuw in zodat je computer de microSD weer ziet. [Open de Terminal](https://support.apple.com/nl-nl/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac) en typ het volgende commando waarna je op enter drukt.
+Once it is done, the microSD will be ejected. Take it out of your computer and insert it again so your computer sees the microSD again. [Open the Terminal](https://support.apple.com/nl-nl/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac) and type the following command then press enter.
 
 ```bash
 touch /Volumes/boot/ssh
 ```
 
-Zit je [op Windows](https://arjanlobbezoo.nl/windows-10-programma-administrator-mode-openen), dan zou iets in de trant van het volgende moeten werken. In dit voorbeeld zou je de D-schijf moeten aanpassen naar wat voor jou van toepassing is.
+If you are [on Windows](https://arjanlobbezoo.nl/windows-10-programma-administrator-mode-openen), then something along the lines of the following should work. In this example, you would need to modify the D drive to whatever is appropriate for you.
 
 ```bash
 d:
@@ -33,8 +30,8 @@ d:
 type nul > ssh
 ```
 
-Met bovenstaande commando's wordt een bestand aangemaakt op de microSD. Het bestand heet "ssh" en als de Pi opstart met dit bestand aan boord, maakt de Pi het mogelijk om zich te laten aansturen van buitenaf. We gaan namelijk met behulp van SSH de Pi aansturen vanaf onze computer. Werp tot slot de microSD uit en stop hem in de Pi.
+The above commands create a file on the microSD. The file is called "ssh" and when the Pi boots up with this file on board, the Pi allows itself to be controlled from the outside. In fact, we are going to use SSH to control the Pi from our computer. Finally, eject the microSD and insert it into the Pi.
 
 ## SSD
 
-Herhaal het bovenstaande voor de SSD, maar gebruik dan Ubuntu en laat het `ssh` bestand zitten. Dat zit standaard al aan boord van Ubuntu.
+Repeat the above for the SSD, but then use Ubuntu and leave the `ssh` file in place. That is already on board Ubuntu by default.

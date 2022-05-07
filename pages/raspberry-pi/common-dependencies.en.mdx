@@ -1,25 +1,22 @@
 import Callout from "nextra-theme-docs/callout";
 
-# XXX TO BE TRANSLATED XXX
-
-
-# Algemene dependencies
+# General dependencies
 
 <Callout emoji="&#x2139;">
-	Tijd: 15 minuten
+	Time: 15 minutes
 </Callout>
 
-Verschillende onderdelen binnen de guide zijn afhankelijk van dezelfde soort tools of programmeertalen. Zo zijn de Lightning Network Daemon en LND Connect afhankelijk van de taal Golang en zijn Ride The Lightning, Lighting Terminal en BTC RPC Explorer allemaal afhankelijk van NodeJS.
+Several components within the guide rely on the same types of tools or programming languages. For example, the Lightning Network Daemon and LND Connect depend on the Golang language and Ride The Lightning, Lighting Terminal and BTC RPC Explorer all depend on NodeJS.
 
-Om niet in herhaling te vallen door in ieder onderdeel te benoemen hoe een afhankelijkheid geinstalleerd dient te worden, is deze pagina de waar naar verwezen wordt. Zo kunnen eventuele updates ook centraal verwerkt worden waardoor alle onderdelen die hierop voort bouwen profiteren.
+In order not to repeat ourselves by mentioning in each part how a dependency should be installed, this page is the one to be referred to. In this way, any updates can also be processed centrally so that all components that build on it benefit.
 
 ## Golang
 
-Golang \(Go\) is een programmeertaal ontwikkeld door Google. Het is een vrij jonge taal uitgebracht in 2009. De lightning implementatie genaamd LND is hierop gebouwd. Aangezien we LND zelf gaan compilen, hebben we Go nodig.
+Golang is a programming language developed by Google. It is a fairly young language released in 2009. The lightning implementation called LND is built on it. Since we are going to compile LND ourselves, we need Go.
 
-### Oude versie verwijderen \(optioneel\)
+### Remove old version (optional).
 
-Dit deel is alleen nodig als je Go al een keer geïnstalleerd had op je Pi middels `sudo apt install`. De versie die je op die manier hebt geïnstalleerd dient eerst te worden verwijderd.
+This part is only necessary if you have already installed Go on your Pi using `sudo apt install`. The version you installed that way should be deleted first.
 
 ```bash
 sudo apt remove golang-go
@@ -33,9 +30,9 @@ sudo apt autoremove golang-go
 sudo apt purge golang-go
 ```
 
-### Installeren
+### Installing
 
-Nadat de oude versie is verwijderd kunnen we de nieuwe installeren. Op moment van schrijven is [v1.17.6](https://golang.org/dl) het meest recent. Als er een nieuwe versie is die je wil installeren \(of omdat een latere versie van LND dat vereist\), let er dan op dat je een ARM64 versie van Go download voor je Raspberry Pi. Als je bijvoorbeeld op een Intel NUC draait, dan heb je de amd64 versie nodig.
+After the old version is removed we can install the new one. At the time of writing, [v1.17.6](https://golang.org/dl) is the most recent. If there is a new version you want to install (or because a later version of LND requires it), make sure you download an ARM64 version of Go for your Raspberry Pi. For example, if you're running on an Intel NUC, you'll need the amd64 version.
 
 ```bash
 wget https://go.dev/dl/go1.17.6.linux-arm64.tar.gz
@@ -48,26 +45,25 @@ sudo tar -C /usr/local -xzf go1.17.6.linux-arm64.tar.gz
 ```bash
 rm go1.17.6.linux-arm64.tar.gz
 ```
+### Updating
 
-### Updaten
-
-Voordat je kunt updaten dien je de oude versie te verwijderen. Dat doe je met dit commando:
+Before you can update you need to remove the old version. You do that with this command:
 
 ```bash
 sudo rm -rf /usr/local/go
 ```
 
-Zodra je de oude versie verwijderd hebt, kun je de drie commando's [onder het vorige kopje](/raspberry-pi/common-dependencies) uitvoeren.
+Once you have removed the old version, you can run the three commands [under the previous heading](/raspberry-pi/common-dependencies).
 
-### Referencies updaten
+### Update Referencies
 
-Om Go lekker te laten werken moeten we wat paden aanpassen. Daarvoor passen we het profile bestand aan.
+To make Go work properly we need to change some paths. To do that, we'll edit the profile file.
 
 ```bash
 nano ~/.profile
 ```
 
-Waarschijnlijk zie je al wat staan in het bestand. Dat is goed en moet je laten staan. Plak er het volgende onderaan erin:
+You probably already see some in the file. That is good and you should leave it there. Paste in the following at the bottom:
 
 ```bash
 export GOPATH=$HOME/go
@@ -75,45 +71,45 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
 ```
 
-Sla het op met `Ctrl + X` en `Y`. Nadat het opgeslagen is kun je profile inladen.
+Save it with `Ctrl + X` and `Y`. After it is saved you can load profile.
 
 ```bash
 . ~/.profile
 ```
 
-Om zeker van de te zijn dat alles werkt log je uit met "exit" en start je een nieuwe SSH verbinding. Check de Go versie met:
+To make sure everything works log out with "exit" and start a new SSH connection. Check the Go version with:
 
 ```bash
 go version
 ```
 
-Als het goed is zie je `go version go1.17.6 linux/arm64` verschijnen.
+If all goes well you should see `go version go1.17.6 linux/arm64` appear.
 
 ## NodeJS
 
-Net als dat Golang binnengehaald moest worden, gaan we nu NodeJS binnenhalen. We willen de nieuwste versie, dus draaien eerst een scriptje. Zorg allereerst dat je in de home directory zit met `cd ~` commando. Voer daarna het script uit.
+Just as we needed to get Golang, we're going to get NodeJS. We want the latest version, so first run a little script. First of all, make sure you are in the home directory with `cd ~` command. Then run the script.
 
 ```bash
 curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 ```
 
-Nadat het scriptje zijn werk gedaan heeft, kunnen we NodeJS installeren.
+After the little script has done its job, we can install NodeJS.
 
 ```bash
 sudo apt install nodejs -y
 ```
 
-Check of je de juiste versie hebt met:
+Check that you have the right version with:
 
 ```bash
 node --version
 
-# Verwachte output: v16.13.1
+# Expected output: v16.13.1
 ```
 
 ## Yarn
 
-Download en installeer [Yarn](https://classic.yarnpkg.com/en/docs/install).
+Download and install [Yarn](https://classic.yarnpkg.com/en/docs/install).
 
 ```bash
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
@@ -123,11 +119,93 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 sudo apt update && sudo apt install yarn -y
 ```
 
-Controleer of Yarn is geïnstalleerd.
+Verify that Yarn is installed.
 
 ```bash
 yarn --version
 
-# Verwachte output: 1.22.17
+# Expected output: 1.22.17
+```
+
+### Updating
+
+Before you can update you need to remove the old version. You do that with this command:
+
+```bash
+sudo rm -rf /usr/local/go
+```
+
+Once you have removed the old version, you can run the three commands [under the previous heading](/raspberry-pi/common-dependencies).
+
+### Update Referencies
+
+To make Go work properly we need to change some paths. To do that, we'll edit the profile file.
+
+```bash
+nano ~/.profile
+```
+
+You probably already see some in the file. That is good and you should leave it there. Paste in the following at the bottom:
+
+```bash
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
+```
+
+Save it with `Ctrl + X` and `Y`. After it is saved you can load profile.
+
+```bash
+. ~/.profile
+```
+
+To make sure everything works log out with "exit" and start a new SSH connection. Check the Go version with:
+
+```bash
+go version
+```
+
+If all goes well you should see `go version go1.17.6 linux/arm64` appear.
+
+## NodeJS
+
+Just as we needed to get Golang, we're going to get NodeJS. We want the latest version, so first run a little script. First of all, make sure you are in the home directory with `cd ~` command. Then run the script.
+
+```bash
+curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+```
+
+After the little script has done its job, we can install NodeJS.
+
+```bash
+sudo apt install nodejs -y
+```
+
+Check that you have the right version with:
+
+```bash
+node --version
+
+# Expected output: v16.13.1
+```
+
+## Yarn
+
+Download and install [Yarn](https://classic.yarnpkg.com/en/docs/install).
+
+```bash
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
+sudo apt update && sudo apt install yarn -y
+```
+
+Verify that Yarn is installed.
+
+```bash
+yarn --version
+
+# Expected output: 1.22.17
 ```
 

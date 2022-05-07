@@ -1,97 +1,95 @@
 import Callout from "nextra-theme-docs/callout";
 
-# XXX TO BE TRANSLATED XXX
-
-
-# Port overzicht
+# Port overview
 
 <Callout emoji="&#x2139;">
-	Dit dient als een naslagwerk mocht je het overzicht een beetje kwijt raken. Begrijpelijk, want je node heeft geen fancy, makkelijk te gebruiken voorkant.
+	This serves as a reference guide should you lose track a bit. Understandable, since your node doesn't have a fancy, easy-to-use front end.
 </Callout>
 
-Het volgende is een overzicht van alle ports die benaderbaar zijn op je Raspberry Pi. Je kunt bij bepaalde tools door in je browser het IP-adres van je Pi gevolgd door het portnummer in te voeren. Bijvoorbeeld `192.168.1.6:3002` om BTC RPC Explorer in te zien. Wil je de tools benaderen over tor, zul je per tool het `torrc` bestand moeten aanpassen. Je kunt dan bepaalde porten benaderbaar maken voor buitenaf en doorsturen naar een lokale port op je Pi. Hoe dit werkt staat binnen The Road to Node meestal uitgelegd in de tool naar keuze.
+The following is a list of all the ports that are approachable on your Raspberry Pi. You can access certain tools by entering in your browser the IP address of your Pi followed by the port number. For example `192.168.1.6:3002` to see BTC RPC Explorer. If you want to access the tools over tor, you will need to modify the `torrc` file for each tool. You can then make certain ports accessible to the outside world and forward them to a local port on your Pi. How this works is usually explained within The Road to Node in the tool of choice.
 
-We gaan uit van de default waardes voor alle tools, met uitzondering van Thunderhub. Dit heeft te maken met het feit dat Ride the Lightning op dezelfde port draait.
+We will assume the default values for all tools, with the exception of Thunderhub. This is due to the fact that Ride the Lightning runs on the same port.ort draait.
 
 ### Bitcoin Core
 
-| Port | Functionaliteit |
+| Port | Function |
 | :--- | :--- |
-| **8332** | De JSON-RPC port. Met de juiste username/password combinatie kun je hier tegenaan praten. Standaard accepteert Bitcoin Core alleen connecties vanaf de Pi zelf. Een tool die op de Pi draait zal daarom mogen praten met de RPC port, maar een willekeurige aanvaller van buitenaf niet. |
-| **8333** | Deze port is verantwoordelijk voor de communicatie met andere clients op het Bitcoin netwerk. |
-| **28332** | De Bitcoin Daemon kan middels het ZeroMQ protocol block informatie versturen naar clients. Zo hoeven de clients niet iedere keer een request te doen via de JSON-RPC, maar gaat het op subscription basis. |
-| **28333** | Hetzelfde als port 28332, maar dan voor transacties in plaats van blocks. |
+| **8332** | The JSON-RPC port. With the right username/password combination, you can talk to this. By default, Bitcoin Core only accepts connections from the Pi itself. Therefore, a tool running on the Pi will be allowed to talk to the RPC port, but a random attacker from the outside will not. |
+| **8333** | This port is responsible for communication with other clients on the Bitcoin network. |
+| **28332** | The Bitcoin Daemon can use the ZeroMQ protocol to send block information to clients. This way, the clients do not have to make a request via the JSON-RPC every time, but can do so on a subscription basis. |
+| **28333** | The same as port 28332 but for transactions instead of blocks. |
 
 ### Tor
 
-| Port | Functionaliteit |
+| Port | Function |
 | :--- | :--- |
-| **9050** | Als je wil dat een bepaalde applicatie communiceert over het tor netwerk, moet je de applicatie vertellen gebruik te maken van port 9050. |
+| **9050** | If you want a particular application to communicate over the tor network, you must tell the application to use port 9050.  |
 
 ### BTC RPC Explorer
 
-| Port | Functionaliteit |
+| Port | Function |
 | :--- | :--- |
-| **3002** | De BTC RPC Explorer is benaderbaar via deze port. |
+| **3002** | The BTC RPC Explorer can be accessed via this port. |
 
-### Electrum \(voor Electrs, Electrum X en Electrum Personal Server\)
+### Electrum \(for Electrs, Electrum X and Electrum Personal Server\)
 
-| Port | Functionaliteit |
+| Port | Function |
 | :--- | :--- |
-| **4224** | Monitoring van Electrs. |
-| **8000** | Standaard RPC port van het Electrum protocol. |
-| **50001** | Standaard port voor TCP verbindingen. |
-| **50002** | Standaard port voor SSL verbindingen. |
-| **50004** | Standaard port voor secure websocket verbindingen. |
+| **4224** | Monitoring of Electrs. |
+| **8000** | Standard RPC port of the Electrum protocol. |
+| **50001** | Standard port for TCP connections. |
+| **50002** | Standard port for SSL connections. |
+| **50004** | Standard port for secure websocket connections. |
+
 
 ### Specter
 
-| Port | Functionaliteit |
+| Port | Function |
 | :--- | :--- |
-| **25441** | Voer je deze port in dan zie je het Specter overzicht. |
+| **25441** | Navigating to this port will show the Specter overview|
 
 ### Lightning Network Daemon (LND)
 
-| Port | Functionaliteit |
+| Port | Function |
 | :--- | :--- |
-| **8080** | De port waarmee de REST API van LND zich benaderbaar maakt. Beveiligd met een zogenaamde macaroon. |
-| **9735** | De port die connect met andere nodes. Een beetje zoals 8333 voor Bitcoin Core. |
-| **10009** | De port waarmee de RPC API van LND zich benaderbaar maakt. Beveiligd met een zogenaamde macaroon. |
+| **8080** | The port with which the REST API of LND can be accessed. Secured with a so-called macaroon. |
+| **9735** | The port which connects with other nodes. A bit like 8333 for Bitcoin Core. |
+| **10009** | The port with which the RPC API of LND makes itself approachable. Secured with a so-called macaroon. |
 
 ### Loop
 
-| Port | Functionaliteit |
+| Port | Function |
 | :--- | :--- |
-| **8081** | REST port voor loopd. |
-| **11010** | RPC port voor loopd. |
+| **8081** | REST port for loopd. |
+| **11010** | RPC port for loopd. |
 
 ### Faraday
 
-| Port | Functionaliteit |
+| Port | Function |
 | :--- | :--- |
-| **8465** | RPC port voor faraday. |
+| **8465** | RPC port for faraday. |
 
 ### Pool
 
-| Port | Functionaliteit |
+| Port | Function |
 | :--- | :--- |
-| **8281** | REST port voor poold. |
-| **12010** | RPC port voor poold. |
+| **8281** | REST port for poold. |
+| **12010** | RPC port for poold. |
 
 ### Lightning Terminal
 
-| Port | Functionaliteit |
+| Port | Function |
 | :--- | :--- |
-| **8443** | De port waarop LiT draait. |
+| **8443** | LiT runs on this port. |
 
 ### Ride the Lightning
 
-| Port | Functionaliteit |
+| Port | Function |
 | :--- | :--- |
-| **3000** | De Ride the Lightning interface kun je gebruiken als je naar deze port gaat. |
+| **3000** | The Ride the Lightning interface can be used if you go to this port. |
 
 ### Thunderhub
 
-| Port | Functionaliteit |
+| Port | Function |
 | :--- | :--- |
-| **4000** | Standaard staat deze tool ingesteld op port 3000. Maar aangezien Ride The Lightning daar al gebruik van maakt, kiezen we in deze guide voor port 4000. |
+| **4000** | By default, this tool is set to port 3000. But since Ride The Lightning already uses that, in this guide we choose port 4000. |

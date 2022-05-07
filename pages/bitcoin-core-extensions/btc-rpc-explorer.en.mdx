@@ -1,44 +1,42 @@
 import Callout from "nextra-theme-docs/callout";
 
-# XXX TO BE TRANSLATED XXX
-
 # BTC RPC Explorer
 
 <Callout emoji="&#x2139;">
-	Tijd: 20 minuten
+	Time: 20 minutes
 </Callout>
 
-Een eigen block explorer helpt je in het waarborgen van je privacy, omdat je geen publieke block explorer meer hoeft te raadplegen. Zo kun je ongestoord kijken of jouw transacties nog in de mempool zitten of al gevalideerd zijn.
+Having your own block explorer helps you in ensuring your privacy, as you no longer have to consult a public block explorer. This way you can check your transactions undisturbed to see if they are still in the mempool or have already been validated.
 
-De Block Explorer die we gaan gebruiken is [BTC RPC Explorer](https://github.com/janoside/btc-rpc-explorer) van Dan Janosik.
+The Block Explorer we are going to use is [BTC RPC Explorer](https://github.com/janoside/btc-rpc-explorer) by Dan Janosik.
 
 <Callout emoji="&#x2139;">
-	Let op: dit onderdeel is afhankelijk van de [NodeJS installatie](/raspberry-pi/common-dependencies#nodejs). Je kunt niet verder als je NodeJS niet geïnstalleerd hebt op de Raspberry Pi.
+	Note that this section is dependent on the [NodeJS installation](/raspberry-pi/common-dependencies#nodejs). You cannot proceed if you do not have NodeJS installed on the Raspberry Pi.
 </Callout>
 
-## Voorbereiding
+## Preparation
 
-Er zijn een aantal voorwaarden waaraan je moet voldoen om deze block explorer te kunnen draaien:
+There are a number of requirements that you must meet in order to run this block explorer:
 
-1. Je moet een full node hebben draaien waarvan de blockchain compleet is.
-2. Je node moet ook een index hebben van alle transacties.
-3. Je moet een recente versie van NodeJS hebben draaien.
+1. You must have a full node running of which the blockchain is complete.
+2. Your node must also have an index of all transactions.
+3. You must have a recent version of NodeJS running.
 
 ### Full node
 
-Je bent bezig met de road to node. Als je het in de juiste volgorde aan het doen bent dan heb je [Bitcoin Core](/bitcoin-core/installation) inmiddels geïnstalleerd. Zo niet doe dat dan eerst.
+You're on the road to node. If you are doing it in the right order you have [Bitcoin Core](/bitcoin-core/installation) installed by now. If not do that first.
 
-### Transactieindex
+### Transaction Index
 
-Login op je Pi en open het bitcoin configuratiebestand.
+Login to your Pi and open the bitcoin configuration file.
 
 ```bash
 nano /home/ubuntu/.bitcoin/bitcoin.conf
 ```
 
-Controleer of de regel `txindex=1` erin voorkomt. Zo niet, voeg deze dan toe en sla je wijzigingen op met `Ctrl + X` gevolgd door `Y`.
+Check to see if the line `txindex=1` appears in it. If not, add it and save your changes with `Ctrl + X` followed by `Y`.
 
-Herstart vervolgens `bitcoind`.
+Next, restart `bitcoind`.
 
 ```bash
 sudo systemctl restart bitcoind
@@ -46,39 +44,39 @@ sudo systemctl restart bitcoind
 
 ## Firewall
 
-Ook hier dient de firewall geüpdate te worden. De port waarover BTC RPC Explorer zich toont is 3002.
+Again, the firewall needs to be updated. The port over which BTC RPC Explorer shows up is 3002.
 
 ```bash
-sudo ufw allow 3002 comment "Port voor BTC-RPC-Explorer"
+sudo ufw allow 3002 comment "Port for BTC-RPC-Explorer"
 ```
 
-## Installatie
+## Installation
 
-Zorg dat je in de home directory bent.
+Make sure you are in the home directory.
 
 ```bash
 cd ~
 ```
 
-Haal de broncode binnen.
+Get the source code in.
 
 ```bash
 git clone https://github.com/janoside/btc-rpc-explorer
 ```
 
-Ga de BTC RPC Explorer map in.
+Enter the BTC RPC Explorer directory.
 
 ```bash
 cd btc-rpc-explorer
 ```
 
-Pak de nieuwste release.
+Grab the latest release.
 
 ```bash
 git checkout v3.3.0
 ```
 
-Installeer BTC RPC Explorer en maak daarna het configuratie bestand `.env` aan.
+Install BTC RPC Explorer and then create the configuration file `.env`.
 
 ```bash
 npm install
@@ -86,10 +84,10 @@ npm install
 nano .env
 ```
 
-Plak daar de volgende regels in.
+Paste the following lines in there.
 
 ```bash
-BTCEXP_HOST=IP-ADRES VAN PI
+BTCEXP_HOST=IP ADDRESS OF PI
 BTCEXP_PORT=3002
 
 BTCEXP_BITCOIND_HOST=127.0.0.1
@@ -100,21 +98,21 @@ BTCEXP_BITCOIND_RPC_TIMEOUT=5000
 BTCEXP_PRIVACY_MODE=true
 ```
 
-Pas de tekst `IP-ADRES VAN PI` aan naar wat voor jou van toepassing is. Vervang het dus met iets dat lijkt op `192.168.1.6`. Sla het bestand op met `Ctrl + X` gevolgd door `Y`.
+Modify the text `IP ADDRESS OF PI` to what is applicable to you. So replace it with something similar to `192.168.1.6`. Save the file with `Ctrl + X` followed by `Y`.
 
 <Callout emoji="&#x2139;">
-	Open het bestand `.env-sample` om te zien welke opties er nog meer zijn.
+	Open the file `.env-sample` to see what other options there are.
 </Callout>
 
-## Automatiseren
+## Automating
 
-Zorg er nu voor dat de BTC-RPC-Explorer automatisch start en draait als een service wanneer je Pi opnieuw opstart.
+Now make sure that the BTC-RPC-Explorer starts automatically and runs as a service when your Pi reboots.
 
 ```bash
 sudo nano /etc/systemd/system/btc-rpc-explorer.service
 ```
 
-De inhoud van het bestand moet er zo uit zien. Met name het pad naar de `WorkingDirectory` is belangrijk.
+The contents of the file should look like this. In particular, the path to the `WorkingDirectory` is important.
 
 ```toml
 [Unit]
@@ -136,9 +134,9 @@ RestartSec=30
 WantedBy=multi-user.target
 ```
 
-Sla het bestand op met `Ctrl + X` gevolgd door `Y`.
+Save the file with `Ctrl + X` followed by `Y`.
 
-Met de volgende twee commando's activeer en start je de service.
+With the following two commands, activate and start the service.
 
 ```bash
 sudo systemctl enable btc-rpc-explorer
@@ -146,47 +144,47 @@ sudo systemctl enable btc-rpc-explorer
 sudo systemctl start btc-rpc-explorer
 ```
 
-Open nu in Firefox op je PC een tabblad naar `http://IP-ADRES VAN PI:3002` om te zien of het werkt. Bijvoorbeeld `http://192.168.1.6:3002`.
+Now in Firefox on your PC, open a tab to `http://IP-ADRES FROM PI:3002` to see if it works. Bijvoorbeeld `http://192.168.1.6:3002`.
 
-## Updaten
+## Updating
 
-Als er een nieuwe versie beschikbaar is voor BTC RPC Explorer kun je eenvoudig updaten door de nieuwe source met Git op te halen en deze te installeren. Wel eerst even de service stoppen en naderhand weer starten zoals hieronder staat aangegeven.
+If there is a new version available for BTC RPC Explorer you can easily update it by getting the new source with Git and installing it. First stop the service and then start it again as shown below.
 
 ```
 sudo systemctl stop btc-rpc-explorer
 ```
 
-Ga de BTC RPC Explorer map in.
+Enter the BTC RPC Explorer directory.
 
 ```
 cd ~/btc-rpc-explorer
 ```
 
-Update de repository met de laatste wijzigingen via Git.
+Update the repository with the latest changes via Git.
 
 ```bash
 git fetch --all
 ```
 
-Toon de laatste versie/tag/release.
+Show the latest version/tag/release.
 
 ```
-git describe --tags `git rev-list --tags --max-count=1`
+git describe --tags `git rev-list --tags --max-count=1``
 ```
 
-Haal de wijzigingen op van de laatste versie.
+Retrieve the changes from the latest release.
 
 ```bash
-git checkout -f <OUTPUT VAN DE VORIGE STAP> #voorbeeld: v3.3.0
+git checkout -f <OUTPUT FROM PREVIOUS STEP> #example: v3.3.0
 ```
 
-Installeer via NPM.
+Install via NPM.
 
 ```bash
 npm install
 ```
 
-Start de service weer op nadat installeren klaar is.
+Restart the service after install is finished.
 
 ```
 sudo systemctl start btc-rpc-explorer
@@ -194,13 +192,13 @@ sudo systemctl start btc-rpc-explorer
 
 ## Tor
 
-De service kun je ook beschikbaar maken via tor. Allereerst passen we de tor configuratie aan om een nieuwe hidden service te maken.
+You can also make the service available through tor. First, we modify the tor configuration to create a new hidden service.
 
 ```bash
 sudo nano /etc/tor/torrc
 ```
 
-In het bestand dat zich opent voeg je onderaan de volgende drie regels toe.
+In the file that opens, add the following three lines at the bottom.
 
 ```bash
 HiddenServiceDir /var/lib/tor/btc-rpc-explorer
@@ -208,7 +206,7 @@ HiddenServiceVersion 3
 HiddenServicePort 3002 127.0.0.1:3002
 ```
 
-Nadat tor is geconfigureerd moeten we de juiste mappen aanmaken en rechten toekennen.
+After tor is configured we need to create the appropriate directories and assign permissions.
 
 ```bash
 sudo mkdir /var/lib/tor/btc-rpc-explorer
@@ -216,42 +214,42 @@ sudo chown -R debian-tor:debian-tor /var/lib/tor/btc-rpc-explorer
 sudo chmod 700 /var/lib/tor/btc-rpc-explorer
 ```
 
-Herstart tor met:
+Restart tor with:
 
 ```bash
 sudo systemctl restart tor
 ```
 
-Het onion-adres vind je met het volgende commando:
+Find the onion address with the following command:
 
 ```bash
 sudo cat /var/lib/tor/btc-rpc-explorer/hostname
 ```
 
-Vul deze (met portnummer) in in je tor browser. De BTC RPC Explorer homepage zou moeten verschijnen.
+Enter this (with port number) into your tor browser. The BTC RPC Explorer homepage should appear.
 
-## Koppeling met Electrum Server
+## Linking with Electrum Server
 
-Als je de Electrum Server (Electrs, Electrum X, of Electrum Personal Server) guide gevolgd hebt, kun je BTC RPC Explorer meteen hierop aansluiten voor verbeterde privacy. Pas het configuratie bestand van BTC RPC Explorer aan.
+If you followed the Electrum Server (Electrs, Electrum X, or Electrum Personal Server) guide, you can connect BTC RPC Explorer directly to it for enhanced privacy. Modify the configuration file of BTC RPC Explorer.
 
 ```bash
 nano ~/btc-rpc-explorer/.env
 ```
 
-Voeg onderaan de volgende twee regels toe:
+At the bottom, add the following two lines:
 
 ```toml
 BTCEXP_ADDRESS_API=electrum
 BTCEXP_ELECTRUM_SERVERS=tcp://127.0.0.1:50001
 ```
 
-Als je er zeker van wil zijn dat de explorer enkel gebruik maakt van jouw eigen backend, kun je ook de service aanpassen en meegeven dat hij enkel mag draaien als de Electrum Server draait. In het onderstaande voorbeeld staat Electrs als voorbeeld, maar pas dit aan wat voor jou van toepassing is.
+If you want to make sure that the explorer only uses your own backend, you can also modify the service and pass along that it should only run when the Electrum Server is running. The example below shows Electrs as an example, but modify it as appropriate for you.
 
 ```bash
 sudo nano /etc/systemd/system/btc-rpc-explorer.service
 ```
 
-De aangepaste service ziet er dan zo uit:
+The custom service will then look like this:
 
 ```toml
 [Unit]
@@ -273,11 +271,11 @@ RestartSec=30
 WantedBy=multi-user.target
 ```
 
-Op deze manier wacht Electrs op Bitcoin Core en wacht BTC RPC Explorer op Electrs.
+This way Electrs waits for Bitcoin Core and BTC RPC Explorer waits for Electrs.
 
-Na het aanpassen van services moet systemctl even opnieuw geladen worden met `systemctl daemon-reload`. Hier is je wachtwoord voor nodig.
+After modifying services, systemctl needs to be reloaded briefly with `systemctl daemon-reload`. Your password is needed for this.
 
-Herstart de tot slot de explorer service om de nieuwe configuratie van kracht te laten zijn en gebruik te maken van je eigen backend.
+Finally, restart the explorer service to make the new configuration effective and use your own backend.
 
 ```bash
 sudo systemctl restart btc-rpc-explorer
