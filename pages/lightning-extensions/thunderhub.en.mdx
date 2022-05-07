@@ -1,90 +1,87 @@
 import Callout from "nextra-theme-docs/callout";
 
-# XXX TO BE TRANSLATED XXX
-
-
 # Thunderhub
 
 <Callout emoji="&#x2139;">
-	Tijd: 20 minuten
+	Time: 20 minutes
 </Callout>
 
-Thunderhub is net als Ride The Lightning een beheertool voor jouw node. Bezoek [de website](https://www.thunderhub.io/) om alle features te ontdekken.
+Thunderhub, like Ride The Lightning, is a management tool for your node. Visit [the website](https://www.thunderhub.io/) to discover all the features.
 
-### Benodigdheden
+### Requirements
 
 * [NodeJS](/raspberry-pi/common-dependencies#nodejs)
 
-## Broncode
+## Source code
 
-Download de broncode van Thunderhub.
+Download the source code from Thunderhub.
 
 ```bash
 git clone https://github.com/apotdevin/thunderhub
 ```
 
-Ga naar de code.
+Go to the code.
 
 ```bash
 cd thunderhub
 ```
 
-Pak de laatste versie/tag/release.
+Get the latest version/tag/release.
 
 ```bash
 git checkout v0.13.10
 ```
 
-Haal alle benodigde software dependencies binnen.
+Get all the necessary software dependencies.
 
 ```bash
 npm install
 ```
 
-## Configuratie
+## Configuration
 
-Maak het bestand `.env.local`:
+Create the file `.env.local`:
 
 ```bash
 nano .env.local
 ```
 
-Plak het volgende erin:
+Paste the following into it:
 
 ```toml
 ACCOUNT_CONFIG_PATH='/home/ubuntu/.thunderhub/config.yaml'
 PORT=4000
 ```
 
-Sla het op met `Ctrl + X` en bevestig met `Y`. Dit is een minimale setup qua configuratie. Meer parameters die je kunt gebruiken vind je in het `.env` bestand.
+Save it with `Ctrl + X` and confirm with `Y`. This is a minimal setup in terms of configuration. More parameters that you can use are in the `.env` file.
 
-Nu gaan we terug naar je home directory en maken daar een map aan met de naam .thunderhub. In deze map maken we een config bestand aan voor Thunderhub.
+Now we go back to your home directory and create a folder called .thunderhub. In this folder, we will create a config file for Thunderhub.
 
 ```bash
 mkdir ~/.thunderhub && nano ~/.thunderhub/config.yaml
 ```
 
-Plak dit erin:
+Paste this in:
 
 ```yaml
-masterPassword: 'password'
+masterPassword: 'PASSWORD_HERE'
 accounts:
-  - name: '<kies_een_naam>'
+  - name: 'ANY_NAME_HERE'
     serverUrl: '127.0.0.1:10009'
     lndDir: '/home/ubuntu/.lnd'
 ```
 
-Het `masterPassword` kun je naar wens aanpassen en heb je nodig om in te loggen in Thunderhub in je browser straks. Nadat je Thunderhub voor de eerste keer hebt opgestart, wordt dit wachtwoord herschreven met een hashed waarde. Sla het op met `Ctrl + X` en bevestig met `Y`.
+The `masterPassword` you can modify as you wish and you will need it to log into Thunderhub in your browser later. After you start Thunderhub for the first time, this password will be rewritten with a hashed value. Save it with `Ctrl + X` and confirm with `Y`.
 
-## Installatie
+## Installation
 
-We gaan weer terug naar de map met de Thunderhub software als je daar nog niet was:
+We'll go back to the directory containing the Thunderhub software if you weren't already there:
 
 ```bash
 cd ~/thunderhub
 ```
 
-Installeer Thunderhub:
+To install Thunderhub:
 
 ```bash
 npm run build
@@ -92,23 +89,23 @@ npm run build
 
 ## Firewall
 
-Zet port 4000 open.
+Open port 4000.
 
 ```bash
-sudo ufw allow 4000 comment "Port voor Thunderhub"
+sudo ufw allow 4000 comment "Port for Thunderhub"
 ```
 
-Mocht je Thunderhub van buiten je netwerk willen gebruiken, moet je port 4000 op je router opengooien en verkeer doorsturen naar je Pi.
+Should you wish to use Thunderhub from outside your network, you must throw open port 4000 on your router and forward traffic to your Pi.
 
-## Automatiseren
+## Automate
 
-Hoe laat je Thunderhub automatisch opstarten? Daarvoor maken we een Thunderhub service bestand aan:
+How do you make Thunderhub start up automatically? For that, we create a Thunderhub service file:
 
 ```bash
 sudo nano /etc/systemd/system/thunderhub.service
 ```
 
-Plak er dit in.
+Paste this into it.
 
 ```toml
 [Unit]
@@ -128,9 +125,9 @@ RestartSec=30
 WantedBy=multi-user.target
 ```
 
-Sla het weer op met `Ctrl + X` en bevestig met `Y`. De applicatie wordt gestart op poort 4000. Standaard is dit poort 3000, maar deze poort wordt ook gebruikt voor de [Ride The Lightning](/lightning-extensions/ride-the-lightning) applicatie.
+Save it again with `Ctrl + X` and confirm with `Y`. The application is started on port 4000. By default this is port 3000, but this port is also used for the [Ride The Lightning](/lightning-extensions/ride-the-lightning) application.
 
-Het systeem moet op de hoogte gesteld worden van de nieuwe service en kan daarna gestart worden.
+The system must be notified of the new service and can then be started.
 
 ```bash
 sudo systemctl enable thunderhub
@@ -140,54 +137,54 @@ sudo systemctl enable thunderhub
 sudo systemctl start thunderhub
 ```
 
-Wil je zien of alles goed is opgestart, voer dan dit uit:
+If you want to see if everything started up properly, run this:
 
 ```bash
 systemctl status thunderhub
 ```
 
-Wil je een overzicht van de status over meerdere sessie, gebruik dan dit:
+If you want an overview of the status over multiple session, use this:
 
 ```bash
 sudo journalctl -f -u thunderhub
 ```
 
-## Gebruiken
+## Using
 
-Ga naar `http://[het ip adres van je Pi]:4000` in je browser om Thunderhub te openen.  
-Gebruik het wachtwoord `password` om in te loggen tenzij je een ander wachtwoord hebt ingevuld in het `config.yaml` bestand.
+Go to `http://[the ip address of your Pi]:4000` in your browser to open Thunderhub.  
+Use the password `password` to log in unless you entered a different password in the `config.yaml` file.
 
-## Updaten
+## Updating
 
 <Callout type="warning" emoji="&#x26A0;">
-	Bij het upgraden van een Thuderhub van voor v0.13.0 naar v0.13.0+, zijn wijzigingen aan het `.env.local` bestand nodig. Neem even een kijkje bij de [paragraaf "configuratie"](#configuratie).
+	When upgrading a Thuderhub from before v0.13.0 to v0.13.0+, changes to the `.env.local` file are required. Please take a look at the [section "configuration"](#configuration).
 </Callout>
 
-Ga naar de applicatie directory.
+Go to the application directory.
 
 ```bash
 cd ~/thunderhub
 ```
 
-Update de repository met de laatste wijzigingen via Git.
+Update the repository with the latest changes via Git.
 
 ```bash
 git fetch --all
 ```
 
-Toon de laatste versie/tag/release.
+Show the latest version/tag/release.
 
 ```bash
 git describe --tags `git rev-list --tags --max-count=1`
 ```
 
-Haal de wijzigingen op van de laatste versie.
+Retrieve the changes from the latest release.
 
 ```bash
-git checkout -f <OUTPUT VAN DE VORIGE STAP> # Bijvoorbeeld v0.13.10
+git checkout -f <OUTPUT FROM PREVIOUS STEP> # For example, v0.13.10
 ```
 
-Installeer de software.
+Install the software.
 
 ```bash
 npm install
@@ -195,10 +192,10 @@ npm install
 npm run build
 ```
 
-Herstart de Thunderhub service.
+Restart the Thunderhub service.
 
 ```bash
 sudo systemctl restart thunderhub
 ```
 
-Thunderhub is nu bijgewerkt!
+Thunderhub is now updated!

@@ -1,190 +1,187 @@
 import Callout from "nextra-theme-docs/callout";
 
-# XXX TO BE TRANSLATED XXX
-
-
 # Lightning Terminal
 
 <Callout emoji="&#x2139;">
-	Tijd: 20 minuten
+	Time: 20 minutes
 </Callout>
 
-Lightning Terminal \([LiT](https://github.com/lightninglabs/lightning-terminal)\) geeft de gebruiker een mooi schilletje om bestaande tools van Lightning Labs. De tools zijn [Loop](https://lightning.engineering/loop), [Faraday](https://github.com/lightninglabs/faraday) en [Pool](https://lightning.engineering/pool). Op dit moment is Loop goed te gebruiken door middel van LiT. Ook Pool werkt prima, maar is nog in preview fase. Faraday heeft slechts 1 functionaliteit in LiT, maar meer zal toegevoegd worden.
+Lightning Terminal gives the user a nice skin around existing tools from Lightning Labs. The tools are [Loop](https://lightning.engineering/loop), [Faraday](https://github.com/lightninglabs/faraday) and [Pool](https://lightning.engineering/pool). At the moment, Loop is good to use through LiT. Pool also works fine, but is still in preview phase. Faraday has only 1 functionality in LiT, but more will be added.
 
-### LiT use cases voor zover
+### LiT use cases as far as.
 
-* Een visueel overzicht van de balans van jouw Lightning kanalen.
-* Kanalen balanceren via Loop met behulp van submarine swaps.
-* Balanceren doe je met on-chain satoshis met Loop In.
-* Je betaalt minder fees als je meerdere kanalen tegelijk balanceert.
-* Eenvoudig satoshis versturen naar je on-chain wallet met Loop Out.
-* Deelname aan de Lightning Network liquiditeit markt met Pool.
-* Downloadbaar overzicht van channels in CSV formaat met Faraday.
+* A visual overview of the balance of your Lightning channels.
+* Balancing channels via Loop using submarine swaps.
+* Balancing is done with on-chain satoshis with Loop In.
+* You pay less fees when you balance multiple channels at once.
+* Easily send satoshis to your on-chain wallet with Loop Out.
+* Participate in the Lightning Network liquidity market with Pool.
+* Downloadable overview of channels in CSV format with Faraday.
 
-Een demo video kun je [hier](https://lightning.engineering/static/terminal-2c00f93b062f44e5c2d1db067f7ee8cd.mp4) vinden.
+A demo video can be found [here](https://lightning.engineering/static/terminal-2c00f93b062f44e5c2d1db067f7ee8cd.mp4).
 
-### Benodigdheden
+### Supplies
 
-* [Faraday](/lightning-extensions/faraday)
+* Faraday](/lightning-extensions/faraday)
 * [Golang](/raspberry-pi/common-dependencies#golang)
-* [Loop](/lightning-extensions/loop)
+* Loop](/lightning-extensions/loop)
 * [NodeJS](/raspberry-pi/common-dependencies#nodejs)
-* [Pool](/lightning-extensions/pool)
+* Pool](/lightning-extensions/pool)
 * [Yarn](/raspberry-pi/common-dependencies#yarn)
 
-## LND configureren voor LiT
+## Configuring LND for LiT
 
-Als je LND hebt geïnstalleerd zonder speciale installatie tags, dan moet je LND even opnieuw installeren. Als je de gids gevolgd hebt, hoef je je geen zorgen te maken en kun je deze paragraaf overslaan.
+If you have installed LND without any special installation tags, you need to reinstall LND for a while. If you followed the guide, you don't have to worry and you can skip this section.
 
-Aangezien we LND opnieuw installeren met nieuwe tags, dienen de macaroon bestanden \(bestanden die authenticatie verzorgen\) verwijderd te worden. Na het opnieuw opstarten van de verse installatie, zullen de bestanden opnieuw aangemaakt worden.
+Since we are reinstalling LND with new tags, the macaroon files (files that provide authentication) need to be removed. After restarting the fresh installation, the files will be recreated.
 
 <Callout emoji="&#x2139;">
-	Je channels en wallet blijven bestaan bij een herinstallatie van LND. Net als bij een update.
+	Your channels and wallet will continue to exist on a reinstallation of LND. Just like an update.
 
-	Heb je Thunderhub of andere tools draaien die op LND leunen? Dan dien je die na het opnieuw opstarten van LND ook opnieuw te starten.
+Are you running Thunderhub or other tools that depend on LND? If so, you'll need to restart those after restarting LND as well.
 </Callout>
 
-Ga naar de bronbestanden map van LND om LND opnieuw te installeren met de juiste installatie tags.
+Go to the source files directory of LND to reinstall LND with the correct installation tags.
 
 ```bash
 cd ~/lnd
 ```
 
-Installeer LND met de juiste tags.
+Install LND with the appropriate tags.
 
 ```bash
 make install tags="autopilotrpc signrpc walletrpc chainrpc invoicesrpc routerrpc watchtowerrpc monitoring"
 ```
 
-Check voor macaroon bestanden.
+Check for macaroon files.
 
 ```bash
 ls -la ~/.lnd/data/chain/bitcoin/mainnet
 ```
 
-De macaroon bestanden die je moet verwijderen zijn. `admin.macaroon`, `invoice.macaroon`, `readonly.macaroon` `router.macaroon` .
+The macaroon files you need to delete are: `admin.macaroon`, `invoice.macaroon`, `readonly.macaroon` `router.macaroon` .
 
-Verwijder de macaroon bestanden.
+Delete the macaroon files.
 
 ```bash
 rm -i ~/.lnd/data/chain/bitcoin/mainnet/*.macaroon
 ```
 
-Beantwoord de vragen met `yes` om elk bestand te verwijderen.
+Answer the questions with `yes` to delete each file.
 
-Start LND opnieuw. Hiermee worden ook nieuwe macaroons aangemaakt.
+Restart LND. This will also create new macaroons.
 
 ```bash
 sudo systemctl restart lnd
 ```
 
-Unlock je wallet met je wachtwoord.
+Unlock your wallet with your password.
 
 ```bash
 lncli unlock
 ```
 
-## Installatie
+## Installation
 
-Navigeer terug naar je home directory.
+Navigate back to your home directory.
 
 ```bash
 cd ~
 ```
 
-Download de broncode van Lightning Terminal.
+Download the source code for Lightning Terminal.
 
 ```bash
 git clone https://github.com/lightninglabs/lightning-terminal
 ```
 
-Duik de code in.
+Dive into the code.
 
 ```bash
 cd lightning-terminal
 ```
 
-Pak de laatste versie/tag/release.
+Grab the latest version/tag/release.
 
 ```bash
 git checkout v0.6.7-alpha
 ```
 
-Installeer Lightning Terminal. Dit kan ongeveer een kwartier duren.
+Install Lightning Terminal. This may take about 15 minutes.
 
 ```bash
 make install
 ```
 
-## Configuratie
+## Configuration
 
-Het configureren van LiT gaat - zoals vele andere zaken in deze guide - via een configuratiebestand. In het bestand staan alle instellingen en tijdens het opstarten van LiT zullen de instellingen toegepast worden.
+Configuring LiT - like many other things in this guide - is done via a configuration file. The file contains all the settings and during the startup of LiT the settings will be applied.
 
-Maak de `.lit` map aan in je home directory.
+Create the `.lit` folder in your home directory.
 
 ```bash
 mkdir ~/.lit
 ```
 
-Maak het configuratiebestand aan.
+Create the configuration file.
 
 ```bash
 nano ~/.lit/lit.conf
 ```
 
-Kopieer het volgende in het configuratiebestand.
+Copy the following into the configuration file.
 
 ```toml
-# Lightning Terminal applicatie instellingen
-uipassword=BEDENK_IETS
+# Lightning Terminal application settings
+uipassword=THINK_OF_A_PASSWORD
 network=mainnet
 httpslisten=0.0.0.0:8443
 
-# Remote LND instellingen
+# Remote LND settings
 remote.lnd.rpcserver=127.0.0.1:10009
 remote.lnd.macaroonpath=/home/ubuntu/.lnd/data/chain/bitcoin/mainnet/admin.macaroon
 remote.lnd.tlscertpath=/home/ubuntu/.lnd/tls.cert
 
-# Remote Faraday instellingen
+# Remote Faraday settings
 faraday-mode=remote
 remote.faraday.rpcserver=127.0.0.1:8465
 remote.faraday.macaroonpath=/home/ubuntu/.faraday/mainnet/faraday.macaroon
 remote.faraday.tlscertpath=/home/ubuntu/.faraday/mainnet/tls.cert
 
-# Remote Loop instellingen
+# Remote Loop settings
 loop-mode=remote
 remote.loop.rpcserver=127.0.0.1:11010
 remote.loop.macaroonpath=/home/ubuntu/.loop/mainnet/loop.macaroon
 remote.loop.tlscertpath=/home/ubuntu/.loop/mainnet/tls.cert
 
-# Remote Pool instellingen
+# Remote Pool settings
 pool-mode=remote
 remote.pool.rpcserver=127.0.0.1:12010
 remote.pool.macaroonpath=/home/ubuntu/.pool/mainnet/pool.macaroon
 remote.pool.tlscertpath=/home/ubuntu/.pool/mainnet/tls.cert
 ```
 
-Hierboven staat `BEDENK_IETS` bij het wachtwoord. Pas dit aan naar iets wat je zelf prettig vindt. Sla de wijzigingen op met `Ctrl + X` en bevestig met `Y`.
+Above it says `THINK_OF_A_PASSWORD` by the password. Change this to something you like. Save the changes with `Ctrl + X` and confirm with `Y`.
 
 ## Firewall
 
-We kunnen LiT benaderen over port 8443, vandaar dat we die open zetten.
+We can access LiT over port 8443, hence we open it.
 
 ```bash
-sudo ufw allow 8443 comment "Port voor Lightning Terminal"
+sudo ufw allow 8443 comment "Port for Lightning Terminal"
 ```
 
-## Automatiseren
+## Automate
 
-Hoe laat je Lightning Terminal automatisch opstarten? Daarvoor maken we weer een Lightning Terminal service bestand aan.
+How do you make Lightning Terminal start up automatically? For that, we create another Lightning Terminal service file.
 
-### LiT service aanmaken
+### Create a LiT service
 
 ```bash
 sudo nano /etc/systemd/system/lit.service
 ```
 
-Plak er dit in.
+Paste this into it.
 
 ```toml
 [Unit]
@@ -212,73 +209,73 @@ RestartSec=30
 WantedBy=multi-user.target
 ```
 
-Sla de wijzigingen op met `Ctrl + X` en bevestig met `Y`.
+Save the changes with `Ctrl + X` and confirm with `Y`.
 
-Breng het systeem op de hoogte van de nieuwe service.
+Notify the system of the new service.
 
 ```bash
 sudo systemctl enable lit
 ```
 
-Start de LiT service als volgt.
+Start the LiT service as follows.
 
 ```bash
 sudo systemctl start lit
 ```
 
-Wil je zien of de service is opgestart, voer dan dit uit.
+If you want to see if the service was started, run this.
 
 ```bash
 systemctl status lit
 ```
 
-Wil je een overzicht van de status over meerdere sessies, gebruik dan dit commando.
+If you want a view of the status across multiple sessions, use this command.
 
 ```bash
 sudo journalctl -f -u lit
 ```
 
-## Lightning Terminal gebruiken
+## Using Lightning Terminal
 
-Open `https://IP VAN JE PI:8443` in de browser om in te loggen in Lightning Terminal en aan de slag te gaan met de tool. **Vergeet HTTPS er niet voor te zetten.**
+Open `https://IP OF YOUR PI:8443` in the browser to log into Lightning Terminal and get started with the tool. **Don't forget to put HTTPS in front of it.**
 
 ### Walkthrough
 
-Aan de slag met het LiT dashboard? Volg dan [deze walkthrough](https://github.com/lightninglabs/lightning-terminal/blob/master/doc/WALKTHROUGH.md) van Lightning Labs.
+Getting started with the LiT dashboard? Then follow [this walkthrough](https://github.com/lightninglabs/lightning-terminal/blob/master/doc/WALKTHROUGH.md) from Lightning Labs.
 
-## Updaten
+## Updating
 
-Ga naar de applicatie directory.
+Go to the application directory.
 
 ```bash
 cd ~/lightning-terminal
 ```
 
-Update de repository met de laatste wijzigingen via Git.
+Update the repository with the latest changes via Git.
 
 ```bash
 git fetch --all
 ```
 
-Toon de laatste versie/tag/release.
+Show the latest version/tag/release.
 
 ```bash
 git describe --tags `git rev-list --tags --max-count=1`
 ```
 
-Haal de wijzigingen op van de laatste versie.
+Retrieve the changes from the latest release.
 
 ```bash
-git checkout -f <OUTPUT VAN DE VORIGE STAP> #bijvoorbeeld v0.6.7-alpha
+git checkout -f <OUTPUT FROM PREVIOUS STEP> #e.g. v0.6.7-alpha
 ```
 
-Installeer Lightning Terminal.
+Install Lightning Terminal.
 
 ```bash
 make install
 ```
 
-Herstart de LiT service.
+Restart the LiT service.
 
 ```bash
 sudo systemctl restart lit

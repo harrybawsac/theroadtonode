@@ -1,87 +1,84 @@
 import Callout from "nextra-theme-docs/callout";
 
-# XXX TO BE TRANSLATED XXX
-
-
 # Loop
 
 <Callout emoji="&#x2139;">
-	Tijd: 5 minuten
+	Time: 5 minutes
 </Callout>
 
-Om kanalen te kunnen balanceren heb je verschillende tools, Loop is zo'n tool.
+To balance channels you have several tools, Loop is one such tool.
 
-## Benodigdheden
+## Supplies
 
-* [Golang](/raspberry-pi/common-dependencies#golang) **\(update naar de nieuwste versie voordat je begint\)**
+* [Golang](/raspberry-pi/common-dependencies#golang) **# (update to the latest version before you start)**.
 
-## Installatie
+## Installation
 
-Ga eerst naar je home directory.
+First, go to your home directory.
 
 ```bash
 cd ~
 ```
 
-Download de broncode.
+Download the source code.
 
 ```bash
 git clone https://github.com/lightninglabs/loop
 ```
 
-Ga de map in.
+Enter the directory.
 
 ```bash
 cd loop
 ```
 
-Pak de laatste versie/tag/release.
+Grab the latest version/tag/release.
 
 ```bash
 git checkout v0.18.0-beta
 ```
 
-Ga naar `loop/cmd`.
+Go to `run/cmd`.
 
 ```bash
 cd loop/cmd
 ```
 
-Installeer de `loopd` software.
+Install the `loopd` software.
 
 ```bash
 go install ./...
 ```
 
-Test of het gelukt is door Loop tijdelijk op te starten.
+Test if it succeeded by temporarily starting Loop.
 
 ```bash
 loopd
 ```
 
-In de output zul je lezen dat Loop verbonden is met je LND en met `Ctrl + C` kun je `loopd` weer stop zetten.
+In the output you will read that Loop is connected to your LND and with `Ctrl + C` you can stop `loopd` again.
 
-Naast het Loop programma is er ook een CLI geinstalleerd. Je kunt deze controleren met `loop --version`.
+In addition to the Loop program, a CLI is also installed. You can check it with `loop --version`.
 
 ## Firewall
 
-Je kunt van buitenaf Loop benaderen op twee verschillende poorten.
+You can access Loop from the outside on two different ports.
 
 ```bash
-sudo ufw allow 8081 comment "Port voor REST API van Loop"
+sudo ufw allow 8081 comment "Port for REST API of Loop"
 
-sudo ufw allow 11010 comment "Port voor RPC van Loop"
+sudo ufw allow 11010 comment "Port for RPC from Loop"
 ```
 
-## Automatiseren
+## Automate
 
-Wil je Loop in de achtergrond draaien dan heb je weer een service nodig.
+If you want to run Loop in the background you need another service.
 
 ```bash
 sudo nano /etc/systemd/system/loop.service
 ```
 
-Plak dit erin.
+Paste this in.
 
 ```toml
 [Unit]
@@ -102,71 +99,71 @@ RestartSec=30
 WantedBy=multi-user.target
 ```
 
-Sla de wijzigingen op met `Ctrl + X` en bevestig met `Y`.
+Save the changes with `Ctrl + X` and confirm with `Y`.
 
-Breng het systeem op de hoogte van de nieuwe service.
+Notify the system of the new service.
 
 ```bash
 sudo systemctl enable loop
 ```
 
-Start de loop service als volgt.
+Start the loop service as follows.
 
 ```bash
 sudo systemctl start loop
 ```
 
-Wil je zien of de service is opgestart, voer dan dit uit.
+If you want to see if the service was started, run this.
 
 ```bash
 systemctl status loop
 ```
 
-Wil je een overzicht van de status over meerdere sessies, gebruik dan dit commando.
+If you want a view of the status across multiple sessions, use this command.
 
 ```bash
 sudo journalctl -f -u loop
 ```
 
-## Updaten
+## Updating
 
-Ga naar de applicatie directory.
+Go to the application directory.
 
 ```bash
 cd ~/loop
 ```
 
-Update de repository met de laatste wijzigingen via Git.
+Update the repository with the latest changes via Git.
 
 ```bash
 git fetch --all
 ```
 
-Toon de laatste versie/tag/release.
+Show the latest version/tag/release.
 
 ```bash
 git describe --tags `git rev-list --tags --max-count=1`
 ```
 
-Haal de wijzigingen op van de laatste versie.
+Retrieve the changes from the latest release.
 
 ```bash
-git checkout -f <OUTPUT VAN DE VORIGE STAP> #bijvoorbeeld v0.18.0-beta
+git checkout -f <OUTPUT FROM PREVIOUS STEP> #example v0.18.0-beta
 ```
 
-Ga naar `cmd`.
+Go to `cmd`.
 
 ```bash
 cd cmd
 ```
 
-Installeer de `loopd` software.
+Install the `loopd` software.
 
 ```bash
 go install ./...
 ```
 
-Herstart de services van Loop en LiT (als je dat hebt draaien).
+Restart the Loop and LiT services (if you have that running).
 
 ```bash
 sudo systemctl restart loop
