@@ -66,7 +66,7 @@ Tot slot het samenstellen van Bitcoin Core.
 <Callout emoji="&#x2139;">
 Met het onderstaande commando configureren we de installatie van Bitcoin Core. Het is mogelijk om Bitcoin Core te draaien zonder wallet functionaliteit en dus puur te gebruiken als backend voor je andere wallets. Weet je zeker dat je de ingebouwde wallet functionaliteit van Core _**niet**_ zal gebruiken, draai dan:
 
-`./configure --enable-upnp-default --without-gui --disable-wallet BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"`
+`./configure --without-gui --disable-wallet BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"`
 
 Aan bovenstaand commando is de instelling `--disable-wallet` meegegeven. Weet je het niet zeker, draai dan onderstaand commando.
 
@@ -76,13 +76,13 @@ Heb je Bitcoin Core geconfigureerd zónder wallet functionaliteit en wil je dit 
 Wil je alle opties zien die te maken hebben met de installatie van Bitcoin Core, draai dan `./configure --help`.
 
 ```bash
-./configure --enable-upnp-default --without-gui BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"
+./configure --without-gui BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"
 ```
 
 Voor een iets snellere variant zonder dependency tracking, tests en benchmarks:
 
 ```bash
-./configure --enable-upnp-default --without-gui --disable-maintainer-mode --disable-dependency-tracking --disable-tests --disable-gui-tests --disable-bench BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"
+./configure --without-gui --disable-maintainer-mode --disable-dependency-tracking --disable-tests --disable-gui-tests --disable-bench BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"
 ```
 
 Na op enter drukken van het volgende commando kun je wat voor jezelf gaan doen. **Uit ervaring blijkt deze stap bijna een uur te duren.**

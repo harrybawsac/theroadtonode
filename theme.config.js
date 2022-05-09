@@ -16,7 +16,7 @@ export default {
 	),
 	head: (
 		<>
-			<meta charset="utf-8"></meta>
+			<meta charSet="utf-8"></meta>
 			<meta name="msapplication-TileColor" content="#ffffff" />
 			<meta name="theme-color" content="#ffffff" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />

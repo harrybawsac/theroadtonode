@@ -1,12 +1,16 @@
 {
-	"connect-hardware": "Connect hardware",
-	"flash-software": "Flash software",
+	"connect-hardware": "Connecting hardware",
+	"flash-software": "Flashing software",
 	"boot-from-ssd": "Boot from SSD",
 	"transfer-public-key": "Transfer public key",
 	"updating": "Updating",
+<<<<<<< HEAD
 	"install-tor": "Install Tor",
+=======
+	"install-tor": "Installing tor",
+>>>>>>> a4465841f259c04398da9dc3efa11a6f643e6d6e
 	"monitoring": "Monitoring",
-	"common-dependencies": "Common dependencies",
+	"common-dependencies": "General dependencies",
 	"firewall": "Firewall",
 	"port-overview": "Port overview"
 }
