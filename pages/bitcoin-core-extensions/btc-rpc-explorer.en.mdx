@@ -192,7 +192,7 @@ sudo systemctl start btc-rpc-explorer
 
 ## Tor
 
-You can also make the service available through tor. First, we modify the tor configuration to create a new hidden service.
+You can also make the service available through Tor. First, we modify the Tor configuration to create a new hidden service.
 
 ```bash
 sudo nano /etc/tor/torrc
@@ -206,7 +206,7 @@ HiddenServiceVersion 3
 HiddenServicePort 3002 127.0.0.1:3002
 ```
 
-After tor is configured we need to create the appropriate directories and assign permissions.
+After Tor is configured we need to create the appropriate directories and assign permissions.
 
 ```bash
 sudo mkdir /var/lib/tor/btc-rpc-explorer
@@ -214,7 +214,7 @@ sudo chown -R debian-tor:debian-tor /var/lib/tor/btc-rpc-explorer
 sudo chmod 700 /var/lib/tor/btc-rpc-explorer
 ```
 
-Restart tor with:
+Restart Tor with:
 
 ```bash
 sudo systemctl restart tor
@@ -226,7 +226,7 @@ Find the onion address with the following command:
 sudo cat /var/lib/tor/btc-rpc-explorer/hostname
 ```
 
-Enter this (with port number) into your tor browser. The BTC RPC Explorer homepage should appear.
+Enter this (with port number) into your Tor browser. The BTC RPC Explorer homepage should appear.
 
 ## Linking with Electrum Server
 

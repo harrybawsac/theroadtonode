@@ -47,12 +47,12 @@ disablewallet=0
 # You can dail this down to 500 after IBD.
 dbcache=3000
 
-# If you'd want to run your node on both tor and clearnet, leave the setting below as is.
-# If you'd want to run your node only on tor, do the following:
-# - Remove the # in front of onlynet=onion. This was you tell Core to only use tor.
-# - Remove the # in front of proxy=127.0.0.1:9050. This way you tell Core to route traffic through tor.
+# If you'd want to run your node on both Tor and clearnet, leave the setting below as is.
+# If you'd want to run your node only on Tor, do the following:
+# - Remove the # in front of onlynet=onion. This was you tell Core to only use Tor.
+# - Remove the # in front of proxy=127.0.0.1:9050. This way you tell Core to route traffic through Tor.
 # - Remove the # in front of bind=127.0.0.1.
-# - Place a # in front of onion=127.0.0.1:9050. You already told Core to run everything through tor already.
+# - Place a # in front of onion=127.0.0.1:9050. You already told Core to run everything through Tor already.
 # - Place a # in front of discover=1. You turn off the discover function of Core.
 # - Place a # in front of upnp=1. You turn off the UPnP function this way.
 
@@ -72,12 +72,12 @@ addresstype=bech32
 changetype=bech32
 ```
 
-Wait a minute before hitting `Ctrl + X` instantly. If you'd want your node to only be reachable through tor you should follow the step detailed below. If you'd also want your node to be reachable through the normal internet, then leave it as is and save the file.
+Wait a minute before hitting `Ctrl + X` instantly. If you'd want your node to only be reachable through Tor you should follow the step detailed below. If you'd also want your node to be reachable through the normal internet, then leave it as is and save the file.
 
-* Remove the `#` in front of `onlynet=onion`. This was you tell Core to only use tor.
-* Remove the `#` in front of `proxy=127.0.0.1:9050`. This way you tell Core to route traffic through tor.
+* Remove the `#` in front of `onlynet=onion`. This was you tell Core to only use Tor.
+* Remove the `#` in front of `proxy=127.0.0.1:9050`. This way you tell Core to route traffic through Tor.
 * Remove the `#` in front of `bind=127.0.0.1`.
-* Place a `#` in front of `onion=127.0.0.1:9050`. You already told Core to run everything through tor already.
+* Place a `#` in front of `onion=127.0.0.1:9050`. You already told Core to run everything through Tor already.
 * Place a `#` in front of `discover=1`. You turn off the discover function of Core.
 * Place a `#` in front of `upnp=1`. You turn off the UPnP function this way.
 
@@ -112,7 +112,7 @@ You can add as many rpcauth lines to the configuration file as you like. This wa
 
 ## Firewall and router
 
-If you've setup UFW it's important to open port 8333. This makes sure other nodes in the network can connect with yours. Opening this port is only neccesary if you're \(also\) running your node on cleannet. If you're only running your node on tor, you can skip this step and continue with "start".
+If you've setup UFW it's important to open port 8333. This makes sure other nodes in the network can connect with yours. Opening this port is only neccesary if you're \(also\) running your node on cleannet. If you're only running your node on Tor, you can skip this step and continue with "start".
 
 ```bash
 sudo ufw allow 8333 comment "Port for Bitcoin Core peers"
@@ -148,7 +148,7 @@ Make use of `bitcoin-cli` to get information about the network using your own no
 bitcoin-cli getnetworkinfo
 ```
 
-With this command you can get information about the netwerk. If everything is alright, the output will look similar to the one below if you only use tor.
+With this command you can get information about the netwerk. If everything is alright, the output will look similar to the one below if you only use Tor.
 
 <Callout emoji="&#x2139;">
 	The onion-address will be different from the one you created in [the last step](https://docs.theroadtonode.com/bitcoin-core/tor-changes#onion-address) \(if you created that one\). It won't match the onion-address you'll see in your output and that's good. The onion-address from the last step is only for applications to make use of your node as their backend from outside of your own network. The onion-address below is created by bitcoind itself and is used for communication with other nodes instead of applications.
@@ -191,10 +191,10 @@ It'll tell you the following:
 
 * IPv4 is unreachable
 * IPv6 is unreachable
-* Onion is reachable \(tor\)
+* Onion is reachable \(Tor\)
 * Your onion-address within the "localaddresses" block
 
-If you're running your node on both tor and clearnet, you ouput will look similar to this:
+If you're running your node on both Tor and clearnet, you ouput will look similar to this:
 
 ```json
 "networks": [
@@ -236,7 +236,7 @@ If you're running your node on both tor and clearnet, you ouput will look simila
 
 It'll tell you the following:
 
-* IPv4, IPv6 and onion \(tor\) are all reachable
+* IPv4, IPv6 and onion \(Tor\) are all reachable
 * Your IP-address within the "localaddresses" block
 * Your onion-address within the "localaddresses" block
 
