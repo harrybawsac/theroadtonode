@@ -138,30 +138,6 @@ Open the file `nano mempool-config.json`. If all goes well, the file looks like 
 }
 ```
 
-## Frontend
-
-Now that the backend is taken care of we can focus on the frontend. This starts with navigating to the correct directory.
-
-```bash
-cd ../frontend
-```
-
-Again you need to install the dependencies with ``npm install --prod``. Then you can copy the sample configuration, but you don't need to modify it.
-
-```bash
-cp mempool-frontend-config.sample.json mempool-frontend-config.json
-```
-
-<Callout emoji="&#x2139;">
-        It may happen that the build below fails. If so, please try again later. Unfortunately there is no better solution for this.
-</Callout>
-
-You can build the frontend with `npm run build` (may take quite some time) and finally move the output of the build to another directory. Nginx will redirect traffic to that directory.
-
-```bash
-sudo rsync -av --delete dist/ /var/www/
-```
-
 ### Frontend
 
 Now that the backend is taken care of we can focus on the frontend. This starts with navigating to the right directory.
@@ -170,7 +146,7 @@ Now that the backend is taken care of we can focus on the frontend. This starts 
 cd ../frontend
 ```
 
-Again you need to install the dependencies with ``npm install --prod``. Then you can copy the sample configuration, but you don't need to modify it.
+Again you need to install the dependencies with `npm install --prod`. Then you can copy the sample configuration, but you don't need to modify it.
 
 ```bash
 cp mempool-frontend-config.sample.json mempool-frontend-config.json
@@ -211,20 +187,13 @@ To finish the Nginx setup, restart Nginx with `sudo systemctl restart nginx`.
 
 ## Firewall
 
-Reaching mempool.space is done through normal internet traffic. That is port 80. Nginx further handles where the traffic goes.
-
-```bash
-sudo ufw allow 80 comment "Port for normal internet traffic"
-```
-## Firewall
-
 Reaching mempool.space is done through normal internet addresses (clearnet). On port 80. Nginx further handles where the traffic goes.
 
 ```bash
 sudo ufw allow 80 comment "Port for normal internet traffic"
 ```
 
-## Automate
+## Automation
 
 The frontend of mempool.space is now in a folder you don't need worry about. However, it is important that the backend runs in the background. We create a service for this.
 
@@ -261,14 +230,12 @@ Save it with `Ctrl + X` and confirm with `Y`.
 Enable and start the service with these two commands:
 
 ```bash
-sudo systemctl daemon-reload
-
 sudo systemctl enable mempool
 
 sudo systemctl start mempool
 ```
 
-With `sudo systemctl status mempool`` you can see if everything is running properly and get an output similar to the one below.
+With `sudo systemctl status mempool` you can see if everything is running properly and get an output similar to the one below.
 
 ```bash
 ● mempool.service - Mempool
@@ -326,7 +293,7 @@ First, go to the directory containing the frontend code.
 cd ../frontend
 ```
 
-Again, you need to install the dependencies with ``npm install --prod``.
+Again, you need to install the dependencies with `npm install --prod`.
 
 <Callout emoji="&#x2139;">
         It may happen that the build below fails. Please try again later. Unfortunately there is no better solution for this.

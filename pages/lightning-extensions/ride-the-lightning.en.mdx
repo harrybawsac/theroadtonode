@@ -15,7 +15,7 @@ The Lightning Network CLI is kinda fun, but not very practical. That's why we're
 
 ## Installation
 
-First, it`s time to fetch the source code from RTL.
+First, it's time to fetch the source code from RTL.
 
 ```bash
 git clone https://github.com/Ride-The-Lightning/RTL
@@ -95,7 +95,7 @@ sudo ufw allow 3000 comment "Port for Ride the Lightning"
 
 Should you wish to use RTL from outside your network, you must throw open port 3000 on your router and forward traffic to your Pi.
 
-## Automate
+## Automation
 
 ```bash
 sudo nano /etc/systemd/system/rtl.service
@@ -146,7 +146,7 @@ sudo journalctl -f -u rtl
 
 ## Use
 
-Using your favorite browser, go to ``the ip address of your Pi:3000``. In my case, it is 192.168.1.6:3000. The RTL interface will appear and ask for a password. The default password is "password". After the first login, you may set your own password. If LND has just been started, RTL will also ask for that password (the `lncli unlock` password).
+Using your favorite browser, go to `the ip address of your Pi:3000`. In my case, it is 192.168.1.6:3000. The RTL interface will appear and ask for a password. The default password is "password". After the first login, you may set your own password. If LND has just been started, RTL will also ask for that password (the `lncli unlock` password).
 
 ## Updating
 

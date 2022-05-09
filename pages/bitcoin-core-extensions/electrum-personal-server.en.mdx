@@ -23,7 +23,7 @@ Check that in `bitcoin.conf` there is a line `disablewallet = 0`.
 nano /home/ubuntu/.bitcoin/bitcoin.conf
 ```
 
-If it is not there already, add it, save the file (using ``Ctrl + X`) and restart the bitcoind service.
+If it is not there already, add it, save the file (using `Ctrl + X`) and restart the bitcoind service.
 
 ```bash
 sudo systemctl restart bitcoind
@@ -104,7 +104,7 @@ When it is finished start EPS again.
 ~/.local/bin/electrum-personal-server ~/.eps/config.cfg
 ```
 
-## Automate
+## Automation
 
 Now we just need to make sure the EPS starts running as a Service. You should have two windows open. One with the output of the bitcoin log and one where EPS is running.
 
@@ -155,7 +155,7 @@ sudo ufw allow 50002
 
 ## Electrum Wallet
 
-1. Now start Electrum Wallet on your PC with ``C:˜Program Files (x86)``Electrum-4.1.5.exe'' --server IP ADDRESS OF PI:50002:s --oneserver``.
+1. Now start Electrum Wallet on your PC with `"C:\Program Files (x86)\Electrum\electrum-4.1.5.exe" --server PI-IP-ADDRESS:50002:s --oneserver`
 2. From the Tools menu, choose Network
 3. Open the Server tab
 4. Uncheck the box next to "select server automatically".
@@ -177,7 +177,7 @@ Stop the service.
 sudo systemctl stop eps
 ```
 
-From the Github, download the tarball of the [latest release](https://github.com/chris-belcher/electrum-personal-server/releases) of Electrum Personal Server. Copy the link from source code ``(tar.gz), unzip it and discard the download. **Replace the version numbers here with the most recent, of course.**
+From the Github, download the tarball of the [latest release](https://github.com/chris-belcher/electrum-personal-server/releases) of Electrum Personal Server. Copy the link from source code (tar.gz), unzip it and discard the download. **Replace the version numbers here with the most recent, of course.**
 
 ```bash
 cd ~/.eps

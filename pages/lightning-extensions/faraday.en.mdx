@@ -10,7 +10,7 @@ Faraday is an [accounting tool](https://lightning.engineering/posts/2020-09-15-f
 
 ## Requirements
 
-* [Golang](/raspberry-pi/common-dependencies#golang) **(update to the latest version before you start)**.
+* [Golang](/raspberry-pi/common-dependencies#golang) **\(update to the latest version before you start\)**.
 
 ## Installation
 
@@ -44,7 +44,7 @@ Install the faraday software.
 make && make install
 ```
 
-There are two tools that have been installed: ``faraday`` and ``frcli``. Faraday is the program itself and frcli is a way to communicate with Faraday. Test both to see if installation was successful.
+There are two tools that have been installed: `faraday` and `frcli`. Faraday is the program itself and frcli is a way to communicate with Faraday. Test both to see if installation was successful.
 
 ```bash
 faraday --version
@@ -64,11 +64,11 @@ Once you see that everything is working, you can close faraday again with `Ctrl 
 
 You can access faraday via gRPC on port 8465.
 
-``bash
+```bash
 sudo ufw allow 8465 comment "Port for Faraday"
 ```
 
-## Automating
+## Automation
 
 Automating Faraday cannot be done very neatly. This is due to the fact that Faraday does not use a configuration file that contains the settings. Instead, you have to pass all the settings along at startup.
 

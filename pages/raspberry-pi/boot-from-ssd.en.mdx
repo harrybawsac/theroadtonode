@@ -20,7 +20,7 @@ Open a terminal and type:
 ssh pi@IP-ADRESS FROM PI
 ```
 
-Replace in the command `IP ADDRESS OF PI` with something like ``192.168.1.6`. Once you press enter you will get a question that you can answer `YES/NO`. Type `yes` and press enter. You will now be instructed to enter a password. **The default password is `raspberry`.**
+Replace in the command `IP ADDRESS OF PI` with something like `192.168.1.6`. Once you press enter you will get a question that you can answer `YES/NO`. Type `yes` and press enter. You will now be instructed to enter a password. **The default password is `raspberry`.**
 
 Now what did we just do? You have indicated with the command that you want to use SSH. Next, you specify a user name and a computer. The computer can be reached via an IP address.
 
@@ -37,7 +37,7 @@ sudo apt full-upgrade -y
 ```
 
 ```bash
-sudo rpi update
+sudo rpi-update
 ```
 
 ```bash
@@ -60,7 +60,7 @@ If all goes well, it says that the `BOOTLOADER` is up-to-date and the values beh
 
 Then it is now time to configure the Pi in such a way that we can boot from the SSD. Run the following:
 
-``bash
+```bash
 sudo raspi-config
 ```
 
