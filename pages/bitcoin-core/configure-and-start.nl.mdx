@@ -47,12 +47,12 @@ disablewallet=0
 # Later kan het teruggeschroeft worden naar 500.
 dbcache=3000
 
-# Wil je jouw node op zowel tor als clearnet, laat de instellingen dan voor wat het is.
-# Wil je jouw node enkel op tor? Doe dan het volgende:
-# - Haal # weg voor onlynet=onion. Je zegt hiermee dat alleen tor toegestaan is.
-# - Haal # weg voor proxy=127.0.0.1:9050. Je zegt hiermee dat alles via tor moet lopen.
+# Wil je jouw node op zowel Tor als clearnet, laat de instellingen dan voor wat het is.
+# Wil je jouw node enkel op Tor? Doe dan het volgende:
+# - Haal # weg voor onlynet=onion. Je zegt hiermee dat alleen Tor toegestaan is.
+# - Haal # weg voor proxy=127.0.0.1:9050. Je zegt hiermee dat alles via Tor moet lopen.
 # - Haal # weg voor bind=127.0.0.1.
-# - Zet # voor onion=127.0.0.1:9050. Je hebt immers met proxy aangegeven dat ALLES via tor moet.
+# - Zet # voor onion=127.0.0.1:9050. Je hebt immers met proxy aangegeven dat ALLES via Tor moet.
 # - Zet # voor discover=1. Je zet hiermee de discover functie uit.
 # - Zet # voor upnp=1. Je zet hiermee de UPnP functie uit.
 
@@ -72,12 +72,12 @@ addresstype=bech32
 changetype=bech32
 ```
 
-Wacht even met gulzig op `Ctrl + X` drukken om op te slaan! Wil je dat jouw node enkel bereikbaar is via tor? Doe dan het onderstaande. Wil je dat jouw node ook via het normale internet bereikbaar is, laat de instellingen dan voor wat het is en sla het bestand op.
+Wacht even met gulzig op `Ctrl + X` drukken om op te slaan! Wil je dat jouw node enkel bereikbaar is via Tor? Doe dan het onderstaande. Wil je dat jouw node ook via het normale internet bereikbaar is, laat de instellingen dan voor wat het is en sla het bestand op.
 
-* Haal de `#` weg voor `onlynet=onion`. Je zegt hiermee dat alleen tor toegestaan is.
-* Haal de `#` weg voor `proxy=127.0.0.1:9050`. Je zegt hiermee dat alles via tor moet lopen.
+* Haal de `#` weg voor `onlynet=onion`. Je zegt hiermee dat alleen Tor toegestaan is.
+* Haal de `#` weg voor `proxy=127.0.0.1:9050`. Je zegt hiermee dat alles via Tor moet lopen.
 * Haal de `#` weg voor `bind=127.0.0.1`.
-* Zet een `#` voor `onion=127.0.0.1:9050`. Je hebt immers met proxy aangegeven dat ALLES via tor moet.
+* Zet een `#` voor `onion=127.0.0.1:9050`. Je hebt immers met proxy aangegeven dat ALLES via Tor moet.
 * Zet een `#` voor `discover=1`. Je zet hiermee de discover functie uit.
 * Zet een `#` voor `upnp=1`. Je zet hiermee de UPnP functie uit.
 
@@ -112,7 +112,7 @@ Je kunt meerdere rpcauth regels toevoegen. Zo kun je verschillende gebruikers aa
 
 ## Firewall en router
 
-Als je UFW hebt ingesteld is het belangrijk om port 8333 open te zetten. Dit zorgt ervoor dat andere nodes kunnen verbinden met die van jou. Het openzetten van deze port is alleen noodzakelijk als je je node \(ook\) over clearnet draait. Draai je jouw node enkel over tor, dan kun je deze paragraaf overslaan en verder naar "starten".
+Als je UFW hebt ingesteld is het belangrijk om port 8333 open te zetten. Dit zorgt ervoor dat andere nodes kunnen verbinden met die van jou. Het openzetten van deze port is alleen noodzakelijk als je je node \(ook\) over clearnet draait. Draai je jouw node enkel over Tor, dan kun je deze paragraaf overslaan en verder naar "starten".
 
 ```bash
 sudo ufw allow 8333 comment "Port voor Bitcoin Core peers"
@@ -148,7 +148,7 @@ Maak gebruik van de `bitcoin-cli` om netwerk informatie op te halen van jouw nod
 bitcoin-cli getnetworkinfo
 ```
 
-Met dit commando krijg je wat informatie over het netwerk. Als het goed is ziet het er ongeveer zo uit als je enkel van tor gebruik maakt.
+Met dit commando krijg je wat informatie over het netwerk. Als het goed is ziet het er ongeveer zo uit als je enkel van Tor gebruik maakt.
 
 <Callout emoji="&#x2139;">
 	Het onion-adres wijkt af van het adres dat je in [de vorige stap](/bitcoin-core/change-tor) hebt aangemaakt \(als je dat hebt aangemaakt\). Dat het afwijkt is juist goed. Het onion-adres uit de vorige stap is enkel voor het uitvoeren van commando's op je node van buitenaf en gaat over port 8332. Het onderstaande onion-adres wordt door bitcoind zelf aangemaakt en gaat over port 8333. Dit wordt gebruikt om met andere nodes te communiceren.
@@ -191,10 +191,10 @@ Hieraan zie je het volgende:
 
 * IPv4 is niet bereikbaar
 * IPv6 is niet bereikbaar
-* Onion is wel bereikbaar \(tor\)
+* Onion is wel bereikbaar \(Tor\)
 * Jouw onion-adres binnen het "localaddresses" blok
 
-Heb je zowel tor als clearnet aan staan, dan zal je output er zo uit zien:
+Heb je zowel Tor als clearnet aan staan, dan zal je output er zo uit zien:
 
 ```json
 "networks": [
@@ -236,7 +236,7 @@ Heb je zowel tor als clearnet aan staan, dan zal je output er zo uit zien:
 
 Hieraan zie je het volgende:
 
-* IPv4, IPv6 en onion \(tor\) zijn bereikbaar
+* IPv4, IPv6 en onion \(Tor\) zijn bereikbaar
 * Jouw IP-adres binnen het "localaddresses" blok
 * Jouw onion-adres binnen het "localaddresses" blok
 

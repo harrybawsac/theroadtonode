@@ -192,7 +192,7 @@ sudo systemctl start btc-rpc-explorer
 
 ## Tor
 
-De service kun je ook beschikbaar maken via tor. Allereerst passen we de tor configuratie aan om een nieuwe hidden service te maken.
+De service kun je ook beschikbaar maken via Tor. Allereerst passen we de Tor configuratie aan om een nieuwe hidden service te maken.
 
 ```bash
 sudo nano /etc/tor/torrc
@@ -206,7 +206,7 @@ HiddenServiceVersion 3
 HiddenServicePort 3002 127.0.0.1:3002
 ```
 
-Nadat tor is geconfigureerd moeten we de juiste mappen aanmaken en rechten toekennen.
+Nadat Tor is geconfigureerd moeten we de juiste mappen aanmaken en rechten toekennen.
 
 ```bash
 sudo mkdir /var/lib/tor/btc-rpc-explorer
@@ -214,7 +214,7 @@ sudo chown -R debian-tor:debian-tor /var/lib/tor/btc-rpc-explorer
 sudo chmod 700 /var/lib/tor/btc-rpc-explorer
 ```
 
-Herstart tor met:
+Herstart Tor met:
 
 ```bash
 sudo systemctl restart tor
@@ -226,7 +226,7 @@ Het onion-adres vind je met het volgende commando:
 sudo cat /var/lib/tor/btc-rpc-explorer/hostname
 ```
 
-Vul deze (met portnummer) in in je tor browser. De BTC RPC Explorer homepage zou moeten verschijnen.
+Vul deze (met portnummer) in in je Tor browser. De BTC RPC Explorer homepage zou moeten verschijnen.
 
 ## Koppeling met Electrum Server
 

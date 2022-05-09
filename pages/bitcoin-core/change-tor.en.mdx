@@ -1,12 +1,12 @@
 import Callout from "nextra-theme-docs/callout";
 
-# Tor aanpassen
+# Change Tor
 
 <Callout emoji="&#x2139;">
 	Time: 5 minutes
 </Callout>
 
-The settings of tor need to be slightly tweaked if you'd like to send commands over RPC from outside of your home netwerk. For this we need to change a file. There's lots of useless stuff in there, so it's recommended to throw away the file first. You can do so with the `rm` command.
+The settings of Tor need to be slightly tweaked if you'd like to send commands over RPC from outside of your home netwerk. For this we need to change a file. There's lots of useless stuff in there, so it's recommended to throw away the file first. You can do so with the `rm` command.
 
 ```bash
 sudo rm /etc/tor/torrc
@@ -34,9 +34,9 @@ Tor has to be restarted now.
 sudo systemctl restart tor
 ```
 
-## RPC via tor
+## RPC via Tor
 
-You can use the RPC protocol of bitcoind to execute various commands in relation to Bitcoin Core. You can sign transactions or retrieve information regarding the network, for example. Normally Core doesn't allow any commands when coming from another network. By default it only allows commands coming from the Pi itself, localhost. If you like to send commands from outside of your network, you'd have to whitelist certain specific IP-addresses. A more simple way is through enabling tor. Core will treat commands through tor as if they were coming from the Pi itself.
+You can use the RPC protocol of bitcoind to execute various commands in relation to Bitcoin Core. You can sign transactions or retrieve information regarding the network, for example. Normally Core doesn't allow any commands when coming from another network. By default it only allows commands coming from the Pi itself, localhost. If you like to send commands from outside of your network, you'd have to whitelist certain specific IP-addresses. A more simple way is through enabling Tor. Core will treat commands through Tor as if they were coming from the Pi itself.
 
 <Callout type="warning" emoji="&#x26A0;">
 	Although the RPC protocol of Core is secured with a password, it is discouraged to make Core accessible from outside. It simply adds too many security risks. When the password is leaked, please understand your funds can be lost. Consider these step as optional.
@@ -56,7 +56,7 @@ HiddenServiceVersion 3
 HiddenServicePort 8332 127.0.0.1:8332
 ```
 
-Create the next two files with these commands. The information related to the tor hidden services will be stored here.
+Create the next two files with these commands. The information related to the Tor hidden services will be stored here.
 
 ```bash
 sudo mkdir /var/lib/tor/bitcoin
@@ -84,10 +84,10 @@ sudo systemctl restart tor
 
 ### Onion-address
 
-You can get the onion-address for your Bitcoin node with the command below. You'll need this address later on when communication with you node over tor. In next chapters of the guide \(like while setting up Lightning\) you'll also see this command pop up.
+You can get the onion-address for your Bitcoin node with the command below. You'll need this address later on when communication with you node over Tor. In next chapters of the guide \(like while setting up Lightning\) you'll also see this command pop up.
 
 <Callout emoji="&#x2139;">
-	This onion-address enables the possibility of sending commands to your node from outside of your network. This address is not the same as the onion-address created by bitcoind to communicate with other nodes over tor!
+	This onion-address enables the possibility of sending commands to your node from outside of your network. This address is not the same as the onion-address created by bitcoind to communicate with other nodes over Tor!
 </Callout>
 
 ```bash

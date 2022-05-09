@@ -4,7 +4,7 @@
 	"boot-from-ssd": "Boot from SSD",
 	"transfer-public-key": "Transfer public key",
 	"updating": "Updating",
-	"install-tor": "Install tor",
+	"install-tor": "Install Tor",
 	"monitoring": "Monitoring",
 	"common-dependencies": "Common dependencies",
 	"firewall": "Firewall",
