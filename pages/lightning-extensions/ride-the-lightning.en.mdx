@@ -1,52 +1,53 @@
 import Callout from "nextra-theme-docs/callout";
 
+
 # Ride the Lightning
 
 <Callout emoji="&#x2139;">
-	Tijd: 15 minuten
+	Time: 15 minutes
 </Callout>
 
-De Lightnig Network CLI \(lncli\) is wel geinig, maar niet heel praktisch. Daarom installeren we [Ride The Lightning](https://github.com/Ride-The-Lightning/RTL) \(RTL\). Een gebruiksvriendelijk voorkantje voor LND.
+The Lightning Network CLI is kinda fun, but not very practical. That's why we're installing [Ride The Lightning](https://github.com/Ride-The-Lightning/RTL) \(RTL\?. A user-friendly front end for LND.
 
 <Callout emoji="&#x2139;">
-	Let op: dit onderdeel is afhankelijk van de [NodeJS installatie](/raspberry-pi/common-dependencies#nodejs). Je kunt niet verder als je NodeJS niet geinstalleerd hebt op de Raspberry Pi.
+	Note that this section is dependent on the [NodeJS installation](/raspberry-pi/common-dependencies#nodejs). You cannot proceed if you do not have NodeJS installed on the Raspberry Pi.
 </Callout>
 
-## Installatie
+## Installation
 
-Tijd om de broncode van RTL op te halen.
+First, it's time to fetch the source code from RTL.
 
 ```bash
 git clone https://github.com/Ride-The-Lightning/RTL
 ```
 
-Duik de code in.
+Dive into the code.
 
 ```bash
 cd RTL
 ```
 
-Pak de laatste versie/tag/release.
+Grab the latest version/tag/release.
 
 ```bash
 git checkout v0.12.3
 ```
 
-Installeer nu RTL. Let op, dit kan zo'n 10 minuten duren.
+Now install RTL. Note that this may take about 10 minutes.
 
 ```bash
 npm install --only=prod
 ```
 
-## Configuratie
+## Configuration
 
-Ook RTL moet ingesteld worden. Maak het configuratiebestand aan \(nog steeds in de `/home/ubuntu/RTL` map\).
+RTL also needs to be configured. Create the configuration file (still in the `/home/ubuntu/RTL` folder).
 
 ```bash
 nano RTL-Config.json
 ```
 
-Plak er dit in.
+Paste this into it.
 
 ```json
 {
@@ -61,7 +62,7 @@ Plak er dit in.
     "nodes": [
         {
             "index": 1,
-            "lnNode": "JOUW_ALIAS",
+            "lnNode": "YOUR_ALIAS",
             "lnImplementation": "LND",
             "Authentication": {
                 "macaroonPath": "/home/ubuntu/.lnd/data/chain/bitcoin/mainnet",
@@ -81,25 +82,26 @@ Plak er dit in.
 }
 ```
 
-Vul bij `JOUW_ALIAS` de [alias](/lightning/configuration) van jouw Lightning node in. Sla het op met `Ctrl + X` en bevestig met `Y`.
+
+At `YOUR_ALIAS`, enter the [alias](/lightning/configuration) of your Lightning node. Save it with `Ctrl + X` and confirm with `Y`.
 
 ## Firewall
 
-Zet port 3000 open.
+Open port 3000.
 
 ```bash
-sudo ufw allow 3000 comment "Port voor Ride the Lightning"
+sudo ufw allow 3000 comment "Port for Ride the Lightning"
 ```
 
-Mocht je RTL van buiten je netwerk willen gebruiken, moet je port 3000 op je router opengooien en verkeer doorsturen naar je Pi.
+Should you wish to use RTL from outside your network, you must throw open port 3000 on your router and forward traffic to your Pi.
 
-## Automatiseren
+## Automation
 
 ```bash
 sudo nano /etc/systemd/system/rtl.service
 ```
 
-Plak er dit in.
+Paste this.
 
 ```toml
 [Unit]
@@ -118,9 +120,9 @@ RestartSec=30
 WantedBy=multi-user.target
 ```
 
-Sla het weer op met `Ctrl + X` en bevestig met `Y`.
+Save it again with `Ctrl + X` and confirm with `Y`.
 
-Het systeem moet op de hoogte gesteld worden van de nieuwe service en kan daarna gestart worden.
+The system should be notified of the new service and can then be started.
 
 ```bash
 sudo systemctl enable rtl
@@ -130,58 +132,58 @@ sudo systemctl enable rtl
 sudo systemctl start rtl
 ```
 
-Wil je zien of alles goed is opgestart, voer dan dit uit:
+If you want to see if everything started up properly, run this:
 
 ```bash
 systemctl status rtl
 ```
 
-Wil je een overzicht van de status over meerdere sessie, gebruik dan dit:
+If you want an overview of the status over multiple session, use this:
 
 ```bash
 sudo journalctl -f -u rtl
 ```
 
-## Gebruik
+## Use
 
-Ga via je favoriete browser naar `het ip adres van je Pi:3000`. Bij mij is dat 192.168.1.6:3000. De RTL interface zal verschijnen en vragen om een wachtwoord. Het standaard wachtwoord is "password". Na de eerste keer inloggen mag je zelf een wachtwoord instellen. Mocht LND net opgestart zijn, zal RTL ook vragen om dát wachtwoord (het `lncli unlock` wachtwoord dus).
+Using your favorite browser, go to `the ip address of your Pi:3000`. In my case, it is 192.168.1.6:3000. The RTL interface will appear and ask for a password. The default password is "password". After the first login, you may set your own password. If LND has just been started, RTL will also ask for that password (the `lncli unlock` password).
 
-## Updaten
+## Updating
 
-Ga naar de applicatie directory.
+Go to the application directory.
 
 ```bash
 cd ~/RTL
 ```
 
-Update de repository met de laatste wijzigingen via Git.
+Update the repository with the latest changes via Git.
 
 ```bash
 git fetch --all
 ```
 
-Toon de laatste versie/tag/release.
+Show the latest version/tag/release.
 
 ```bash
 git describe --tags `git rev-list --tags --max-count=1`
 ```
 
-Haal de wijzigingen op van de laatste versie.
+Retrieve the changes from the latest release.
 
 ```bash
-git checkout -f <OUTPUT VAN DE VORIGE STAP> # bijvoorbeeld v0.12.3
+git checkout -f <OUTPUT FROM PREVIOUS STEP> # for example v0.12.3
 ```
 
-Installeer de software.
+Install the software.
 
 ```bash
 npm install --only=prod
 ```
 
-Herstart de RTL service.
+Restart the RTL service.
 
 ```bash
 sudo systemctl restart rtl
 ```
 
-RTL is nu bijgewerkt!
+RTL is now updated!

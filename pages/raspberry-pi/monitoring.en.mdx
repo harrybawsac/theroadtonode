@@ -3,19 +3,20 @@ import Callout from "nextra-theme-docs/callout";
 # Monitoring
 
 <Callout emoji="&#x2139;">
-	Tijd: 5 minuten
+        Time: 5 minutes
 </Callout>
 
-Wil je weten hoe veel resources je Pi verbruikt, kun je dat bekijken met `htop`. Door in je Pi te SSH'en en simpel `htop` te typen, verschijnt het monitoringsvenster. Htop zit standaard geïnstalleerd op je Pi, dus je hoeft niets te installeren.
+If you want to know how much resources your Pi is consuming, you can view it with `htop`. By SSHing into your Pi and simply typing `htop`, the monitoring window appears. Htop is installed on your Pi by default, so you don't need to install anything.
 
-![Het htop venster](/htop.png)
+-![The htop window](/htop.png)
 
-Wat zie je op dit scherm? Bovenaan staan de vier cores van de processor van de Pi. Daaronder staat het geheugengebruik. Je kunt met `Ctrl + C` of `q` het scherm verlaten.
+What do you see on this screen? At the top are the four cores of the Pi's processor. Below that is the memory usage. You can use `Ctrl + C` or `q` to exit the screen.
 
-Je Pi wordt ook warm, vandaar de heatsink. Wil je weten hoe warm de Pi wordt, voer dan het volgende uit:
+Your Pi also gets warm, hence the heatsink. If you want to know how hot the Pi gets, run the following:
 
 ```bash
 cat /sys/class/thermal/thermal_zone0/temp
 ```
 
-Wel even door 1000 delen.
+Just divide by 1000 to get the right value.
+

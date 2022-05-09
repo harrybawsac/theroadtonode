@@ -1,32 +1,32 @@
 import Callout from "nextra-theme-docs/callout";
 
-# Boot vanaf SSD
+# Boot from SSD
 
 <Callout emoji="&#x2139;">
-	Tijd: 15 minuten
+	Time: 15 minutes
 </Callout>
 
-Sinds september 2020 is het officieel mogelijk om je Pi van een SSD op te starten in plaats van de microSD. Opstarten op deze manier geeft [betere performance](https://www.tomshardware.com/news/raspberry-pi-4-ssd-test,39811.html). Daarnaast omzeil je hiermee het gedoe van het mounten en tegen ieder stukje software zeggen dat die van de SSD gebruik moet maken. Aangezien we de SSD toch al hebben, waarom zouden we het dan niet doen?
+Since September 2020 it is officially possible to boot your Pi from an SSD instead of the microSD. Booting this way gives [better performance](https://www.tomshardware.com/news/raspberry-pi-4-ssd-test,39811.html). In addition, this circumvents the hassle of mounting and telling every piece of software to use the SSD. Since we have the SSD anyway, why not do it?
 
-Steek de microSD en netwerkkabel in de Pi waarna je de stroom aansluit. Na ongeveer een minuutje zal de Pi opgestart zijn en een IP-adres krijgen van je router. Log in op je router, want dit IP-adres heb je nodig. De meeste routers kun je in door naar 192.168.1.1 te gaan in je browser, maar hoe jouw netwerk is ingericht weet je zelf het best.
+Insert the microSD and network cable into the Pi after which you connect the power. After about a minute, the Pi will have booted up and will get an IP address from your router. Log into your router, because you'll need this IP address. Most routers can be accessed by going to 192.168.1.1 in your browser, but you know best how your network is set up.
 
 ## SSH
 
-[Secure Shell](https://nl.wikipedia.org/wiki/Secure_Shell) is een protocol om op een versleutelde manier in te loggen op een andere computer en op afstand commando's op de andere computer uit te voeren via een terminal. Middels dit protocol is het mogelijk om vanaf onze computer de Pi aan te sturen.
+[Secure Shell](https://nl.wikipedia.org/wiki/Secure_Shell) is an encrypted protocol for logging into another computer and remotely executing commands on the other computer via a terminal. Through this protocol it is possible to control the Pi from our computer.
 
-Open een terminal en typ:
+Open a terminal and type:
 
 ```bash
-ssh pi@IP-ADRES VAN PI
+ssh pi@IP-ADRESS FROM PI
 ```
 
-Vervang in het commando `IP-ADRES VAN PI` met iets als `192.168.1.6`. Zodra je op enter drukt zal je een vraag krijgen waar je `YES/NO` op kunt antwoorden. Typ `yes` en druk op enter. Je krijgt nu de opdracht een wachtwoord in te voeren. **Het standaard wachtwoord is `raspberry`.**
+Replace in the command `IP ADDRESS OF PI` with something like `192.168.1.6`. Once you press enter you will get a question that you can answer `YES/NO`. Type `yes` and press enter. You will now be instructed to enter a password. **The default password is `raspberry`.**
 
-Wat hebben we nu net gedaan? Je hebt met het commando aangegeven dat je van SSH gebruik wil maken. Vervolgens specificeer je een gebruikersnaam en een computer. De computer is bereikbaar via een IP-adres.
+Now what did we just do? You have indicated with the command that you want to use SSH. Next, you specify a user name and a computer. The computer can be reached via an IP address.
 
 ## Update
 
-Voer de volgende commando's uit:
+Run the following commands:
 
 ```bash
 sudo apt update
@@ -44,75 +44,75 @@ sudo rpi-update
 sudo reboot now
 ```
 
-Je Pi zal nu opnieuw opstarten waarna je opnieuw erin moet SSH'en.
+Your Pi will now reboot after which you need to SSH into it again.
 
-## Boot configuratie
+## Boot configuration
 
-De Pi start standaard op vanaf de microSD. De Pi moet anders geconfigureerd worden om op te starten vanaf de SSD. Eerst moet de Pi voorzien worden van de nieuwste firmware. Voer onderstaande commando uit:
+By default, the Pi boots from the microSD. The Pi must be configured differently to boot from the SSD. First, the Pi must be provided with the latest firmware. Run the command below:
 
 ```bash
 sudo rpi-eeprom-update -a
 ```
 
-![Uitvoer van `sudo rpi-eeprom-update -a` commando](/bootfromssd.png)
+![Output of `sudo rpi-eeprom-update -a` command](/bootfromssd.png)
 
-Als het goed is staat er dat de `BOOTLOADER` up-to-date is en zijn de waardes achter `CURRENT` en `LATEST` gelijk aan elkaar. Mocht je de Pi nog moeten updaten omdat hij niet up-to-date is of omdat `CURRENT` en `LATEST` niet aan elkaar gelijk zijn, herstart dan weer met `sudo reboot now`.
+If all goes well, it says that the `BOOTLOADER` is up-to-date and the values behind `CURRENT` and `LATEST` are the same. If you still need to update the Pi because it is not up-to-date or because `CURRENT` and `LATEST` are not equal, reboot again with `sudo reboot now`.
 
-Dan is het nu tijd om de Pi op zo'n manier te configureren dat we kunnen opstarten van de SSD. Voer het volgende uit:
+Then it is now time to configure the Pi in such a way that we can boot from the SSD. Run the following:
 
 ```bash
 sudo raspi-config
 ```
 
-Er toont zich een scherm waardoor het lijkt alsof je in de jaren '80 beland bent. Kies `6 Advanced Options`.
+A screen appears which makes it look like you've landed in the 1980s. Choose `6 Advanced Options`.
 
 ![](/6-advancedoptions.png)
 
-Kies `A7 Bootloader Version`.
+Choose `A7 Bootloader Version`.
 
 ![](/a7-bootversion.png)
 
-Kies `E1 Latest`.
+Choose `E1 Latest`.
 
 ![](/e1-latest.png)
 
-Kies `No` en druk op `Ok`.
+Choose `No` and press `Ok`.
 
 ![](/nope.png)
 
-Kies nog een keer voor `6 Advanced Options`, maar ga dit maal voor `A6 Boot Order`.
+Choose `6 Advanced Options` again, but this time go for `A6 Boot Order`.
 
 ![](/a6-bootorder.png)
 
-Kies `USB Boot` en druk op `Ok`.
+Choose `USB Boot` and press `Ok`.
 
 ![](/usbboot.png)
 
-Kies voor `Finish` om de instellingen af te ronden.
+Choose `Finish` to finish the settings.
 
 ![](/finish.png)
 
-En tot slot `Yes` om opnieuw op te starten.
+And finally `Yes` to reboot.
 
 ![](/reboot.png)
 
-## Dubbelcheck
+## Double Check
 
-Om te controleren of alles goed is gegaan moet je weer de Pi in SSH'en. Voer het volgende uit.
+To verify that everything went well, you need to SSH into the Pi again. Run the following.
 
 ```bash
 vcgencmd bootloader_config
 ```
 
-Op de onderste regel moet iets staan als **BOOT\_ORDER=0xf14** (het getal kan ook anders zijn, zoals 0xf41). Als er **BOOT\_ORDER=0x0** staat, heb je iets fout gedaan.
+The bottom line should say something like **BOOT_ORDER=0xf14** (the number can also be different, like 0xf41). If it says **BOOT_ORDER=0x0**, you have done something wrong.
 
 ![](/check.png)
 
-Sluit de SSD aan. Voer `lsblk` uit om de opslag wat je Pi te zien. Als het goed is zie je het onderstaande scherm verschijnen, of iets dat er heel erg op lijkt. De micro-sd-kaart zal ongeveer `mmcblk0` heten en in dit voorbeeld is `sda` de SSD.
+Connect the SSD. Run `lsblk` to see the storage what your Pi. If all goes well, you will see the screen below appear, or something very similar. The micro SD card will be called something like `mmcblk0` and in this example `sda` is the SSD.
 
-![Uitvoer van `lsblk` commando](/lsblk.png)
+![Output of `lsblk` command](/lsblk.png)
 
-We gaan de partities van de SSD "mounten" op de Pi. Doe dat met de volgende vier commando's:
+We are going to "mount" the partitions of the SSD on the Pi. Do that with the following four commands:
 
 ```bash
 sudo mkdir /mnt/boot
@@ -122,46 +122,46 @@ sudo mount /dev/sda1 /mnt/boot
 sudo mount /dev/sda2 /mnt/writable
 ```
 
-Als je `lsblk` nog een keer uitvoert zie je een scherm zoals hieronder. Je ziet dat de twee partities van je SSD een plekje hebben gekregen in je Pi (onder het kopje MOUNTPOINT).
+If you run `lsblk` again you will see a screen like the one below. You can see that the two partitions of your SSD have been given a place in your Pi (under the heading MOUNTPOINT).
 
-![Uitvoer van `lsblk` commando](/mounted.png)
+![Output of `lsblk` command](/mounted.png)
 
-Zodra dat er goed uit ziet, moet je een script draaien op de Pi. Het script wordt binnengehaald met Git, een versiebeheersysteem dat veel gebruikt wordt in deze gids.
+Once that looks good, you need to run a script on the Pi. The script is brought in using Git, a version control system used extensively in this guide.
 
 ```bash
 sudo apt install git -y
 ```
 
-Na de installatie van Git wordt het script opgehaald en uitgevoerd.
+After Git is installed, the script is retrieved and run.
 
 ```bash
 sudo curl https://raw.githubusercontent.com/TheRemote/Ubuntu-Server-raspi4-unofficial/master/BootFix.sh | sudo bash
 ```
 
-Zodra je een scherm ziet waarin staat dat het gelukt is, kun je de Pi afsluiten met `sudo shutdown now`.
+Once you see a screen saying it succeeded, you can shut down the Pi with `sudo shutdown now`.
 
-![Uitvoer van script](/script.png)
-## Booten
+![Output of script](/script.png)
+## Booting
 
-Nu we de bootloader correct hebben ingesteld, kunnen we van de SSD booten. Haal de microSD uit de Pi en sluit de SSD aan. Zet de stroom erop et voilà! Je moet nu je Pin in SSH'en met een andere username en wachtwoord. Doe dat als volgt.
+Now that we have the bootloader set up correctly, we can boot from the SSD. Remove the microSD from the Pi and plug in the SSD. Put the power and kaboom, it should work! You now need to SSH your Pin in with a different username and password. Do this as follows.
 
 ```bash
-ssh ubuntu@IP-ADRES VAN PI
+ssh ubuntu@IP-ADRESS FROM PI
 ```
 
-**Het standaard wachtwoord is `raspberry`.**
+**The default password is `raspberry`.**
 
-Het zou voor kunnen komen dat je de volgende foutmelding krijgt zodra opnieuw probeert te SSH'en naar je Pi:
+It might happen that you get the following error message as soon as you try to SSH to your Pi again:
 
 ```bash
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@ WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
 Someone could be eavesdropping on you right now (man-in-the-middle attack)!
 (...)
 ```
 
-Zoiets is gemakkelijk op te lossen door op je computer het commando `nano .ssh/known_hosts` in te voeren. In het scherm dat volgt staan bekende computers voor jouw computer. Verwijder de regel met het IP-adres van jouw Pi. Sla het bestand op met `Ctrl + X` en bevestig met `Y`. Je hebt nu tegen jouw computer gezegd dat hij de eerdere relatie met de Pi mag vergeten en een nieuwe relatie mag opbouwen.
+Something like this is easily solved by entering the command `nano .ssh/known_hosts` on your computer. The screen that follows lists known computers for your computer. Delete the line with the IP address of your Pi. Save the file with `Ctrl + X` and confirm with `Y`. You have now told your computer that it may forget the previous relationship with the Pi and establish a new one.
 
-De eerste keer vraagt Ubuntu om het instellen van een nieuw wachtwoord. Kies een sterk wachtwoord en onthoud deze goed. Het is het wachtwoord voor de gebruiker `ubuntu` en deze gebruiker beheert later alles in de gids.
+The first time, Ubuntu will ask you to set a new password. Choose a strong password and remember it well. It is the password for the user `ubuntu` and this user will later manage everything in the guide.

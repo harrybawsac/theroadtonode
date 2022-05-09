@@ -1,24 +1,24 @@
 import Callout from "nextra-theme-docs/callout";
 
-# Tor aanpassen
+# Customizing Tor
 
 <Callout emoji="&#x2139;">
-	Tijd: 5 minuten
+        Time: 5 minutes
 </Callout>
 
-Tor heeft een paar aanpassingen nodig zodat jij van buitenaf met LND kan communiceren. Op deze manier kun je een mobiele wallet aan je Lightning node koppelen en overal gebruiken.
+Tor needs a few modifications so that you can communicate with LND from the outside. This way you can connect a mobile wallet to your Lightning node and use it anywhere.
 
-<Callout type="warning" emoji="&#x26A0;">
-	Let wel op. Zodra iemand jouw macaroon bestanden in handen krijgt, zijn je funds niet meer veilig. Je kunt het tor gedeelte ook over slaan en enkel Lightning gebruiken wanneer je op hetzelfde netwerk zit als je node. Of natuurlijk gebruik maakt van DDNS.
+<Callout type="warning" emoji="&#x26A0;"> 
+        Notice. As soon as someone gets hold of your macaroon files, your funds are no longer safe. You can also skip the tor part and only use Lightning when you are on the same network as your node. Or use DDNS.
 </Callout>
 
-Open torrc.
+Open torrc:
 
 ```bash
 sudo nano /etc/tor/torrc
 ```
 
-In het torrc bestand zijn we [eerder geweest](/bitcoin-core/change-tor). Voeg de volgende regels toe aan hetgeen dat er al staat.
+In the torrc file (we have [previously been here](/bitcoin-core/change-tor)), add the following lines after what is already there.
 
 ```bash
 SOCKSPort 9050
@@ -32,9 +32,9 @@ HiddenServiceVersion 3
 HiddenServicePort 10009 127.0.0.1:10009
 ```
 
-Sla het bestand op met de toestencombinatie `Ctrl + X`. Geef `Y` als antwoord op de vraag of je op wil slaan.
+Save the file with the key combination `Ctrl + X`. Enter `Y` in response to the prompt to save.
 
-Maak mappen aan met:
+Create directories with:
 
 ```bash
 sudo mkdir /var/lib/tor/lightning
@@ -48,7 +48,7 @@ sudo mkdir /var/lib/tor/lightning/rest
 sudo mkdir /var/lib/tor/lightning/rpc
 ```
 
-Geef de juiste rechten met:
+Give the appropriate permissions with:
 
 ```bash
 sudo chown -R debian-tor:debian-tor /var/lib/tor/lightning/rest
@@ -66,15 +66,15 @@ sudo chmod 700 /var/lib/tor/lightning/rest
 sudo chmod 700 /var/lib/tor/lightning/rpc
 ```
 
-Tor moet nu opnieuw opgestart worden.
+Tor should now be restarted.
 
 ```bash
 sudo systemctl restart tor
 ```
 
-## Onion-adressen
+## Onion addresses
 
-De onion-adressen krijg je met:
+You get the onion addresses with:
 
 ```bash
 sudo cat /var/lib/tor/lightning/rest/hostname

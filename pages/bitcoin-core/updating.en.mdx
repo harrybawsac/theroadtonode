@@ -3,72 +3,73 @@ import Callout from "nextra-theme-docs/callout";
 # Updaten
 
 <Callout emoji="&#x2139;">
-	Tijd: 1.5 uur
+	Time: 1.5h
 </Callout>
 
-Zorg voordat je van start gaat dat je Pi up-to-date is met `sudo apt update` en `sudo apt upgrade -y`.
+Before you get started, make sure your Pi is up-to-date with `sudo apt update` and `sudo apt upgrade -y`.
 
-Ga naar de applicatie directory.
+Go to the application directory.
 
 ```bash
 cd ~/bitcoin
 ```
 
-Update de repository met de laatste wijzigingen via Git.
+Update the repository with the latest changes via Git.
 
 ```bash
 git fetch --all
 ```
 
-Toon de laatste versie/tag/release.
+Show the latest version/tag/release.
 
 ```bash
 git describe --tags `git rev-list --tags --max-count=1`
 ```
 
-Haal de wijzigingen op van de laatste versie.
+Retrieve the changes from the latest release.
 
 ```bash
 git checkout -f <OUTPUT VAN DE VORIGE STAP> #voorbeeld: v23.0
 ```
 
-Build bitcoin core opnieuw op basis van de zojuist uitgecheckte versie van de broncode. Door de toevoeging van `-j $(nproc)` worden alle cores gebruikt van de CPU en zou de build sneller verlopen dan zonder deze toevoeging.
+Rebuild bitcoin core based on the version of the source code you just checked out. The addition of `-j $(nproc)` uses all the cores of the CPU and would make the build faster than it would be without this addition.
+
 
 ```bash
 make -j $(nproc)
 ```
 
-De build zal met ongeveer een uur klaar zijn. Mooi moment voor een biertje of kopje koffie!
+The build will finish in about an hour. Nice time for a beer or cup of coffee!
 
-Stop services die afhankelijk zijn van Bitcoin Core, zoals btc-rpc-explorer, LND of Electrum. Je weet zelf het best welke je hebt draaien. Uit ervaring blijkt dat het niet uitzetten van de services die van Core afhankelijk zijn, niet echt uitmaakt. De services zullen tijdens de update van Core tijdelijk geen data van ontvangen, waarna het weer door gaat zodra Core weer aan staat.
+Stop services that depend on Bitcoin Core, such as btc-rpc-explorer, LND or Electrum. You know best which ones you have running. From experience, not turning off services that depend on Core doesn't really matter. The services will temporarily not receive data from during Core's update, after which it will resume once Core is turned back on.
 
-Stop de bitcoind service.
+Stop the bitcoind service:
 
 ```bash
 sudo systemctl stop bitcoind
 ```
 
-Installeer nu de software. Dit duurt maximaal 5 minuten.
+Now install the software. This will take up to 5 minutes.
 
 ```bash
 sudo make install
 ```
 
-Start de service bitcoin. De service zal vrij snel gestart zijn maar de blockchain moet mogelijk nog een aantal blocks downloaden, afhankelijk van hoe lang de service gestopt was.
+Start the service bitcoin. The service will have started fairly quickly but the blockchain may need to download a few more blocks depending on how long the service was stopped.
 
 ```bash
 sudo systemctl start bitcoind
 ```
 
-Check de huidige versie van bitcoin core.
+Check the current version of bitcoin core.
 
 ```bash
 bitcoin-cli --version
 ```
 
-De output zal lijken op `Bitcoin Core RPC client v23.0` en Core is nu bijgewerkt!
+The output will look like `Bitcoin Core RPC client v23.0` and Core is now updated!
 
-Start de andere services die je eventueel hebt uitgezet. Let wel op dat als je LND opstart, dat het unlocken van LND pas kan nadat de blockchain van bitcoin weer gesynchroniseerd is. Controleer met `tail -f -n 200 .bitcoin/debug.log` hoe ver deze is. Services start je op deze manier:
+Start the other services you may have disabled. Note that when you start LND, unlocking LND can only be done after bitcoin's blockchain has been resynchronized. Check with `tail -f -n 200 .bitcoin/debug.log` how far along it is. Services start this way:
 
 ```bash
 sudo systemctl start bitcoind

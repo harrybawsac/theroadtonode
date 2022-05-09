@@ -3,62 +3,62 @@ import Callout from "nextra-theme-docs/callout";
 # Electrum X
 
 <Callout emoji="&#x2139;">
-	Tijd: 15 minuten en 7 dagen wachten op synchronisatie/indexering
+	Time: 15 minutes and 7 days waiting for synchronization/indexing
 </Callout>
 
-Met behulp van Electrum X kun je gebruik maken van het [Electrum protocol](https://electrumx-spesmilo.readthedocs.io/en/latest/protocol-basics.html). Dit protocol laat wallets en andere software met nodes communiceren. Op andere plekken in de guide kun je tools en wallets die via het Electrum protocol communiceren direct aansluiten op je node. Een functionaliteit die de privacy bevordert. Zo kun je de [BTC RPC Explorer](/bitcoin-core-extensions/btc-rpc-explorer) ook aansluiten op je eigen Electrum X server. Als je dan in het vervolg informatie over je transacties of adressen van jezelf opzoekt, zal niemand dat kunnen zien. Zo kan niemand transacties aan jou linken en geniet je meer privacy.
+Using Electrum X, you can use the [Electrum protocol](https://electrumx-spesmilo.readthedocs.io/en/latest/protocol-basics.html). This protocol lets wallets and other software communicate with nodes. In other places in the guide, you can connect tools and wallets that communicate via the Electrum protocol directly to your node. A functionality that promotes privacy. For example, you can also connect the [BTC RPC Explorer](/bitcoin-core-extensions/btc-rpc-explorer) to your own Electrum X server. Then when you look up information about your transactions or addresses from yourself in the future, no one will be able to see it. This way no one can link transactions to you and you enjoy more privacy.
 
-Het kan zo'n 7 dagen duren voordat Electrum X volledig geïndexeerd en bruikbaar is. Tot die tijd kan je er niks mee.
+It can take up to 7 days before Electrum X is fully indexed and usable. Until then you can't use it.
 
-## Installatie
+## Installation
 
-Zorg dat je in de home directory zit.
+Make sure you are in the home directory.
 
 ```bash
 cd ~
 ```
 
-Installeer de volgende packages op je Raspberry.
+Install the following packages on your Raspberry.
 
 ```bash
 sudo apt install python3-pip build-essential libc6-dev libncurses5-dev libncursesw5-dev libreadline-dev libleveldb-dev
 ```
 
-Door middel van `pip` kun je een Python-specifieke package installeren die nodig is voor Electrum X.
+Using `pip` you can install a Python-specific package needed for Electrum X.
 
 ```bash
 sudo pip3 install plyvel
 ```
 
-Clone de broncode voor Electrum X.
+Clone the source code for Electrum X.
 
 ```bash
 git clone https://github.com/spesmilo/electrumx
 ```
 
-Navigeer de zojuist geclonede map in.
+Navigate the directory you just cloned into.
 
 ```bash
 cd electrumx
 ```
 
-Pak de laatste versie.
+Grab the latest version.
 
 ```bash
 git checkout 1.16.0
 ```
 
-Installeer tot slot Electrum X.
+Finally, install Electrum X.
 
 ```bash
 sudo python3 setup.py install
 ```
 
-## Configuratie
+## Configuration
 
-Net als met alle andere tools in deze guide kun je ook Electrum X op een bepaalde manier configureren. Allereerst zorgen we voor een locatie waar de database van Electrum X opgeslagen wordt. Daarna maken we met behulp van `openssl` sleutels aan. Tot slot stellen we Electrum X in met behulp van een configuratie bestand.
+As with all the other tools in this guide, you can configure Electrum X in some way. First, we provide a location where the database of Electrum X is stored. Then we create keys using `openssl`. Finally, we configure Electrum X using a configuration file.
 
-Maak een `.electrumx` map in de home directory met daarin weer een `db` map.
+Create an `.electrumx` folder in the home directory containing another `db` folder.
 
 ```bash
 mkdir ~/.electrumx
@@ -66,13 +66,13 @@ mkdir ~/.electrumx
 mkdir ~/.electrumx/db
 ```
 
-Ga de map in.
+Enter the directory.
 
 ```bash
 cd ~/.electrumx
 ```
 
-Voer de volgende drie openssl commando's uit voor het aanmaken van een een stel sleutels en certificaten. Tijdens dit proces zul je wat informatie moeten invoeren, maar dat zie je vanzelf.
+Run the following three openssl commands to create a set of keys and certificates. During this process you will need to enter some information, but you will see that.
 
 ```bash
 openssl genrsa -out server.key 2048
@@ -80,13 +80,13 @@ openssl req -new -key server.key -out server.csr
 openssl x509 -req -days 1825 -in server.csr -signkey server.key -out server.crt
 ```
 
-De laatste stap van het configureren betreft het aanmaken van het configuratie bestand. Maak een bestand aan.
+The final step of configuring involves creating the configuration file. Create a file.
 
 ```bash
 nano ~/.electrumx/electrumx.conf
 ```
 
-Zet daar de volgende tekst in.
+Put the following text in there.
 
 ```bash
 NET=mainnet
@@ -100,28 +100,28 @@ SSL_KEYFILE=/home/ubuntu/.electrumx/server.key
 SERVICES=tcp://:50001,ssl://:50002,wss://:50004,rpc://
 ```
 
-Voordat je het opslaat moet je een tweetal aanpassingen maken. Vul op de plekken `USERNAME` en `PASSWORD` de gebruikersnaam-wachtwoord combinatie die je hebt aangemaakt in het [authenticatie deel van de Bitcoin Core configuratie](/bitcoin-core/configure-and-start). Zodra alles goed staat kun je het bestand opslaan met `Ctrl + X` en bevestigen met `Y`.
+Before you save it, you need to make two adjustments. In the `USERNAME` and `PASSWORD` places, enter the username-password combination you created in the [authentication part of the Bitcoin Core configuration](/bitcoin-core/configure-and-start). Once everything is correct you can save the file with `Ctrl + X` and confirm with `Y`.
 
-## Firewall en router
+## Firewall and Router
 
-In principe kun je een lokale tool zoals [BTC RPC Explorer](/bitcoin-core-extensions/btc-rpc-explorer) direct aansluiten op Electrum X. Hier hoef je geen ports voor open te zetten, aangezien lokale connecties \(dus van de Pi naar de Pi\) altijd worden toegestaan. Wil je echter gebruik maken van Electrum X in een app zoals BlueWallet, dan dien je de volgende commando's uit te voeren om twee ports open te zetten.
+In principle, you can connect a local tool such as [BTC RPC Explorer](/bitcoin-core-extensions/btc-rpc-explorer) directly to Electrum X. There is no need to open any ports for this, as local connections are always allowed (i.e. from the Pi to the Pi). However, if you want to use Electrum X in an app like BlueWallet, you need to execute the following commands to open two ports.
 
 ```bash
 sudo ufw allow 50001
 sudo ufw allow 50002
 ```
 
-Wil je van buiten je netwerk Electrum X als backend gebruiken, dan moet je dezelfde ports open gooien op je router en doorlussen naar je Pi.
+If you want to use Electrum X as a backend from outside your network, then you need to throw the same ports open on your router and loop through to your Pi.
 
-## Automatiseren
+## Automation
 
-Electrum X wil je altijd op de achtergrond hebben draaien. Daarom gaan we het opstarten automatiseren middels een service. Maak een service aan.
+Electrum X is something you always want to have running in the background. That's why we're going to automate startup through a service. Create a service.
 
 ```bash
 sudo nano /etc/systemd/system/electrumx.service
 ```
 
-Zet daar de volgende tekst in.
+Put the following text in there.
 
 ```toml
 [Unit]
@@ -141,9 +141,9 @@ RestartSec=30
 WantedBy=multi-user.target
 ```
 
-Sla het op met `Ctrl + X` en bevestigen met `Y`.
+Save it with `Ctrl + X` and confirm with `Y`.
 
-Enable en start de service met deze twee commando's:
+Enable and start the service with these two commands:
 
 ```bash
 sudo systemctl enable electrumx
@@ -151,18 +151,18 @@ sudo systemctl enable electrumx
 sudo systemctl start electrumx
 ```
 
-Na ongeveer een minuutje opstarten kun je aan Electrum X wat informatie opvragen.
+After about a minute of starting up, you can ask Electrum X for some information.
 
 ```bash
 electrumx_rpc getinfo
 ```
 
-Als je output lijkt op het onderstaande ben je klaar!
+If your output looks like the one below you are done!
 
 ```bash
 {
-    "coin": "Bitcoin",
-    "daemon": "127.0.0.1:8332/",
+    "coin": "bitcoin"
+    "daemon": "127.0.0.1:8332/"
     "daemon height": 662952,
     "db height": 662952,
     "db_flush_count": 5797,
@@ -201,49 +201,49 @@ Als je output lijkt op het onderstaande ben je klaar!
 }
 ```
 
-## Updaten
+## Updating
 
-Stop de Electrum X service.
+Stop the Electrum X service.
 
 ```bash
 sudo systemctl stop electrumx
 ```
 
-Ga naar de applicatie directory.
+Go to the application directory.
 
 ```bash
 cd ~/electrumx
 ```
 
-Update de repository met de laatste wijzigingen via Git.
+Update the repository with the latest changes via Git.
 
 ```bash
 git fetch --all
 ```
 
-Toon de laatste versie/tag/release.
+Show the latest version/tag/release.
 
 ```bash
 git describe --tags `git rev-list --tags --max-count=1`
 ```
 
-Haal de wijzigingen op van de laatste versie.
+Retrieve the changes from the latest release.
 
 ```bash
-git checkout <OUTPUT VAN DE VORIGE STAP> # bijvoorbeeld 1.16.0
+git checkout <OUTPUT FROM PREVIOUS STEP> # for example 1.16.0
 ```
 
-Installeer de software.
+Install the software.
 
 ```bash
 sudo python3 setup.py install
 ```
 
-Start de Electrum X service.
+Start the Electrum X service.
 
 ```bash
 sudo systemctl start electrumx
 ```
 
-Electrum X is nu bijgewerkt!
+Electrum X is now updated!
 

@@ -3,74 +3,75 @@ import Callout from "nextra-theme-docs/callout";
 # Mempool.space
 
 <Callout emoji="&#x2139;">
-	Tijd: 20 minuten
+        Time: 20 minutes
 </Callout>
 
-Met mempool.space kun je zelf de mempool van bitcoin in de gaten houden. Dat is handig om te bepalen hoeveel fee je moet betalen of om te zien of je transactie er al doorheen is. Door het zelf te hosten geef je geen data uit handen aan derden.
+Mempool.space allows you to keep track of bitcoin's mempool yourself. This is useful for determining how much fee to pay or to see if your transaction has already gone through. By hosting it yourself you are not handing over any data to third parties.
 
-## Voorbereiding
+## Preparation
 
 1. [Electrs](/bitcoin-core-extensions/electrs)
-2. [NodeJS](/raspberry-pi/algemene-dependencies-installeren#nodejs)
+2. [NodeJS](/raspberry-pi/general-dependencies-install#nodejs)
 
-## Installatie
+## Installation
 
-Haal de source code binnen.
+Get the source code:
 
 ```bash
 git clone https://github.com/mempool/mempool
 ```
 
-Ga de map in met `cd mempool`. Zet daarna de laatste release in een tijdelijke variabele genaamd `latestrelease` in je terminal.
+Enter the directory with `cd mempool`. Then put the latest release in a temporary variable called `latestrelease` in your terminal.
 
 ```bash
-latestrelease=$(curl -s https://api.github.com/repos/mempool/mempool/releases/latest|grep tag_name|head -1|cut -d '"' -f4)
+latestrelease=$(curl -s https://api.github.com/repos/mempool/mempool/releases/latest|grep tag_name|head -1|cut -d ''' -f4)
 ```
 
-Pak daarna de laatste versie met `git checkout $latestrelease`.
+Then grab the latest version with `git checkout $latestrelease`.
 
 ## Maria DB
 
-Mempool.space heeft een database nodig om wat data in op te slaan. Daarom gebruikt het Maria DB.
+Mempool.space needs a database to store some data in. That's why it uses Maria DB.
 
 ```bash
 sudo apt install mariadb-server mariadb-client -y
 ```
 
-Log in bij Maria DB.
+Log in to Maria DB.
 
 ```bash
 sudo mariadb -u root
 ```
 
-Eenmaal in Maria DB kun je SQL code uitvoeren. Mempool.space heeft een database nodig en maak hem daarom aan. Voer heel het commando uit, dus ook met de `;`.
+Once in Maria DB, you can execute SQL code. Mempool.space needs a database so create it. Execute all of the command, including the `;`.
 
 ```sql
 create database mempool;
 ```
 
-Daarna maak je een gebruiker aan die toegang heeft tot die specifieke database.
+Then create a user who will have access to that particular database.
 
 ```sql
 grant all privileges on mempool.* to 'mempool'@'%' identified by 'mempool';
 ```
 
-Tot slot kan je de database connectie sluiten met `quit;`.
+Finally, you can close the database connection with `quit;`.
 
 ## Backend
 
-De tool bestaat uit twee onderdelen die los van elkaar draaien: een backend en een frontend. De frontend zie je in je browser en de backend verzocht de data voor de frontend. Ga de backend map in met `cd backend`. Installeer dan de backend afhankelijkheden met `npm install --prod` waarna je een build maakt `npm run build`.
+The tool consists of two parts which run separately: a backend and a frontend. The frontend is shown in your browser and the backend requested the data for the frontend. Enter the backend directory with `cd backend`. Then install the backend dependencies with `npm install --prod` after which you make a build `npm run build`.
 
-De backend heeft een configuratie nodig en daarvoor hebben we een JSON bestand. Kopieer de voorbeeld configuratie naar een bruikbare.
+The backend needs a configuration and for that we have a JSON file. Copy the sample configuration to a usable one.
 
 ```bash
 cp mempool-config.sample.json mempool-config.json
 ```
 
-Open het bestand `nano mempool-config.json`. Als het goed is lijkt het bestand op hetgeen dat hieronder staat. Hij is best groot en let goed op dat je de juist dingen wijzigt:
 
-* `DIT_WEET_JE_A` en `DIT_WEET_JE_C`: [De user](/bitcoin-core/configure-and-start) die je hebt aangemaakt.
-* `DIT_WEET_JE_B` en `DIT_WEET_JE_D`: [Het wachtwoord](/bitcoin-core/configure-and-start) dat je je hebt gekregen.
+Open the file `nano mempool-config.json`. If all goes well, the file looks like the one below. It is quite large and take great care to change the right things:
+
+* `FROM_BITCOIND_A` and `FROM_BITCOIND_C`: [The user](/bitcoin-core/configure-and-start) that you created.
+* `FROM_BITCOIND_B` and `FROM_BITCOIND_D`: [The password](/bitcoin-core/configure-and-start) that you were given.
 
 ```json
 {
@@ -79,7 +80,7 @@ Open het bestand `nano mempool-config.json`. Als het goed is lijkt het bestand o
     "BACKEND": "electrum",
     "HTTP_PORT": 8999,
     "SPAWN_CLUSTER_PROCS": 0,
-    "API_URL_PREFIX": "/api/v1/",
+    "API_URL_PREFIX":"/api/v1/",
     "POLL_RATE_MS": 2000,
     "CACHE_DIR": "./cache",
     "CLEAR_PROTECTION_MINUTES": 20,
@@ -94,8 +95,8 @@ Open het bestand `nano mempool-config.json`. Als het goed is lijkt het bestand o
   "CORE_RPC": {
     "HOST": "127.0.0.1",
     "PORT": 8332,
-    "USERNAME": "DIT_WEET_JE_A",
-    "PASSWORD": "DIT_WEET_JE_B"
+    "USERNAME": "THIS_KNOW_YOU_A",
+    "PASSWORD": "THIS_KNOW_YOU_B"
   },
   "ELECTRUM": {
     "HOST": "127.0.0.1",
@@ -108,8 +109,8 @@ Open het bestand `nano mempool-config.json`. Als het goed is lijkt het bestand o
   "SECOND_CORE_RPC": {
     "HOST": "127.0.0.1",
     "PORT": 8332,
-    "USERNAME": "DIT_WEET_JE_C",
-    "PASSWORD": "DIT_WEET_JE_D"
+    "USERNAME": "THIS_KNOW_YOU_C",
+    "PASSWORD": "THIS_KNOW_YOU_D"
   },
   "DATABASE": {
     "ENABLED": true,
@@ -137,25 +138,25 @@ Open het bestand `nano mempool-config.json`. Als het goed is lijkt het bestand o
 }
 ```
 
-## Frontend
+### Frontend
 
-Nu de backend geregeld is kunnen we ons focussen op de frontend. Dat begint met naar de juiste map te navigeren.
+Now that the backend is taken care of we can focus on the frontend. This starts with navigating to the right directory.
 
 ```bash
 cd ../frontend
 ```
 
-Ook hier moet je weer de afhankelijkheden installeren met `npm install --prod`. Daarna kun je de voorbeeld configuratie kopieren, maar je hoeft hem niet aan te passen.
+Again you need to install the dependencies with `npm install --prod`. Then you can copy the sample configuration, but you don't need to modify it.
 
 ```bash
 cp mempool-frontend-config.sample.json mempool-frontend-config.json
 ```
 
 <Callout emoji="&#x2139;">
-	Het kan voor komen dat de onderstaande build faalt. Probeer het dan later nog een keer. Hier is helaas geen betere oplossing voor.
+        It may happen that the build below fails. If so, please try again later. Unfortunately there is no better solution for this.
 </Callout>
 
-De frontend kun je builden met `npm run build` (kan vrij lang duren) en tot slot de output van de build verplaatsen naar een andere map. Nginx zal verkeer doorsturen naar die map.
+You can build the frontend with `npm run build` (may take quite some time) and finally move the output of the build to another directory. Nginx will redirect traffic to that directory.
 
 ```bash
 sudo rsync -av --delete dist/ /var/www/
@@ -163,44 +164,44 @@ sudo rsync -av --delete dist/ /var/www/
 
 ## Server
 
-De website is alleen beschikbaar via Nginx.
+The website is only available through Nginx.
 
 ```bash
 sudo apt install -y nginx
 ```
 
-Ga na de installatie van Nginx terug naar de root van het project met `cd ~/mempool`. Installeer vanaf daar de Nginx configuratie van mempool.
+After installing Nginx, go back to the root of the project with `cd ~/mempool`. From there, install the Nginx configuration from mempool.
 
 ```bash
 sudo cp nginx.conf nginx-mempool.conf /etc/nginx/
 ```
 
-Pas daarna twee regels van de configuratie aan met `sudo nano /etc/nginx/nginx.conf`. Een scherm zal zich openen waain je in de bovenste regel `user nobody;` ziet staan. Pas het aan naar `user ubuntu;`. Scroll door naar onder waar je `listen 127.0.0.1:80;` ziet. Dat moet `listen 0.0.0.0:80;` worden. Sla het op met `Ctrl + X` en bevestigen met `Y`. Je kunt de configuratie controleren met `sudo nginx -t` waarvan de output moet lijken op:
+Then modify two lines of the configuration with `sudo nano /etc/nginx/nginx.conf`. A screen will open where you will see in the top line `user nobody;`. Change it to `user ubuntu;`. Scroll down to the bottom where you will see `listen 127.0.0.1:80;`. That should become `listen 0.0.0.0:80;`. Save it with `Ctrl + X` and confirm with `Y`. You can check the configuration with `sudo nginx -t` whose output should look like:
 
 ```
 nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
 nginx: configuration file /etc/nginx/nginx.conf test is successful
 ```
 
-Om het Nginx verhaal af te ronden herstart je Nginx met `sudo systemctl restart nginx`.
+To finish the Nginx setup, restart Nginx with `sudo systemctl restart nginx`.
 
 ## Firewall
 
-Het bereiken van mempool.space loopt via het normale internetverkeer. Dat is poort 80. Nginx handelt verder af waar het verkeer naartoe gaat.
+Reaching mempool.space is done through normal internet addresses (clearnet). On port 80. Nginx further handles where the traffic goes.
 
 ```bash
-sudo ufw allow 80 comment "Port voor normaal internetverkeer"
+sudo ufw allow 80 comment "Port for normal internet traffic"
 ```
 
-## Automatiseren
+## Automation
 
-De frontend van mempool.space staat vrolijk in een mapje waar je niet naar om hoeft te kijken. Met het is wel van belang dat de backend op de achtergrond draait. Hier maken we een service voor aan.
+The frontend of mempool.space is now in a folder you don't need worry about. However, it is important that the backend runs in the background. We create a service for this.
 
 ```bash
 sudo nano /etc/systemd/system/mempool.service
 ```
 
-Zet daar de volgende tekst in.
+Put the following text in there.
 
 ```toml
 [Unit]
@@ -224,9 +225,9 @@ RestartSec=30
 WantedBy=multi-user.target
 ```
 
-Sla het op met `Ctrl + X` en bevestigen met `Y`.
+Save it with `Ctrl + X` and confirm with `Y`.
 
-Enable en start de service met deze twee commando's:
+Enable and start the service with these two commands:
 
 ```bash
 sudo systemctl enable mempool
@@ -234,7 +235,7 @@ sudo systemctl enable mempool
 sudo systemctl start mempool
 ```
 
-Met `sudo systemctl status mempool` kun je zien of alles goed draait en krijg je een output die lijkt op het onderstaande.
+With `sudo systemctl status mempool` you can see if everything is running properly and get an output similar to the one below.
 
 ```bash
 ● mempool.service - Mempool
@@ -252,33 +253,33 @@ Jan 31 10:00:15 ubuntu npm[209203]: Jan 31 10:00:15 [209203] DEBUG: Fetched tran
 Jan 31 10:00:15 ubuntu npm[209203]: Jan 31 10:00:15 [209203] DEBUG: Fetched transaction 16 / 19
 ```
 
-## Updaten
+## Updating
 
-Ga naar de applicatie directory.
+Go to the application directory.
 
 ```bash
 cd ~/mempool
 ```
 
-Update de repository met de laatste wijzigingen via Git.
+Update the repository with the latest changes via Git.
 
 ```bash
 git fetch --all
 ```
 
-Zet daarna de laatste release in een tijdelijke variabele genaamd `latestrelease` in je terminal.
+Then put the latest release in a temporary variable called `latestrelease` in your terminal.
 
 ```bash
-latestrelease=$(curl -s https://api.github.com/repos/mempool/mempool/releases/latest|grep tag_name|head -1|cut -d '"' -f4)
+latestrelease=$(curl -s https://api.github.com/repos/mempool/mempool/releases/latest|grep tag_name|head -1|cut -d ''' -f4)
 ```
 
-Pak de laatste versie met `git checkout $latestrelease`.
+Get the latest version with `git checkout $latestrelease`.
 
 ### Update backend
 
-Ga de backend map in met `cd backend`. Installeer dan de backend afhankelijkheden met `npm install --prod` waarna je een build maakt `npm run build`.
+Enter the backend directory with `cd backend`. Then install the backend dependencies with `npm install --prod` after which you make a build `npm run build`.
 
-Start de mempool service opnieuw op.
+Restart the mempool service.
 
 ```bash
 sudo systemctl restart mempool
@@ -286,16 +287,17 @@ sudo systemctl restart mempool
 
 ### Update frontend
 
-Ga eerst naar de map met de frontend code.
+First, go to the directory containing the frontend code.
 
 ```bash
 cd ../frontend
 ```
 
-Ook hier moet je de afhankelijkheden installeren met `npm install --prod`.
+Again, you need to install the dependencies with `npm install --prod`.
 
 <Callout emoji="&#x2139;">
-	Het kan voor komen dat de onderstaande build faalt. Probeer het dan later nog een keer. Hier is helaas geen betere oplossing voor.
+        It may happen that the build below fails. Please try again later. Unfortunately there is no better solution for this.
 </Callout>
 
-De frontend kun je builden met `npm run build` (kan vrij lang duren). Als het goed is wordt de Nginx map met de productie versie automatisch geupdate.
+You can build the frontend with `npm run build` (can take quite a long time). The Nginx directory with the production version should be updated automatically.
+

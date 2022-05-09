@@ -1,24 +1,24 @@
 import Callout from "nextra-theme-docs/callout";
 
-# Configuratie
+# Configuration
 
 <Callout emoji="&#x2139;">
-	Tijd: 5 minuten
+        Time: 5 minutes
 </Callout>
 
-De map waar LND gebruik van wil maken, bestaat nog niet. Maak hem dus eerst aan. Let op: deze configuratie map verschilt van de map waar je LND zojuist in hebt [geïnstalleerd](/lightning/installation), dat was namelijk `/home/ubuntu/lnd`.
+The folder that LND wants to use does not exist yet. So create it first. Note that this configuration directory is different from the directory you just [installed] LND into (/lightning/installation), which was `/home/ubuntu/lnd`.
 
 ```bash
 mkdir ~/.lnd
 ```
 
-Het configuratie bestand maak je aan met:
+You create the configuration file with:
 
 ```bash
 nano ~/.lnd/lnd.conf
 ```
 
-En plak er de instellingen in.
+Then paste the settings into it.
 
 ```toml
 [Application Options]
@@ -27,8 +27,8 @@ restlisten=0.0.0.0:8080
 rpclisten=0.0.0.0:10009
 listen=127.0.0.1:9735
 maxpendingchannels=5
-color=ZELF_VERZINNEN_A
-alias=ZELF_VERZINNEN_B
+color=YOURSETTING_A
+alias=YOURSETTING_B
 
 [Tor]
 tor.active=true
@@ -42,17 +42,16 @@ bitcoin.node=bitcoind
 
 [bitcoind]
 bitcoind.dir=~/.bitcoin
-bitcoind.rpcuser=DIT_WEET_JE_A
-bitcoind.rpcpass=DIT_WEET_JE_B
+bitcoind.rpcuser=FROM_BITCOIND_A
+bitcoind.rpcpass=FROM_BITCOIND_B
 bitcoind.zmqpubrawblock=tcp://127.0.0.1:28332
 bitcoind.zmqpubrawtx=tcp://127.0.0.1:28333
 ```
+In the text above, there are four things you need to take care of yourself.
 
-In de tekst hierboven staan vier dingen die je zelf moet regelen.
+* **color**, change YOURSETTING_A to a color of your choice. It is a hexadecimal value. For example `color=#123ABC` for the color blue.
+* **alias**, change YOURSETTING_B to a name of your choice. You will then get `alias=nickname`.
+* **bitcoind.rpcuser**, change FROM_BITCOIND_A to [the correct user](/bitcoin-core/configure-and-start).
+* **bitcoind.rpcpass**, change FROM_BITCOIND_B password to [the correct password](/bitcoin-core/configure-and-start). You have been assigned this password.
 
-* **color**, verander ZELF\_VERZINNEN\_A naar een kleur naar keuze. Het is een hexadecimale waarde. Bijvoorbeeld `color=#123ABC` voor de kleur blauw.
-* **alias**, verander ZELF\_VERZINNEN\_B naar een naam naar keuze. Je krijgt dan `alias=nickname`.
-* **bitcoind.rpcuser**, verander DIT\_WEET\_JE\_A naar [de juiste user](/bitcoin-core/configure-and-start).
-* **bitcoind.rpcpass**, verander DIT\_WEET\_JE\_B naar [het juiste wachtwoord](/bitcoin-core/configure-and-start). Dit wachtwoord heb je toebedeeld gekregen.
-
-Sla het bestand op met `Ctrl + X` en `Y`.
+Save the file with `Ctrl + X` and `Y`.

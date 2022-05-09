@@ -1,30 +1,30 @@
 import Callout from "nextra-theme-docs/callout";
 
-# Tor installeren
+# Installing Tor
 
 <Callout emoji="&#x2139;">
-	Tijd: 5 minuten
+        Time: 5 minutes
 </Callout>
 
-Het [Tor netwerk](https://nl.wikipedia.org/wiki/Tor_%28netwerk%29) zorgt voor een extra laagje privacy bij het gebruik van Bitcoin. Het gebruik van tor heeft nog een bijkomend voordeel; je node is bereikbaar van buitenaf. Wat bedoelen we hiermee? Neem dit voorbeeld:
+The [Tor network](https://nl.wikipedia.org/wiki/Tor_%28netwerk%29) provides an extra layer of privacy when using Bitcoin. Using Tor has an additional benefit; your node is reachable from the outside. What do we mean by this? Take this example:
 
-> Je hebt een mobiele wallet. Aangezien je de volledige Bitcoin blockchain niet op je mobiel hebt staan, moet je aan een externe bron informatie opvragen omtrent jouw wallet. Hiermee geef je informatie over jezelf vrij. Verbind je daarentegen je mobiele wallet met je eigen Bitcoin node, behoud je controle over dit soort informatie. Het probleem is dat jouw node thuis draait, dus de mobiele wallet moet verbinding maken met de computer thuis. Dit is lastig omdat internet service providers \(ISPs\), zoals Ziggo of KPN, het IP-adres van jouw huis iedere x-aantal dagen kunnen veranderen. Er zijn manieren om dit te omzeilen. ~~Voor een ietwat geavanceerdere oplossing, zie het hoofdstuk VPN via DuckDNS.~~ Een andere manier is tor. Door zogenaamde [hidden services](https://youtu.be/lVcbq_a5N9I) op te zetten, kun je alsnog van buitenaf met jouw node communiceren.
+> You have a mobile wallet. Since you don't have the full Bitcoin blockchain on your mobile, you need to get information about your wallet from an outside source. By doing this, you are disclosing information about yourself. By contrast, if you connect your mobile wallet to your own Bitcoin node, you retain control over this kind of information. The problem is that your node is running at home, so the mobile wallet needs to connect to your home computer. This is tricky because internet service providers (ISPs) can change the IP address of your home every x-number of days. There are ways around this. ~~For a somewhat more advanced solution, see the chapter VPN via DuckDNS.~~ Another way is tor. By setting up so called [hidden services](https://youtu.be/lVcbq_a5N9I) you can still communicate with your node from the outside.
 
-SSH in je Pi en voer het onderstaande uit om Tor te installeren.
+SSH into your Pi and run the following to install Tor.
 
 ```bash
 sudo apt install tor -y
 ```
 
-De juiste rechten moeten toegekend worden aan onze gebruiker genaamd pi.
+Proper permissions must be granted to our user named pi.
 
 ```bash
 sudo usermod -a -G debian-tor ubuntu
 ```
 
-Om de `usermod` van kracht te laten zijn, log je uit door "exit" te typen en op enter te drukken. **Vergeet dit niet!** SSH daarna weer je Pi in.
+To make the `usermod` take effect, log out by typing "exit" and pressing enter. **Don't forget this!** Then SSH back into your Pi.
 
-Tot slot kunnen we Tor activeren en opstarten.
+Finally, we can activate and boot Tor.
 
 ```bash
 sudo systemctl enable tor
@@ -34,5 +34,5 @@ sudo systemctl enable tor
 sudo systemctl start tor
 ```
 
-Tor is nu geïnstalleerd en opgestart. We zullen meerdere keren in deze guide terug komen op de configuratie van Tor, maar dat kom je vanzelf tegen in andere hoofdstukken.
+Tor is now installed and running. We will come back to the configuration of Tor several times in this guide, but you will encounter that naturally in other chapters.
 
