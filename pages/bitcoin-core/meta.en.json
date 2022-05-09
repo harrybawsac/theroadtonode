@@ -1,10 +1,6 @@
 {
 	"installation": "Installation",
-<<<<<<< HEAD
-	"change-tor": "Change Tor",
-=======
 	"change-tor": "Changing tor",
->>>>>>> a4465841f259c04398da9dc3efa11a6f643e6d6e
 	"configure-and-start": "Configure and start",
 	"automation": "Automation",
 	"command-line-interface": "Command line interface",
