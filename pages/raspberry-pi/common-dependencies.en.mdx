@@ -32,18 +32,18 @@ sudo apt purge golang-go
 
 ### Installing
 
-After the old version is removed we can install the new one. At the time of writing, [v1.17.6](https://golang.org/dl) is the most recent. If there is a new version you want to install (or because a later version of LND requires it), make sure you download an ARM64 version of Go for your Raspberry Pi. For example, if you're running on an Intel NUC, you'll need the amd64 version.
+After the old version is removed we can install the new one. At the time of writing, [v1.18.3](https://golang.org/dl) is the most recent. If there is a new version you want to install (or because a later version of LND requires it), make sure you download an ARM64 version of Go for your Raspberry Pi. For example, if you're running on an Intel NUC, you'll need the amd64 version.
 
 ```bash
-wget https://go.dev/dl/go1.17.6.linux-arm64.tar.gz
+wget https://go.dev/dl/go1.18.3.linux-arm64.tar.gz
 ```
 
 ```bash
-sudo tar -C /usr/local -xzf go1.17.6.linux-arm64.tar.gz
+sudo tar -C /usr/local -xzf go1.18.3.linux-arm64.tar.gz
 ```
 
 ```bash
-rm go1.17.6.linux-arm64.tar.gz
+rm go1.18.3.linux-arm64.tar.gz
 ```
 ### Updating
 
@@ -83,7 +83,7 @@ To make sure everything works log out with "exit" and start a new SSH connection
 go version
 ```
 
-If all goes well you should see `go version go1.17.6 linux/arm64` appear.
+If all goes well you should see `go version go1.18.3 linux/arm64` appear.
 
 ## NodeJS
 
@@ -104,7 +104,7 @@ Check that you have the right version with:
 ```bash
 node --version
 
-# Expected output: v16.13.1
+# Expected output: v16.15.1
 ```
 
 ## Yarn
@@ -124,5 +124,5 @@ Verify that Yarn is installed.
 ```bash
 yarn --version
 
-# Expected output: 1.22.17
+# Expected output: 1.22.19
 ```
