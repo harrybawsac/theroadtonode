@@ -50,15 +50,15 @@ Now we can proceed to download the source and install Electrum Personal Server. 
 From the Github, download the [latest release](https://github.com/chris-belcher/electrum-personal-server/releases) of Electrum Personal Server. Copy the link from Source code (tar.gz), unzip it and discard the download.
 
 ```bash
-wget https://github.com/chris-belcher/electrum-personal-server/archive/eps-v0.2.3.tar.gz
-tar -xvf eps-v0.2.3.tar.gz
-rm eps-v0.2.3.tar.gz
+wget https://github.com/chris-belcher/electrum-personal-server/archive/eps-v0.2.4.tar.gz
+tar -xvf eps-v0.2.4.tar.gz
+rm eps-v0.2.4.tar.gz
 ```
 
 Make a copy of the configuration file and modify it.
 
 ```bash
-cp electrum-personal-server-eps-v0.2.3/config.ini_sample config.cfg
+cp electrum-personal-server-eps-v0.2.4/config.ini_sample config.cfg
 nano config.cfg
 ```
 
@@ -74,7 +74,7 @@ This config-file contains a lot of comments and tips on what to enter where. In 
 </Callout>
 
 ```bash
-cd electrum-personal-server-eps-v0.2.3
+cd electrum-personal-server-eps-v0.2.4
 pip3 install wheel
 pip3 install use .
 ```
@@ -184,13 +184,13 @@ From the Github, download the tarball of the [latest release](https://github.com
 ```bash
 cd ~/.eps
 
-wget https://github.com/chris-belcher/electrum-personal-server/archive/eps-v0.2.3.tar.gz
+wget https://github.com/chris-belcher/electrum-personal-server/archive/eps-v0.2.4.tar.gz
 
-tar -xvf eps-v0.2.3.tar.gz
+tar -xvf eps-v0.2.4.tar.gz
 
-rm eps-v0.2.3.tar.gz
+rm eps-v0.2.4.tar.gz
 
-cd electrum-personal-server-eps-v0.2.3
+cd electrum-personal-server-eps-v0.2.4
 
 pip3 install use .
 ```
