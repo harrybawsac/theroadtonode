@@ -6,7 +6,7 @@ import Callout from "nextra-theme-docs/callout";
 	Time: 5 minutes
 </Callout>
 
-The settings of Tor need to be slightly tweaked if you'd like to send commands over RPC from outside of your home netwerk. For this we need to change a file. There's lots of useless stuff in there, so it's recommended to throw away the file first. You can do so with the `rm` command.
+The settings of Tor need to be slightly tweaked if you'd like to send commands over RPC from outside of your home network. For this we need to change a file. There's lots of useless stuff in there, so it's recommended to throw away the file first. You can do so with the `rm` command.
 
 ```bash
 sudo rm /etc/tor/torrc
@@ -42,7 +42,7 @@ You can use the RPC protocol of bitcoind to execute various commands in relation
 	Although the RPC protocol of Core is secured with a password, it is discouraged to make Core accessible from outside. It simply adds too many security risks. When the password is leaked, please understand your funds can be lost. Consider these step as optional.
 </Callout>
 
-Open hthe torrc file.
+Open the torrc file.
 
 ```bash
 sudo nano /etc/tor/torrc
@@ -56,14 +56,10 @@ HiddenServiceVersion 3
 HiddenServicePort 8332 127.0.0.1:8332
 ```
 
-Create the next two files with these commands. The information related to the Tor hidden services will be stored here.
+Create the needed directories with this command. The information related to the Tor hidden services will be stored here.
 
 ```bash
-sudo mkdir /var/lib/tor/bitcoin
-```
-
-```bash
-sudo mkdir /var/lib/tor/bitcoin/bitcoinrpc
+sudo mkdir -p /var/lib/tor/bitcoin/bitcoinrpc
 ```
 
 Assign the correct rights.
