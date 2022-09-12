@@ -6,10 +6,10 @@ import Callout from "nextra-theme-docs/callout";
 Time: almost one and a half hour \(of which 95% waiting while running the `make` command\)
 </Callout>
 
-This part of the guide will take a while, so be prepared. The goal is to compile Bitcoin Core itself. Waht will you be doing?
+This part of the guide will take a while, so be prepared. The goal is to compile Bitcoin Core itself. What will you be doing?
 
 * **Install dependencies**, in order to compile Bitcoin Core you'll need some extra software.
-* **Get the source code**, throught the use of Git you can get the latest source code.
+* **Get the source code**, through the use of Git you can get the latest source code.
 * **Install database**
 * **Compile Bitcoin Core**
 
@@ -23,7 +23,7 @@ sudo apt install git automake autoconf autotools-dev build-essential make pkg-co
 
 ## Source code
 
-Make sure you are in you "home directory". To be sure, exucute `cd ~`. The tilde sign \(`~`\) is a short cut for `/home/ubuntu` in this case. After that, execute the following command to get Bitcoin Core's source code and place it in a folder inside the home directory. A folder named "bitcoi" will automatically be created.
+Make sure you are in you "home directory". To be sure, execute `cd ~`. The tilde sign \(`~`\) is a short cut for `/home/ubuntu` in this case. After that, execute the following command to get Bitcoin Core's source code and place it in a folder inside the home directory. A folder named "bitcoin" will automatically be created.
 
 ```bash
 git clone https://github.com/bitcoin/bitcoin
@@ -37,7 +37,7 @@ cd bitcoin
 
 Due to the [git-flow of Bitcoin Core](https://github.com/bitcoin/bitcoin/blob/master/CONTRIBUTING.md#decision-making-process) you could argue that everything inside the `master` branch is correct and functional. The release process of Bitcoin Core cuts off the `master` branch at a certain predefined date. Everything on that branch at that momen, will make it into the release. Everything that is added to the branch afterward, will be included in the new release.
 
-If you'd like to specify a certain release \(which is recommended\), you can execute the command below. At the momen v23 is the latest version of Bitcoin Core.
+If you'd like to specify a certain release \(which is recommended\), you can execute the command below. At the moment v23 is the latest version of Bitcoin Core.
 
 ```bash
 git checkout v23.0
@@ -64,7 +64,7 @@ Finish it off by compiling Bitcoin Core.
 ```
 
 <Callout emoji="&#x2139;">
-With the command below we configure the installation process of Bitcoin Core. It is possible to run Bitcoin Core without wallet functionality for examplke, and purely use it as a backend for other wallet software. If you're sure you _**WON'T**_ be using the wallet functionality, then run:
+With the command below we configure the installation process of Bitcoin Core. It is possible to run Bitcoin Core without wallet functionality for example, and purely use it as a backend for other wallet software. If you're sure you _**WON'T**_ be using the wallet functionality, then run:
 
 `./configure --without-gui --disable-wallet BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"`
 
@@ -85,7 +85,7 @@ A slightly quicker configuration without dependency tracking, tests and benchmar
 ./configure --without-gui --disable-maintainer-mode --disable-dependency-tracking --disable-tests --disable-gui-tests --disable-bench BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"
 ```
 
-After hitting enter for the following command, you can go do something else. **From experience we can tell this stel will take around one and a half hour.**
+After hitting enter for the following command, you can go do something else. **From experience we can tell this step will take around one and a half hour.**
 
 ```bash
 make -j $(nproc)

@@ -112,7 +112,7 @@ You can add as many rpcauth lines to the configuration file as you like. This wa
 
 ## Firewall and router
 
-If you've setup UFW it's important to open port 8333. This makes sure other nodes in the network can connect with yours. Opening this port is only neccesary if you're \(also\) running your node on cleannet. If you're only running your node on Tor, you can skip this step and continue with "start".
+If you've setup UFW it's important to open port 8333. This makes sure other nodes in the network can connect with yours. Opening this port is only necessary if you're \(also\) running your node on cleannet. If you're only running your node on Tor, you can skip this step and continue with "start".
 
 ```bash
 sudo ufw allow 8333 comment "Port for Bitcoin Core peers"
@@ -134,7 +134,7 @@ Done! You can follow what's happening with `tail`:
 tail -n 200 -f ~/.bitcoin/debug.log
 ```
 
-Everytime a block is verified, you'll see a line appearing that says something like `progress=X.XXXXX`. This is a number from 0 to 1. Zero means nothing is synchonized, one means you're done synchronizing. With `Crtl + C` you can stop the live feed.
+Everytime a block is verified, you'll see a line appearing that says something like `progress=X.XXXXX`. This is a number from 0 to 1. Zero means nothing is synchronized, one means you're done synchronizing. With `Crtl + C` you can stop the live feed.
 
 The initial block download \(IBD\) will take somewhere between 60 and 80 hours. 
 
@@ -148,7 +148,7 @@ Make use of `bitcoin-cli` to get information about the network using your own no
 bitcoin-cli getnetworkinfo
 ```
 
-With this command you can get information about the netwerk. If everything is alright, the output will look similar to the one below if you only use Tor.
+With this command you can get information about the network. If everything is alright, the output will look similar to the one below if you only use Tor.
 
 <Callout emoji="&#x2139;">
 	The onion-address will be different from the one you created in [the last step](https://docs.theroadtonode.com/bitcoin-core/tor-changes#onion-address) \(if you created that one\). It won't match the onion-address you'll see in your output and that's good. The onion-address from the last step is only for applications to make use of your node as their backend from outside of your own network. The onion-address below is created by bitcoind itself and is used for communication with other nodes instead of applications.
@@ -194,7 +194,7 @@ It'll tell you the following:
 * Onion is reachable \(Tor\)
 * Your onion-address within the "localaddresses" block
 
-If you're running your node on both Tor and clearnet, you ouput will look similar to this:
+If you're running your node on both Tor and clearnet, you output will look similar to this:
 
 ```json
 "networks": [

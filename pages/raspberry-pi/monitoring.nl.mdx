@@ -15,7 +15,5 @@ Wat zie je op dit scherm? Bovenaan staan de vier cores van de processor van de P
 Je Pi wordt ook warm, vandaar de heatsink. Wil je weten hoe warm de Pi wordt, voer dan het volgende uit:
 
 ```bash
-cat /sys/class/thermal/thermal_zone0/temp
+echo "$(cat /sys/class/thermal/thermal_zone0/temp)/1000" | bc -l
 ```
-
-Wel even door 1000 delen.

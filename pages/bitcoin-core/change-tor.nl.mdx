@@ -56,14 +56,10 @@ HiddenServiceVersion 3
 HiddenServicePort 8332 127.0.0.1:8332
 ```
 
-Maak de nodige mappen aan met de volgende twee commando's. Hier komt informatie in te staan omtrent de Tor hidden service.
+Maak de benodigde mappen aan met het volgende commando. Hier komt informatie in te staan omtrent de Tor hidden service.
 
 ```bash
-sudo mkdir /var/lib/tor/bitcoin
-```
-
-```bash
-sudo mkdir /var/lib/tor/bitcoin/bitcoinrpc
+sudo mkdir -p /var/lib/tor/bitcoin/bitcoinrpc
 ```
 
 Geef de juiste rechten met:

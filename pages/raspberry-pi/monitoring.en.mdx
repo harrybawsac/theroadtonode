@@ -15,8 +15,5 @@ What do you see on this screen? At the top are the four cores of the Pi's proces
 Your Pi also gets warm, hence the heatsink. If you want to know how hot the Pi gets, run the following:
 
 ```bash
-cat /sys/class/thermal/thermal_zone0/temp
+echo "$(cat /sys/class/thermal/thermal_zone0/temp)/1000" | bc -l
 ```
-
-Just divide by 1000 to get the right value.
-
