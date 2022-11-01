@@ -1,6 +1,6 @@
 {
 	"name": "theroadtonode",
-	"version": "4.1.0",
+	"version": "4.1.1",
 	"description": "The Road to Node",
 	"main": "index.js",
 	"scripts": {
@@ -11,7 +11,7 @@
 	"author": "Lex van der Werff",
 	"license": "MIT",
 	"dependencies": {
-		"next": "^12.2.0",
+		"next": "^12.3.2",
 		"nextra": "^1.1.0",
 		"nextra-theme-docs": "^1.2.6",
 		"react": "^17.0.2",

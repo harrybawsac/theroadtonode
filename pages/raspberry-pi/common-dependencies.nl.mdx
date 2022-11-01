@@ -32,18 +32,18 @@ sudo apt purge golang-go
 
 ### Installeren
 
-Nadat de oude versie is verwijderd kunnen we de nieuwe installeren. Op moment van schrijven is [v1.18.3](https://golang.org/dl) het meest recent. Als er een nieuwe versie is die je wil installeren \(of omdat een latere versie van LND dat vereist\), let er dan op dat je een ARM64 versie van Go download voor je Raspberry Pi. Als je bijvoorbeeld op een Intel NUC draait, dan heb je de amd64 versie nodig.
+Nadat de oude versie is verwijderd kunnen we de nieuwe installeren. Op moment van schrijven is [v1.19.2](https://golang.org/dl) het meest recent. Als er een nieuwe versie is die je wil installeren \(of omdat een latere versie van LND dat vereist\), let er dan op dat je een ARM64 versie van Go download voor je Raspberry Pi. Als je bijvoorbeeld op een Intel NUC draait, dan heb je de amd64 versie nodig.
 
 ```bash
-wget https://go.dev/dl/go1.18.3.linux-arm64.tar.gz
+wget https://go.dev/dl/go1.19.2.linux-arm64.tar.gz
 ```
 
 ```bash
-sudo tar -C /usr/local -xzf go1.18.3.linux-arm64.tar.gz
+sudo tar -C /usr/local -xzf go1.19.2.linux-arm64.tar.gz
 ```
 
 ```bash
-rm go1.18.3.linux-arm64.tar.gz
+rm go1.19.2.linux-arm64.tar.gz
 ```
 
 ### Updaten
@@ -84,14 +84,14 @@ Om zeker van de te zijn dat alles werkt log je uit met "exit" en start je een ni
 go version
 ```
 
-Als het goed is zie je `go version go1.18.3 linux/arm64` verschijnen.
+Als het goed is zie je `go version go1.19.2 linux/arm64` verschijnen.
 
 ## NodeJS
 
 Net als dat Golang binnengehaald moest worden, gaan we nu NodeJS binnenhalen. We willen de nieuwste versie, dus draaien eerst een scriptje. Zorg allereerst dat je in de home directory zit met `cd ~` commando. Voer daarna het script uit.
 
 ```bash
-curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 ```
 
 Nadat het scriptje zijn werk gedaan heeft, kunnen we NodeJS installeren.
@@ -105,7 +105,7 @@ Check of je de juiste versie hebt met:
 ```bash
 node --version
 
-# Verwachte output: v16.15.1
+# Verwachte output: v18.12.1
 ```
 
 ## Yarn
