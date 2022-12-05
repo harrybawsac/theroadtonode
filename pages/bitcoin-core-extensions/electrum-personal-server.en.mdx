@@ -32,7 +32,7 @@ sudo systemctl restart bitcoind
 EPS needs a wallet in Bitcoin Core. Create one if it is not already present. From bitcoin version 23.0 the default wallet type created is descriptor, which does not support importing adresses. To prevent this you need to add `descriptors=false`
 
 ```bash
-bitcoin-cli createwallet electrumpersonalserver true descriptors=false
+bitcoin-cli -named createwallet wallet_name="electrumpersonalserver" disable_private_keys=true descriptors=false
 ```
 
 Finally, create the following folder in your homedir and go into it.
