@@ -1,0 +1,200 @@
+import Callout from "nextra-theme-docs/callout";
+
+# Ligess
+
+<Callout emoji="&#x2139;">
+	Tijd: 20 minuten
+</Callout>
+
+Met Ligess configureer je een eigen [lightning address](https://lightningaddress.com/) server die is verbonden met je node. Meer informatie lees je in de [Github repository](https://github.com/Dolu89/ligess).
+![](https://i.imgur.com/DIV5q8q.png)
+
+## Benodigdheden
+
+* [NodeJS](/raspberry-pi/common-dependencies#nodejs)
+* Domeinnaam die verwijst naar jouw server waarop je Ligess installeert.
+
+## Installatie
+
+Navigeer naar je home directory.
+```bash
+cd ~
+```
+
+Haal de broncode op en clone de Git repository.
+```bash
+git clone https://github.com/dolu89/ligess
+```
+
+Duik de code in.
+```bash
+cd ~/ligess
+```
+
+Installeer Ligess.
+```bash
+npm install
+```
+
+Maak een kopie van de voorbeeld env variablen bestand en noem deze `.env`.
+```bash
+cp .env.example .env
+```
+
+Pas dit bestand aan met jouw .env variablen.
+```bash
+sudo nano .env
+```
+
+Voorbeeld:
+
+```bash
+LIGESS_USERNAME=jouw_username
+LIGESS_DOMAIN=jouwdomeinnaam.com
+
+LIGESS_LN_BACKEND=LND
+
+LIGESS_LND_REST=https://0.0.0.0:8080
+LIGESS_LND_MACAROON=[...]
+
+HOST=127.0.0.1
+PORT=8088
+```
+
+Om een macaroon in hex format te aan maken, zie https://github.com/ZeusLN/lnd-hex-macaroon-generator. Als je deze tool hebt geïnstalleerd, gebruik je deze als volgt:
+```bash
+node index.js
+> /home/ubuntu/.lnd/data/chain/bitcoin/mainnet/backup/invoice.macaroon
+```
+
+De output vul je in bij `LIGESS_LND_MACAROON` in `.env`.
+Jouw lightning address ziet er nu als volgt uit: `jouw_username@jouwdomein.com`
+
+Test of het werkt:
+```bash
+yarn dev
+```
+Open vervolgens de link in je browser:
+`http://localhost:8088/.well-known/lnurlp/jouw_username`
+
+## Automatiseer
+
+```bash
+sudo nano /etc/systemd/system/ligess.service
+```
+
+Plaats het volgende erin.
+```bash
+[Unit]
+Description=Ligess
+Requires=ligess.service
+After=ligess.service
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/ligess
+ExecStart=yarn dev
+Restart=always
+TimeoutSec=120
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Sla het weer op met `Ctrl + X` en bevestig met `Y`.
+
+Het systeem moet op de hoogte gesteld worden van de nieuwe service en kan daarna gestart worden.
+
+```bash
+sudo systemctl enable ligess
+```
+```bash
+sudo systemctl start ligess
+```
+Wil je zien of alles goed is opgestart, voer dan dit uit:
+
+```bash
+systemctl status ligess
+```
+
+Wil je een overzicht van de status over meerdere sessie, gebruik dan dit:
+```bash
+sudo journalctl -f -u ligess
+```
+
+## Nginx reverse proxy
+
+Lokaal werkt je setup nu, maar jouw lightning address is nog niet van buitenaf bereikbaar. Daarvoor kun je deze Nginx reverse proxy setup gebruiken.
+
+```bash
+upstream lnurlp {
+    server 127.0.0.1:8088;
+}
+server {
+    server_name jouwdomeinnaam.com;
+
+    listen [::]:443 ssl http2; # managed by Certbot
+    listen 443 ssl http2; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/jouwdomeinnaam.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/jouwdomeinaam.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Host $host;
+
+    location /.well-known/lnurlp/ {
+        if ($request_method = 'GET') {
+            add_header 'Access-Control-Allow-Origin' '*';
+        }
+        proxy_pass http://lnurlp;
+    }
+}
+server {
+    if ($host = jouwdomeinnaam.com) {
+        return 301 https://$host$request_uri;
+    }
+
+    server_name jouwdomeinnaam.com;
+
+    listen 80;
+    listen [::]:80;
+    return 404;
+}
+```
+
+## Updaten
+
+Ga naar de applicatie directory.
+
+```bash
+cd ~/ligess
+```
+
+Update de repository met de laatste wijzigingen via Git.
+
+```bash
+git fetch --all
+```
+```bash
+git pull
+```
+
+Installeer de software.
+
+```bash
+npm install
+```
+
+Herstart de Ligess service.
+
+```bash
+sudo systemctl restart ligess
+```
+
+Ligess is nu bijgewerkt!
+
+## Gebruiken
+
+Om gebruik te maken van je eigen lightning address dien je een wallet te gebruiken die dit ondersteund. Een complete lijst vind je [hier](https://github.com/andrerfneves/lightning-address#wallets-supported).

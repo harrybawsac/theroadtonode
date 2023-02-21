@@ -1,19 +1,25 @@
 import Callout from "nextra-theme-docs/callout";
 
-# Ligess
-
-Jouw personal Lightning address server.
+# Ligess - WIP
 
 <Callout emoji="&#x2139;">
 	Tijd: 10 minuten
 </Callout>
+
+Jouw personal Lightning address server die is verbonden met je node.
+
+### Benodigdheden
+
+* [NodeJS](/raspberry-pi/common-dependencies#nodejs)
+
+## Installatie
 
 `git clone https://github.com/dolu89/ligess`
 `cd ligess`
 `npm install`
 `cp .env.example .env`
 
-Pas .env aan met jouw variablen. Voorbeeld:
+Pas de .env variables aan met jouw waardes. Voorbeeld:
 
 ```
 LIGESS_USERNAME=jouw_username
@@ -28,14 +34,14 @@ HOST=127.0.0.1
 PORT=8088
 ```
 
-Je adres ziet er nu als volgt uit: `jouw_username@jouwdomein.com`
-
 Om een macaroon in hex format te maken:
 https://github.com/ZeusLN/lnd-hex-macaroon-generator
 `node index.js`
 `> /home/ubuntu/.lnd/data/chain/bitcoin/mainnet/backup/invoice.macaroon`
 
 De output vul je in bij `LIGESS_LND_MACAROON`.
+
+Je lightning adres ziet er nu als volgt uit: `jouw_username@jouwdomein.com`
 
 Test of het werkt:
 `npm run dev`
