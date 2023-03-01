@@ -6,13 +6,14 @@ import Callout from "nextra-theme-docs/callout";
 	Tijd: 20 minuten
 </Callout>
 
-Met Ligess configureer je een eigen [lightning address](https://lightningaddress.com/) server die is verbonden met je node. Meer informatie lees je in de [Github repository](https://github.com/Dolu89/ligess).
+Met Ligess configureer je een eigen [lightning address](https://lightningaddress.com/) server die verbonden is met jouw node. Meer informatie lees je in de [Github repository](https://github.com/Dolu89/ligess).
 ![](https://i.imgur.com/DIV5q8q.png)
 
 ## Benodigdheden
 
-* [NodeJS](/raspberry-pi/common-dependencies#nodejs)
-* Domeinnaam die verwijst naar jouw server waarop je Ligess installeert.
+* [NodeJS](/nl/raspberry-pi/common-dependencies#nodejs)
+* Een [Lightning node](/nl/lightning/installation)
+* Domeinnaam die verwijst naar jouw server waarop je Ligess installeert
 
 ## Installatie
 
@@ -36,20 +37,21 @@ Installeer Ligess.
 npm install
 ```
 
-Maak een kopie van de voorbeeld env variablen bestand en noem deze `.env`.
+Maak een kopie van het `.env.example` bestand en noem deze `.env`.
 ```bash
 cp .env.example .env
 ```
 
 Pas dit bestand aan met jouw .env variablen.
 ```bash
-sudo nano .env
+nano .env
 ```
+Sla het op met `Ctrl + X` en bevestig met `Y`.
 
 Voorbeeld:
 
 ```bash
-LIGESS_USERNAME=jouw_username
+LIGESS_USERNAME=jouw_naam
 LIGESS_DOMAIN=jouwdomeinnaam.com
 
 LIGESS_LN_BACKEND=LND
@@ -60,22 +62,32 @@ LIGESS_LND_MACAROON=[...]
 HOST=127.0.0.1
 PORT=8088
 ```
-
-Om een macaroon in hex format te aan maken, zie https://github.com/ZeusLN/lnd-hex-macaroon-generator. Als je deze tool hebt geïnstalleerd, gebruik je deze als volgt:
+Bij `LIGESS_LND_MACAROON` dien je een hex encoded macaroon te plaatsen waar in het voorbeeld `[...]` staat.
+Om een macaroon in hex format te aan maken, kun je https://github.com/ZeusLN/lnd-hex-macaroon-generator gebruiken.
+Als je deze tool hebt geïnstalleerd, gebruik je deze als volgt:
 ```bash
 node index.js
 > /home/ubuntu/.lnd/data/chain/bitcoin/mainnet/backup/invoice.macaroon
 ```
 
 De output vul je in bij `LIGESS_LND_MACAROON` in `.env`.
-Jouw lightning address ziet er nu als volgt uit: `jouw_username@jouwdomein.com`
 
-Test of het werkt:
+## Firewall
+
+Zet port 8088 open.
+
+```bash
+sudo ufw allow 8088 comment "Ligess"
+```
+
+Jouw lightning address ziet er nu als volgt uit: `jouw_naam@jouwdomein.com`
+
+Test of Ligess werkt door de applicatie te starten:
 ```bash
 yarn dev
 ```
-Open vervolgens de link in je browser:
-`http://localhost:8088/.well-known/lnurlp/jouw_username`
+Open vervolgens deze link in je browser:
+`http://localhost:8088/.well-known/lnurlp/jouw_naam`
 
 ## Automatiseer
 
@@ -83,7 +95,7 @@ Open vervolgens de link in je browser:
 sudo nano /etc/systemd/system/ligess.service
 ```
 
-Plaats het volgende erin.
+Plak het volgende erin.
 ```bash
 [Unit]
 Description=Ligess
@@ -198,3 +210,5 @@ Ligess is nu bijgewerkt!
 ## Gebruiken
 
 Om gebruik te maken van je eigen lightning address dien je een wallet te gebruiken die dit ondersteund. Een complete lijst vind je [hier](https://github.com/andrerfneves/lightning-address#wallets-supported).
+
+Je kunt je lightning address ook testen / decoden op [https://lightningdecoder.com](https://lightningdecoder.com) waar je `jouw_naam@jouwdomein.com` invult bij Enter Invoice.
