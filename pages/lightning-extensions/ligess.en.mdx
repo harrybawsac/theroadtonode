@@ -137,10 +137,36 @@ If you want an overview of the status over multiple session, use this:
 sudo journalctl -f -u ligess
 ```
 
-## Nginx reverse proxy
+## Server
 
 Locally, your setup should now work, but your lightning address is not yet reachable from the outside.
-For that you can use this Nginx reverse proxy setup.
+For that you can use a Nginx reverse proxy webserver setup.
+
+Install Nginx:
+
+```bash
+sudo apt install -y nginx
+```
+
+You also need to install Certbot to create a Let's Encrypt SSL certificate:
+
+```bash
+sudo apt install -y certbot python3-certbot-nginx
+```
+
+Open port 80 and 443 for Nginx:
+
+```bash
+sudo ufw allow 'Nginx Full'
+```
+
+Create Nginx configuration file for Ligess:
+
+```bash
+sudo nano /etc/nginx/ligess.conf
+```
+
+In this file, paste the following text and replace `yourdomainname.com` with your own domain:
 
 ```bash
 upstream lnurlp {
@@ -179,6 +205,22 @@ server {
 }
 ```
 
+Save it with `Ctrl + X` and confirm with `Y`.
+You can check the configuration with `sudo nginx -t` whose output should look like:
+
+```bash
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+```
+
+To load the Ligess Nginx configuration you need to restart Nginx with `sudo systemctl restart nginx`.
+
+You now can create a Let's Encrypt SSL certificate:
+
+```bash
+sudo certbot --nginx -d jouwdomeinnaam.com
+```
+
 ## Updating
 
 Go to the application directory.
@@ -215,4 +257,4 @@ Ligess is now updated!
 
 To use your own lightning address you need to use a wallet that supports it. A complete list can be found [here](https://github.com/andrerfneves/lightning-address#wallets-supported).
 
-You can also test/decode your lightning address at [https://lightningdecoder.com](https://lightningdecoder.com) where you can enter `jouw_naam@jouwdomein.com` at Enter Invoice.
+You can also test/decode your lightning address at [https://lightningdecoder.com](https://lightningdecoder.com) where you can enter `your_name@jouwdomein.com` at Enter Invoice.

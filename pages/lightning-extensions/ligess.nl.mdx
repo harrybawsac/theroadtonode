@@ -135,9 +135,34 @@ Wil je een overzicht van de status over meerdere sessie, gebruik dan dit:
 sudo journalctl -f -u ligess
 ```
 
-## Nginx reverse proxy
+## Server
 
-Lokaal werkt je setup nu, maar jouw lightning address is nog niet van buitenaf bereikbaar. Daarvoor kun je deze Nginx reverse proxy setup gebruiken.
+Lokaal werkt je setup nu, maar jouw lightning address is nog niet van buitenaf bereikbaar. Daarvoor kun je een Nginx reverse proxy webserver setup gebruiken.
+Installeer Nginx:
+
+```bash
+sudo apt install -y nginx
+```
+
+Je dient ook Certbot te installeren om een Let's Encrypt SSL certificaat aan te maken:
+
+```bash
+sudo apt install -y certbot python3-certbot-nginx
+```
+
+Zet port 80 en 443 open voor Nginx:
+
+```bash
+sudo ufw allow 'Nginx Full'
+```
+
+Maak het Nginx configuratie bestand aan voor Ligess:
+
+```bash
+sudo nano /etc/nginx/ligess.conf
+```
+
+Plak daarin de volgende tekst en vervang op de plekken waar `jouwdomeinnaam.com` staat met jouw eigen domeinnaam:
 
 ```bash
 upstream lnurlp {
@@ -174,6 +199,22 @@ server {
     listen [::]:80;
     return 404;
 }
+```
+
+Sla het op met `Ctrl + X` en bevestigen met `Y`.
+Je kunt de configuratie controleren met `sudo nginx -t` waarvan de output moet lijken op:
+
+```bash
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+```
+
+Om de Ligess Nginx configuratie in te laden herstart je Nginx met `sudo systemctl restart nginx`.
+
+Je kunt nu een SSL certificaat met Certbot aanmaken:
+
+```bash
+sudo certbot --nginx -d jouwdomeinnaam.com
 ```
 
 ## Updaten
