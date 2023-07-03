@@ -29,7 +29,7 @@ git describe --tags `git rev-list --tags --max-count=1`
 Retrieve the changes from the latest release.
 
 ```bash
-git checkout -f <OUTPUT OF PREVIOUS STEP> #example: v23.0
+git checkout -f <OUTPUT OF PREVIOUS STEP> #example: v25.0
 ```
 
 Rebuild bitcoin core based on the version of the source code you just checked out. The addition of `-j $(nproc)` uses all the cores of the CPU and would make the build faster than it would be without this addition.
@@ -67,7 +67,7 @@ Check the current version of bitcoin core.
 bitcoin-cli --version
 ```
 
-The output will look like `Bitcoin Core RPC client v23.0` and Core is now updated!
+The output will look like `Bitcoin Core RPC client v25.0` and Core is now updated!
 
 Start the other services you may have disabled. Note that when you start LND, unlocking LND can only be done after bitcoin's blockchain has been resynchronized. Check with `tail -f -n 200 .bitcoin/debug.log` how far along it is. Services start this way:
 

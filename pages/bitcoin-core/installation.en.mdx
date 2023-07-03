@@ -40,19 +40,7 @@ Due to the [git-flow of Bitcoin Core](https://github.com/bitcoin/bitcoin/blob/ma
 If you'd like to specify a certain release \(which is recommended\), you can execute the command below. At the moment v23 is the latest version of Bitcoin Core.
 
 ```bash
-git checkout v23.0
-```
-
-## Database
-
-Inside of the repository of Core is a script to install the database. Bitcoin Core needs this to function. Stay in the current directory \(`/home/ubuntu/bitcoin`\) and execute the command below. All of the subsequent command will also be executed from within this directory.
-
-```bash
-./contrib/install_db4.sh `pwd`
-```
-
-```bash
-export BDB_PREFIX='/home/ubuntu/bitcoin/db4'
+git checkout v25.0
 ```
 
 ## Compiling Bitcoin Core
@@ -66,7 +54,7 @@ Finish it off by compiling Bitcoin Core.
 <Callout emoji="&#x2139;">
 With the command below we configure the installation process of Bitcoin Core. It is possible to run Bitcoin Core without wallet functionality for example, and purely use it as a backend for other wallet software. If you're sure you _**WON'T**_ be using the wallet functionality, then run:
 
-`./configure --without-gui --disable-wallet BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"`
+`./configure --without-gui --disable-wallet`
 
 The above command has an additional flag `--disable-wallet`. If you're not sure whether you need the wallet functionality, run the command below.
 
@@ -76,7 +64,7 @@ Did you configure Bitcoin Core without the wallet functionality but still want t
 Do you want to know about any other option in regards to the installation of Bitcoin Core, run `./configure --help`.
 
 ```bash
-./configure --without-gui BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include"
+./configure --without-gui
 ```
 
 A slightly quicker configuration without dependency tracking, tests and benchmarks:
