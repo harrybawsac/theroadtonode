@@ -32,8 +32,13 @@ Retrieve the changes from the latest release.
 git checkout -f <OUTPUT OF PREVIOUS STEP> #example: v25.0
 ```
 
-Rebuild bitcoin core based on the version of the source code you just checked out. The addition of `-j $(nproc)` uses all the cores of the CPU and would make the build faster than it would be without this addition.
+Be sure to start from a clean slate. It could prevent some errors later on.
 
+```bash
+make clean
+```
+
+Rebuild bitcoin core based on the version of the source code you just checked out. The addition of `-j $(nproc)` uses all the cores of the CPU and would make the build faster than it would be without this addition.
 
 ```bash
 make -j $(nproc)
