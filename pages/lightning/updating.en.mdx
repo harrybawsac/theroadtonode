@@ -45,13 +45,13 @@ git describe --tags `git rev-list --tags --max-count=1`
 Retrieve the changes from the latest release.
 
 ```bash
-git checkout -f <OUTPUT FROM PREVIOUS STEP> #example: v0.15.4-beta
+git checkout -f <OUTPUT FROM PREVIOUS STEP> #example: v0.16.4-beta
 ```
 
 Now install the software.
 
 ```bash
-make install tags="autopilotrpc signrpc walletrpc chainrpc invoicesrpc routerrpc watchtowerrpc monitoring"
+make install tags="autopilotrpc signrpc walletrpc chainrpc invoicesrpc routerrpc watchtowerrpc monitoring peersrpc"
 ```
 
 ## Start the services
@@ -78,7 +78,7 @@ Check the current version of LND.
 lncli --version
 ```
 
-The output will look like `lncli version 0.15.4-beta commit=v0.15.4-beta`.
+The output will look like `lncli version 0.15.4-beta commit=v0.16.4-beta`.
 
 LND is now updated! Now start the other services that depend on LND such as RTL or Thunderhub.
 

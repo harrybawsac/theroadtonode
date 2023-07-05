@@ -27,6 +27,7 @@ restlisten=0.0.0.0:8080
 rpclisten=0.0.0.0:10009
 listen=127.0.0.1:9735
 maxpendingchannels=5
+rpcmiddleware.enable=true
 color=YOURSETTING_A
 alias=YOURSETTING_B
 
@@ -47,6 +48,7 @@ bitcoind.rpcpass=FROM_BITCOIND_B
 bitcoind.zmqpubrawblock=tcp://127.0.0.1:28332
 bitcoind.zmqpubrawtx=tcp://127.0.0.1:28333
 ```
+
 In the text above, there are four things you need to take care of yourself.
 
 * **color**, change YOURSETTING_A to a color of your choice. It is a hexadecimal value. For example `color=#123ABC` for the color blue.
