@@ -20,7 +20,7 @@ Lightning Terminal gives the user a nice skin around existing tools from Lightni
 
 A demo video can be found [here](https://lightning.engineering/static/terminal-2c00f93b062f44e5c2d1db067f7ee8cd.mp4).
 
-### Prerequisites
+### Requirements
 
 * [Faraday](/lightning-extensions/faraday)
 * [Golang](/raspberry-pi/common-dependencies#golang)
@@ -31,14 +31,14 @@ A demo video can be found [here](https://lightning.engineering/static/terminal-2
 
 ## Configuring LND for LiT
 
-If you have installed LND without any special installation tags, you need to reinstall LND for a while. If you followed the guide, you don't have to worry and you can skip this section.
+If you have installed LND without any special installation tags, you need to reinstall LND. If you followed the guide, you don't have to worry and you can skip this section.
 
 Since we are reinstalling LND with new tags, the macaroon files (files that provide authentication) need to be removed. After restarting the fresh installation, the files will be recreated.
 
 <Callout emoji="&#x2139;">
 	Your channels and wallet will continue to exist on a reinstallation of LND. Just like an update.
 
-Are you running Thunderhub or other tools that depend on LND? If so, you'll need to restart those after restarting LND as well.
+	Are you running Thunderhub or other tools that depend on LND? If so, you'll need to restart those after restarting LND as well.
 </Callout>
 
 Go to the source files directory of LND to reinstall LND with the correct installation tags.
