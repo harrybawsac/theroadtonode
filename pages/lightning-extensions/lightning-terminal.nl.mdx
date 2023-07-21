@@ -104,7 +104,7 @@ cd lightning-terminal
 Pak de laatste versie/tag/release.
 
 ```bash
-git checkout v0.8.3-alpha
+git checkout v0.10.2-alpha
 ```
 
 Installeer Lightning Terminal. Dit kan ongeveer een kwartier duren.
@@ -186,12 +186,10 @@ Plak er dit in.
 ```toml
 [Unit]
 Description=Lightning Terminal
-Requires=bitcoind.service
 Requires=lnd.service
 Requires=faraday.service
 Requires=loop.service
 Requires=pool.service
-After=bitcoind.service
 After=lnd.service
 After=faraday.service
 After=loop.service
@@ -266,7 +264,7 @@ git describe --tags `git rev-list --tags --max-count=1`
 Haal de wijzigingen op van de laatste versie.
 
 ```bash
-git checkout -f <OUTPUT VAN DE VORIGE STAP> #bijvoorbeeld v0.8.3-alpha
+git checkout -f <OUTPUT VAN DE VORIGE STAP> #bijvoorbeeld v0.10.2-alpha
 ```
 
 Installeer Lightning Terminal.

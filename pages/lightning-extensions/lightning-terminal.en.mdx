@@ -8,7 +8,7 @@ import Callout from "nextra-theme-docs/callout";
 
 Lightning Terminal gives the user a nice skin around existing tools from Lightning Labs. The tools are [Loop](https://lightning.engineering/loop), [Faraday](https://github.com/lightninglabs/faraday) and [Pool](https://lightning.engineering/pool). At the moment, Loop is good to use through LiT. Pool also works fine, but is still in preview phase. Faraday has only 1 functionality in LiT, but more will be added.
 
-### LiT use cases as far as.
+### LiT use cases
 
 * A visual overview of the balance of your Lightning channels.
 * Balancing channels via Loop using submarine swaps.
@@ -20,7 +20,7 @@ Lightning Terminal gives the user a nice skin around existing tools from Lightni
 
 A demo video can be found [here](https://lightning.engineering/static/terminal-2c00f93b062f44e5c2d1db067f7ee8cd.mp4).
 
-### Supplies
+### Prerequisites
 
 * [Faraday](/lightning-extensions/faraday)
 * [Golang](/raspberry-pi/common-dependencies#golang)
@@ -104,7 +104,7 @@ cd lightning-terminal
 Grab the latest version/tag/release.
 
 ```bash
-git checkout v0.8.3-alpha
+git checkout v0.10.2-alpha
 ```
 
 Install Lightning Terminal. This may take about 15 minutes.
@@ -186,12 +186,10 @@ Paste this into it.
 ```toml
 [Unit]
 Description=Lightning Terminal
-Requires=bitcoind.service
 Requires=lnd.service
 Requires=faraday.service
 Requires=loop.service
 Requires=pool.service
-After=bitcoind.service
 After=lnd.service
 After=faraday.service
 After=loop.service
@@ -266,7 +264,7 @@ git describe --tags `git rev-list --tags --max-count=1`
 Retrieve the changes from the latest release.
 
 ```bash
-git checkout -f <OUTPUT FROM PREVIOUS STEP> #e.g. v0.8.3-alpha
+git checkout -f <OUTPUT FROM PREVIOUS STEP> #e.g. v0.10.2-alpha
 ```
 
 Install Lightning Terminal.
