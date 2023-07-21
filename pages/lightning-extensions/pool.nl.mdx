@@ -35,7 +35,7 @@ cd pool
 Pak de laatste versie/tag/release.
 
 ```bash
-git checkout v0.6.0-beta
+git checkout v0.6.4-beta
 ```
 
 Installeer de Pool software.
@@ -77,9 +77,7 @@ Plak dit erin.
 ```toml
 [Unit]
 Description=Pool
-Requires=bitcoind.service
 Requires=lnd.service
-After=bitcoind.service
 After=lnd.service
 
 [Service]
@@ -142,7 +140,7 @@ git describe --tags `git rev-list --tags --max-count=1`
 Haal de wijzigingen op van de laatste versie.
 
 ```bash
-git checkout -f <OUTPUT VAN DE VORIGE STAP> #bijvoorbeeld v0.6.0-beta
+git checkout -f <OUTPUT VAN DE VORIGE STAP> #bijvoorbeeld v0.6.4-beta
 ```
 
 Installeer de `poold` software.

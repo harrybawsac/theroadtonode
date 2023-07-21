@@ -35,7 +35,7 @@ cd loop
 Pak de laatste versie/tag/release.
 
 ```bash
-git checkout v0.20.2-beta
+git checkout v0.25.2-beta
 ```
 
 Ga naar `loop/cmd`.
@@ -83,9 +83,7 @@ Plak dit erin.
 ```toml
 [Unit]
 Description=Loop
-Requires=bitcoind.service
 Requires=lnd.service
-After=bitcoind.service
 After=lnd.service
 
 [Service]
@@ -148,7 +146,7 @@ git describe --tags `git rev-list --tags --max-count=1`
 Haal de wijzigingen op van de laatste versie.
 
 ```bash
-git checkout -f <OUTPUT VAN DE VORIGE STAP> #bijvoorbeeld v0.20.2-beta
+git checkout -f <OUTPUT VAN DE VORIGE STAP> #bijvoorbeeld v0.25.2-beta
 ```
 
 Ga naar `cmd`.

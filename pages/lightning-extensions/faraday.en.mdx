@@ -52,7 +52,7 @@ faraday --version
 frcli --version
 ```
 
-You can go a step further by starting Faraday with the correct settings. In the text below, in the spots "VULGATE_USERNAME_IN" and "VULGATE_PASSWORD_IN" you need to enter the data you created during the [configuration](/bitcoin-core/configure-and-start) of Core.
+You can go a step further by starting Faraday with the correct settings. In the text below, in the spots "FILL_USERNAME_IN" and "FILL_PASSWORD_IN" you need to enter the data you created during the [configuration](/bitcoin-core/configure-and-start) of Core.
 
 ```bash
 faraday --lnd.macaroondir=/home/ubuntu/.lnd/data/chain/bitcoin/mainnet --lnd.tlscertpath=/home/ubuntu/.lnd/tls.cert --lnd.rpcserver=127.0.0.1:10009 --connect_bitcoin --bitcoin.host=127.0.0.1:8332 --bitcoin.user=ENTER_USERNAME_HERE--bitcoin.password=ENTER_PASSWORD_HERE
@@ -81,9 +81,7 @@ Paste this in.
 ```toml
 [Unit]
 Description=Faraday
-Requires=bitcoind.service
 Requires=lnd.service
-After=bitcoind.service
 After=lnd.service
 
 [Service]
