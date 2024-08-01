@@ -15,7 +15,19 @@ Electrs waits for Bitcoin Core to finish synchronizing. So you can't use Electrs
 Start by installing the dependencies.
 
 ```bash
-sudo apt install -y clang cmake cargo
+sudo apt install -y clang cmake
+```
+
+Install Rust and Cargo
+
+```bash
+curl https://sh.rustup.rs -sSf | sh
+```
+
+Source the corresponding env file
+
+```bash
+. "$HOME/.cargo/env"
 ```
 
 Make sure you are in the home directory and get Electrs in via Git.
