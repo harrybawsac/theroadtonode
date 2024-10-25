@@ -16,7 +16,19 @@ Electrs wacht totdat Bitcoin Core klaar is met synchroniseren. Je kunt dus geen 
 Begin met het installeren van de dependencies.
 
 ```bash
-sudo apt install -y clang cmake cargo
+sudo apt install -y clang cmake
+```
+
+Installeer Rust en Cargo.
+
+```bash
+curl https://sh.rustup.rs -sSf | sh
+```
+
+Source het bijbehorende environment-bestand.
+
+```bash
+. "$HOME/.cargo/env"
 ```
 
 Zorg dat je in de home directory bent en haal Electrs binnen via Git.
