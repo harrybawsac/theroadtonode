@@ -6,32 +6,45 @@ import Callout from "nextra-theme-docs/callout";
 	Tijd: 15 minuten
 </Callout>
 
-Het is tijd om iets met een beeldscherm te doen. De Pi moet een besturingssysteem hebben, namelijk [Ubuntu Server 20 LTS](https://ubuntu.com/download/raspberry-pi). Ook [Raspberry Pi OS Lite](https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2020-08-24/2020-08-20-raspios-buster-arm64-lite.zip) is nodig voor het eenmalig instellen van de Pi. Om de besturingssystemen op zowel de SSD als de microSD te krijgen, gebruiken we het programma [Balena Etcher](https://www.balena.io/etcher). Gebruik je Windows dan zou je ook [Rufus](https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe) kunnen gebruiken.
+Het is tijd om iets met een beeldscherm te doen. De Pi moet een besturingssysteem hebben, namelijk [Ubuntu Server LTS](https://ubuntu.com/download/raspberry-pi). Om Ubuntu op de SSD te krijgen, gebruiken we het programma [Raspberry Pi Imager](https://www.raspberrypi.com/software/). We gebruiken dezelfde software om eenmalig de Pi in te stellen met Raspberry Pi OS.
 
 ## Raspberry Pi OS
 
-We beginnen met het flashen van Raspberry Pi OS naar de microSD. Open Balena Etcher, selecteer de Raspberry Pi OS image en microSD en druk op de knop "Flash!".
+We beginnen met het flashen van Raspberry Pi OS naar de microSD. Open de Raspberry Pi Imager en selecteer de volgende twee dingen:
 
-![Raspberry Pi OS flashen naar de microSD](/flash-pi-os.png)
+- Raspberry Pi Device: Raspberry Pi 4
+- Operating System: Raspberry Pi OS Lite (64-bit). Je vindt het onder "Raspberry Pi OS (other)".
+- Storage: microSD.
 
-Zodra het klaar is zal de microSD uitgeworpen worden. Haal hem uit je computer en steek hem er opnieuw in zodat je computer de microSD weer ziet. [Open de Terminal](https://support.apple.com/nl-nl/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac) en typ het volgende commando waarna je op enter drukt.
+![Setup voor het flashen van Raspi OS Lite](/rpi-imager-raspberry-pi-os-setup.jpeg)
 
-```bash
-touch /Volumes/boot/ssh
-```
+Wanneer je op "NEXT" klikt, zal het vragen of je de instellingen wilt aanpassen. Klik op "EDIT SETTINGS".
 
-Zit je [op Windows](https://arjanlobbezoo.nl/windows-10-programma-administrator-mode-openen), dan zou iets in de trant van het volgende moeten werken. In dit voorbeeld zou je de D-schijf moeten aanpassen naar wat voor jou van toepassing is.
+![Configuratiebericht voor het flashen van Raspi OS Lite](/rpi-imager-raspberry-pi-os-config.jpeg)
 
-```bash
-d:
-```
+In de instellingen kun je de gebruikersnaam, het wachtwoord en de SSH-instellingen instellen. Stel de gebruikersnaam in op `pi` en het wachtwoord op `raspberry`.
 
-```bash
-type nul > ssh
-```
+![Algemene instellingen voor het flashen van Raspi OS Lite](/rpi-imager-raspberry-pi-os-general.jpeg)
 
-Met bovenstaande commando's wordt een bestand aangemaakt op de microSD. Het bestand heet "ssh" en als de Pi opstart met dit bestand aan boord, maakt de Pi het mogelijk om zich te laten aansturen van buitenaf. We gaan namelijk met behulp van SSH de Pi aansturen vanaf onze computer. Werp tot slot de microSD uit en stop hem in de Pi.
+Schakel over naar het tabblad "SERVICES" en schakel SSH in.
+
+![Service-instellingen voor het flashen van Raspi OS Lite](/rpi-imager-raspberry-pi-os-services.jpeg)
+
+Klik op "SAVE" en schrijf vervolgens de image naar de microSD-kaart. Zodra dit is voltooid, wordt de microSD-kaart uitgeworpen. Je kunt deze in de Pi steken.
 
 ## SSD
 
-Herhaal het bovenstaande voor de SSD, maar gebruik dan de Ubuntu image en laat het `ssh` bestand zitten. Dat zit standaard al aan boord van Ubuntu.
+Sluit de SSD aan op je computer. Open de Raspberry Pi Imager en selecteer de volgende twee dingen:
+
+- Raspberry Pi Device: Raspberry Pi 4
+- Operating System: Ubuntu Server 24.04.1 LTS (64-bit). Je vindt het onder "Other general-purpose OS" en dan "Ubuntu". Installeer geen 24.10, omdat dit geen LTS (Long Term Support) versie is.
+- Storage: SSD.
+
+![Setup voor het flashen van Ubuntu Server 24 LTS](/rpi-imager-ubuntu-server-setup.jpeg)
+
+Wanneer je op "NEXT" klikt, zal het vragen of je de instellingen wilt aanpassen. Klik op "EDIT SETTINGS".
+
+Gebruik dezelfde instellingen als voor Raspberry Pi OS, maar stel de gebruikersnaam in op `ubuntu` en het wachtwoord op `ubuntu`.
+
+Klik op "SAVE" en schrijf vervolgens de image naar de SSD. Zodra dit is voltooid, wordt de SSD uitgeworpen. 
+

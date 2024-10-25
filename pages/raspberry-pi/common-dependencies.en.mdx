@@ -32,18 +32,18 @@ sudo apt purge golang-go
 
 ### Installing
 
-After the old version is removed we can install the new one. At the time of writing, [v1.19.2](https://golang.org/dl) is the most recent. If there is a new version you want to install (or because a later version of LND requires it), make sure you download an ARM64 version of Go for your Raspberry Pi. For example, if you're running on an Intel NUC, you'll need the amd64 version.
+After the old version is removed we can install the new one. At the time of writing, [v1.23.2](https://golang.org/dl) is the most recent. If there is a new version you want to install (or because a later version of LND requires it), make sure you download an ARM64 version of Go for your Raspberry Pi. For example, if you're running on an Intel NUC, you'll need the amd64 version.
 
 ```bash
-wget https://go.dev/dl/go1.20.5.linux-arm64.tar.gz
+wget https://go.dev/dl/go1.23.2.linux-arm64.tar.gz
 ```
 
 ```bash
-sudo tar -C /usr/local -xzf go1.20.5.linux-arm64.tar.gz
+sudo tar -C /usr/local -xzf go1.23.2.linux-arm64.tar.gz
 ```
 
 ```bash
-rm go1.20.5.linux-arm64.tar.gz
+rm go1.23.2.linux-arm64.tar.gz
 ```
 ### Updating
 
@@ -55,7 +55,7 @@ sudo rm -rf /usr/local/go
 
 Once you have removed the old version, you can run the three commands [under the previous heading](/raspberry-pi/common-dependencies#installing).
 
-### Update Referencies
+### Update References
 
 To make Go work properly we need to change some paths. To do that, we'll edit the profile file.
 
@@ -83,14 +83,14 @@ To make sure everything works log out with "exit" and start a new SSH connection
 go version
 ```
 
-If all goes well you should see `go version go1.19.2 linux/arm64` appear.
+If all goes well you should see `go version go1.23.2 linux/arm64` appear.
 
 ## NodeJS
 
 Just as we needed to get Golang, we're going to get NodeJS. We want the latest version, so first run a little script. First of all, make sure you are in the home directory with `cd ~` command. Then run the script.
 
 ```bash
-curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 ```
 
 After the little script has done its job, we can install NodeJS.
@@ -104,19 +104,15 @@ Check that you have the right version with:
 ```bash
 node --version
 
-# Expected output: v18.16.1
+# Expected output: v22.10.0
 ```
 
 ## Yarn
 
-Download and install [Yarn](https://classic.yarnpkg.com/en/docs/install).
+Download and install [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#debian-stable).
 
 ```bash
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-
-sudo apt update && sudo apt install yarn -y
+sudo npm install --global yarn
 ```
 
 Verify that Yarn is installed.
@@ -124,5 +120,5 @@ Verify that Yarn is installed.
 ```bash
 yarn --version
 
-# Expected output: 1.22.19
+# Expected output: 1.22.22
 ```

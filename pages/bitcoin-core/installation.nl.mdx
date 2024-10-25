@@ -10,15 +10,14 @@ Ga er maar even goed voor zitten, want met dit onderdeel ben je wel even zoet. H
 
 * **Dependencies installeren**, er is wat software nodig om Bitcoin Core samen te stellen.
 * **Broncode ophalen**, door middel van Git kunnen we de nieuwste broncode ophalen.
-* **Database installeren**
-* **Bitcoin Core samenstellen**
+* **Bitcoin Core compileren**
 
 ## Dependencies
 
-Voer het volgende uit om de dependencies te installeren. Dependencies zijn precies wat het zegt; afhankelijkheden. Het zelf samenstellen van Bitcoin Core is afhankelijk van andere software.
+Voer het volgende uit om de dependencies te installeren. Dependencies zijn precies wat het zegt; afhankelijkheden. Het zelf compileren van Bitcoin Core is afhankelijk van andere software.
 
 ```bash
-sudo apt install git automake autoconf autotools-dev build-essential make pkg-config protobuf-compiler libminiupnpc-dev libprotobuf-dev libdb++-dev libzmq3-dev libsqlite3-dev libboost-thread-dev libboost-test-dev libboost-all-dev libevent-dev libtool libssl-dev libboost-system-dev libboost-filesystem-dev -y
+sudo apt install git automake autoconf autotools-dev build-essential cmake make pkg-config protobuf-compiler libminiupnpc-dev libprotobuf-dev libdb++-dev libzmq3-dev libsqlite3-dev libboost-thread-dev libboost-test-dev libboost-all-dev libevent-dev libtool libssl-dev libboost-system-dev libboost-filesystem-dev -y
 ```
 
 ## Broncode
@@ -37,10 +36,10 @@ cd bitcoin
 
 Gezien de [git-flow van Bitcoin Core](https://github.com/bitcoin/bitcoin/blob/master/CONTRIBUTING.md#decision-making-process) kun je er vanuit gaan dat alles in de master branch correct en foutloos functioneert. Het release proces van Bitcoin Core hakt de master branch af op een vaste datum. Alles wat op die branch zat op moment van afhakken, zal meegenomen in de release. Alles dat daarna in de branch komt, zal in een volgende release komen.
 
-Zou je toch een specifieke release willen \(wat op zich wel aan te raden is\), kun je het onderstaande commando uitvoeren. Op moment van schrijven is v25.0 de nieuwste versie.
+Zou je toch een specifieke release willen \(wat op zich wel aan te raden is\), kun je het onderstaande commando uitvoeren. Op moment van schrijven is v28.0 de nieuwste versie.
 
 ```bash
-git checkout v25.0
+git checkout v28.0
 ```
 
 ## Bitcoin Core samenstellen

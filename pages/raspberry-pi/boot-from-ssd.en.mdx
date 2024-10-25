@@ -6,27 +6,27 @@ import Callout from "nextra-theme-docs/callout";
 	Time: 15 minutes
 </Callout>
 
-Since September 2020 it is officially possible to boot your Pi from an SSD instead of the microSD. Booting this way gives [better performance](https://www.tomshardware.com/news/raspberry-pi-4-ssd-test,39811.html). In addition, this circumvents the hassle of mounting and telling every piece of software to use the SSD. Since we have the SSD anyway, why not do it?
+Since September 2020 it is possible to boot your Pi from an SSD instead of the microSD. Booting this way gives [better performance](https://www.tomshardware.com/news/raspberry-pi-4-ssd-test,39811.html). In addition, this circumvents the hassle of mounting and telling every piece of software to use the SSD. Since we have the SSD anyway, why not do it?
 
-Insert the microSD and network cable into the Pi after which you connect the power. After about a minute, the Pi will have booted up and will get an IP address from your router. Log into your router, because you'll need this IP address. Most routers can be accessed by going to 192.168.1.1 in your browser, but you know best how your network is set up.
+Insert the microSD and network cable into the Pi after which you connect the power. After about a minute, the Pi has booted up and will get an IP address from your router. Log into your router, because you'll need this IP address. Most routers can be accessed by going to 192.168.1.1 in your browser, but you know best how your network is set up.
 
 ## SSH
 
-[Secure Shell](https://nl.wikipedia.org/wiki/Secure_Shell) is an encrypted protocol for logging into another computer and remotely executing commands on the other computer via a terminal. Through this protocol it is possible to control the Pi from our computer.
+[Secure Shell](https://en.wikipedia.org/wiki/Secure_Shell) is an encrypted protocol for logging into another computer and remotely executing commands on the other computer via a terminal. Through this protocol it is possible to control the Pi from our computer.
 
 Open a terminal and type:
 
 ```bash
-ssh pi@IP-ADRESS FROM PI
+ssh pi@IP.ADDRESS.OF.PI
 ```
 
-Replace in the command `IP ADDRESS OF PI` with something like `192.168.1.6`. Once you press enter you will get a question that you can answer `YES/NO`. Type `yes` and press enter. You will now be instructed to enter a password. **The default password is `raspberry`.**
+Replace in the command `IP.ADDRESS.OF.PI` with something like `192.168.1.6` (the IP address of your Pi). Once you press enter you will get a question that you can answer `YES/NO`. Type `yes` and press enter. You will now be instructed to enter a password. **The password was set by you during flashing.** This is `raspberry`.
 
 Now what did we just do? You have indicated with the command that you want to use SSH. Next, you specify a user name and a computer. The computer can be reached via an IP address.
 
 ## Update
 
-Run the following commands:
+Run the following commands to update the Pi:
 
 ```bash
 sudo apt update
@@ -37,11 +37,7 @@ sudo apt full-upgrade -y
 ```
 
 ```bash
-sudo rpi-update
-```
-
-```bash
-sudo reboot now
+sudo reboot
 ```
 
 Your Pi will now reboot after which you need to SSH into it again.
@@ -51,102 +47,53 @@ Your Pi will now reboot after which you need to SSH into it again.
 By default, the Pi boots from the microSD. The Pi must be configured differently to boot from the SSD. First, the Pi must be provided with the latest firmware. Run the command below:
 
 ```bash
-sudo rpi-eeprom-update -a
+sudo rpi-update master c8fffcda5ae0f923857a73fedbeb07e81d2eb813
 ```
 
-![Output of `sudo rpi-eeprom-update -a` command](/bootfromssd.png)
+Your Pi will now update its firmware after which you need to reboot it.
 
-If all goes well, it says that the `BOOTLOADER` is up-to-date and the values behind `CURRENT` and `LATEST` are the same. If you still need to update the Pi because it is not up-to-date or because `CURRENT` and `LATEST` are not equal, reboot again with `sudo reboot now`.
+```bash
+sudo reboot
+```
 
-Then it is now time to configure the Pi in such a way that we can boot from the SSD. Run the following:
+SSH into your Pi again. It is time to configure the Pi in such a way that we can boot from the SSD. Run the following:
 
 ```bash
 sudo raspi-config
 ```
 
-A screen appears which makes it look like you've landed in the 1980s. Choose `6 Advanced Options`.
+A screen appears which makes it look like you've landed in the 1980s. Choose `Advanced Options`.
 
-![](/6-advancedoptions.png)
+![Raspi config advanced options selection](/raspi-config-step-1.jpeg)
 
-Choose `A7 Bootloader Version`.
+Go next for `Boot Order`.
 
-![](/a7-bootversion.png)
-
-Choose `E1 Latest`.
-
-![](/e1-latest.png)
-
-Choose `No` and press `Ok`.
-
-![](/nope.png)
-
-Choose `6 Advanced Options` again, but this time go for `A6 Boot Order`.
-
-![](/a6-bootorder.png)
+![Raspi config boot order selection](/raspi-config-step-2.jpeg)
 
 Choose `USB Boot` and press `Ok`.
 
-![](/usbboot.png)
+![Raspi config USB boot selection](/raspi-config-step-3.jpeg)
 
 Choose `Finish` to finish the settings.
 
-![](/finish.png)
+![Raspi config finish selection](/raspi-config-step-4.jpeg)
 
 And finally `Yes` to reboot.
 
-![](/reboot.png)
+![Raspi config reboot](/raspi-config-step-5.png)
 
-## Double Check
-
-To verify that everything went well, you need to SSH into the Pi again. Run the following.
+Your Pi will now reboot. After the reboot, you need to SSH into your Pi again. You need to do this in order to shut down the Pi properly.
 
 ```bash
-vcgencmd bootloader_config
+sudo shutdown now
 ```
 
-The bottom line should say something like **BOOT_ORDER=0xf14** (the number can also be different, like 0xf41). If it says **BOOT_ORDER=0x0**, you have done something wrong.
-
-![](/check.png)
-
-Connect the SSD. Run `lsblk` to see the storage what your Pi. If all goes well, you will see the screen below appear, or something very similar. The micro SD card will be called something like `mmcblk0` and in this example `sda` is the SSD.
-
-![Output of `lsblk` command](/lsblk.png)
-
-We are going to "mount" the partitions of the SSD on the Pi. Do that with the following four commands:
-
-```bash
-sudo mkdir /mnt/boot
-sudo mkdir /mnt/writable
-
-sudo mount /dev/sda1 /mnt/boot
-sudo mount /dev/sda2 /mnt/writable
-```
-
-If you run `lsblk` again you will see a screen like the one below. You can see that the two partitions of your SSD have been given a place in your Pi (under the heading MOUNTPOINT).
-
-![Output of `lsblk` command](/mounted.png)
-
-Once that looks good, you need to run a script on the Pi. The script is brought in using Git, a version control system used extensively in this guide.
-
-```bash
-sudo apt install git -y
-```
-
-After Git is installed, the script is retrieved and run.
-
-```bash
-sudo curl https://raw.githubusercontent.com/TheRemote/Ubuntu-Server-raspi4-unofficial/master/BootFix.sh | sudo bash
-```
-
-Once you see a screen saying it succeeded, you can shut down the Pi with `sudo shutdown now`.
-
-![Output of script](/script.png)
 ## Booting
 
-Now that we have the bootloader set up correctly, we can boot from the SSD. Remove the microSD from the Pi and plug in the SSD. Put the power and kaboom, it should work! You now need to SSH your Pi in with a different username and password. Do this as follows.
+Now that we have the bootloader set up correctly, we can boot from the SSD. Remove the microSD from the Pi and plug in the SSD. Put the power and it should work! You now need to SSH your Pi in with a different username and password. Do this as follows.
 
 ```bash
-ssh ubuntu@IP.ADDRESS.OF.YOUR.PI
+ssh ubuntu@IP.ADDRESS.OF.PI
 ```
 
 **The default password is `ubuntu`.**
@@ -164,4 +111,4 @@ Someone could be eavesdropping on you right now (man-in-the-middle attack)!
 
 Something like this is easily solved by entering the command `nano .ssh/known_hosts` on your computer. The screen that follows lists known computers for your computer. Delete the line with the IP address of your Pi. Save the file with `Ctrl + X` and confirm with `Y`. You have now told your computer that it may forget the previous relationship with the Pi and establish a new one.
 
-The first time, Ubuntu will ask you to set a new password. Choose a strong password and remember it well. It is the password for the user `ubuntu` and this user will later manage everything in the guide.
+The first time, Ubuntu will ask you to set a new password. Choose a strong password and remember it well. It is the password for the user `ubuntu` and this user will later manage everything in the guide. If Ubuntu doesn't ask you to set a new password, you can do it yourself with the command `passwd`.

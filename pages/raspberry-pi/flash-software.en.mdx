@@ -6,32 +6,44 @@ import Callout from "nextra-theme-docs/callout";
 	Time: 15 minutes
 </Callout>
 
-It's time to do something with a monitor. The Pi should have an operating system, namely [Ubuntu Server 20 LTS](https://ubuntu.com/download/raspberry-pi). [Raspberry Pi OS Lite](https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2020-08-24/2020-08-20-raspios-buster-arm64-lite.zip) is also required to set up the Pi once. To get the operating systems on both the SSD and the microSD, we use the program [Balena Etcher](https://www.balena.io/etcher). If you use Windows then you could also use [Rufus](https://github.com/pbatard/rufus/releases/download/v3.17/rufus-3.17.exe).
+It's time to do something with a monitor. The Pi should have an operating system, namely [Ubuntu Server LTS](https://ubuntu.com/download/raspberry-pi). To get Ubuntu onto the SSD, we use the program [Raspberry Pi Imager](https://www.raspberrypi.com/software/). We use the same software to set up the Pi with Raspberry Pi OS.
 
 ## Raspberry Pi OS
 
-We start by flashing Raspberry Pi OS to the microSD. Open Balena Etcher, select the Raspberry Pi OS image and microSD and press the "Flash!" button.
+We start by flashing Raspberry Pi OS to the microSD. Open the Raspberry Pi Imager and select the following two things:
 
-![Flashing Raspberry Pi OS to the microSD](/flash-pi-os.png)
+- Raspberry Pi Device: Raspberry Pi 4
+- Operating System: Raspberry Pi OS Lite (64-bit). You can find it under "Raspberry Pi OS (other)".
+- Storage: microSD.
 
-Once it is done, the microSD will be ejected. Take it out of your computer and insert it again so your computer sees the microSD again. [Open the Terminal](https://support.apple.com/nl-nl/guide/terminal/apd5265185d-f365-44cb-8b09-71a064a42125/mac) and type the following command then press enter.
+![Setup for flashing Raspi OS Lite](/rpi-imager-raspberry-pi-os-setup.jpeg)
 
-```bash
-touch /Volumes/boot/ssh
-```
+When you click on "NEXT", it'll ask if you'd like to customize settings. Click on "EDIT SETTINGS".
 
-If you are [on Windows](https://arjanlobbezoo.nl/windows-10-programma-administrator-mode-openen), then something along the lines of the following should work. In this example, you would need to modify the D drive to whatever is appropriate for you.
+![Config message for flashing Raspi OS Lite](/rpi-imager-raspberry-pi-os-config.jpeg)
 
-```bash
-d:
-```
+In the settings, you can set the username, password, and SSH settings. Set the username to `pi` and the password to `raspberry`.
 
-```bash
-type nul > ssh
-```
+![General settings for flashing Raspi OS Lite](/rpi-imager-raspberry-pi-os-general.jpeg)
 
-The above commands create a file on the microSD. The file is called "ssh" and when the Pi boots up with this file on board, the Pi allows itself to be controlled from the outside. In fact, we are going to use SSH to control the Pi from our computer. Finally, eject the microSD and insert it into the Pi.
+Switch over to the "SERVICES" tab and enable SSH.
+
+![Services settings for flashing Raspi OS Lite](/rpi-imager-raspberry-pi-os-services.jpeg)
+
+Click on "SAVE" and then write the image to the microSD card. Once it is done, the microSD will be ejected. You can insert it into the Pi.
 
 ## SSD
 
-Repeat the above for the SSD, but then use the Ubuntu image and leave the `ssh` file in place. That is already on board Ubuntu by default.
+Connect to SSD to your computer. Open the Raspberry Pi Imager and select the following two things:
+
+- Raspberry Pi Device: Raspberry Pi 4
+- Operating System: Ubuntu Server 24.04.1 LTS (64-bit). You can find it under "Other general-purpose OS" and then "Ubuntu". Don't install 24.10, as this is not an LTS (Long Term Support) version.
+- Storage: SSD.
+
+![Setup for flashing Ubuntu Server 24 LTS](/rpi-imager-ubuntu-server-setup.jpeg)
+
+When you click on "NEXT", it'll ask if you'd like to customize settings. Click on "EDIT SETTINGS".
+
+Use the same settings as for Raspberry Pi OS, but set the username to `ubuntu` and the password to `ubuntu`.
+
+Click on "SAVE" and then write the image to the SSD. Once it is done, the SSD will be ejected.

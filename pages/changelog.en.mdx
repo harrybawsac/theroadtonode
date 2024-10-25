@@ -1,34 +1,50 @@
 # Changelog
 
+## 5.0.0 - 2024 / October / 31
+
+### Changes
+
+* From Ubuntu 20 to Ubuntu 24
+* Moved to Raspberry Pi Imager for flashing the SSD
+* Updated all software to latest versions
+
+### Deletions
+
+* Removed Balena Etcher for flashing SSD
+
+### Improvements
+
+* Simplified the way to boot from SSD
+
 ## 4.1.1 - 2023 / juli / 03
 
-### Aanpassingen
+### Changes
 
 * Wat linkjes opgeschoond
 * Versies geupdate van NodeJS, Go en Bitcoin Core
-* Berkeley DB verwijderd uit de configuratie stap van Bitcoin Core
+* Berkeley DB deleted uit de configuratie stap van Bitcoin Core
 
 ## 4.1.0 - 2022 / mei / 09
 
-### Toevoegingen
+### Additions
 
 * Alles vertaald naar het Engels, mede dankzij [Kloek](https://github.com/harrybawsac/theroadtonode/pull/5)!
 
 ## 4.0.1 - 2022 / april / 16
 
-### Aanpassingen
+### Changes
 
 * Alle oude links geupdate naar Nextra
 
 ## 4.0.0 - 2022 / april / 15
 
-### Aanpassingen
+### Changes
 
 * Overstap van Gitbook naar Nextra
 
 ## 3.1.3 - 2022 / maart / 07
 
-### Toevoegingen
+### Additions
 
 * Updaten van [Pool](/lightning-extensions/pool) \(Lightning Extensies\)
 * Updaten van [Faraday](/lightning-extensions/faraday) \(Lightning Extensies\)
@@ -36,13 +52,13 @@
 
 ## 3.1.2 - 2022 / februari / 04
 
-### Toevoegingen
+### Additions
 
 * Updaten van [Electrs](/bitcoin-core-extensions/electrs) \(Bitcoin Core Extensies\)
 
 ## 3.1.1 - 2022 / februari / 04
 
-### Aanpassingen
+### Changes
 
 * Breaking changes toegevoegd aan [Thunderhub v0.13.0+](/lightning-extensions/thunderhub) \(Lightning Extensies\) in verband met de port
 * Tekst van de homepage en mempool.space aangepast
@@ -50,13 +66,13 @@
 
 ## 3.1.0 - 2022 / januari / 31
 
-### Toevoegingen
+### Additions
 
 * [Mempool.space](/bitcoin-core-extensions/mempool-space) \(Bitcoin Core Extensies\)
 
 ## 3.0.0 - 2022 / januari / 23 - Breaking changes
 
-### Aanpassingen
+### Changes
 
 * OS aangepast van 32-bit Raspberry OS naar 64-bit Ubuntu met [dank aan Thomas](https://github.com/0xthomas/succotash)
 * User door heel de gids aangepast van `pi` naar `ubuntu`
@@ -65,90 +81,90 @@
 * Faraday, Loop en Pool losgetrokken van Lightning Terminal
 * Lightning Terminal maakt enkel gebruik van remote tools in plaats van internal tools
 
-### Toevoegingen
+### Additions
 
 * [Electrs](/bitcoin-core-extensions/electrs) \(Bitcoin Core Extensies\)
 
-### Verwijderd
+### Deletions
 
 * Dynamic DNS hoofdstuk
 * LND Admin hoofdstuk
 
 ## 2.5.0 - 2021 / juni / 06
 
-### Verbeteringen
+### Improvements
 
 * Updaten van Lightning Terminal
 
 ## 2.4.1 - 2021 / juni / 11
 
-### Verbeteringen
+### Improvements
 
 * [Updaten van Specter](/bitcoin-core-extensions/specter) \(Bitcoin Core Extensies\) \([DerM007](https://github.com/bitdeal-nl/theroadtonode/issues/86)\)
 
 ## 2.4.0 - 2021 / juni / 04
 
-### Toevoegingen
+### Additions
 
 * Automatiseren van [Specter](/bitcoin-core-extensions/specter) \(Bitcoin Core Extensies\)
 
-### Verbeteringen
+### Improvements
 
 * Aan ieder onderdeel `git checkout` toegevoegd
 * Aliassen toegevoegd voor Pool, Loop en Faraday onder LiT installatie \(Lightning Extensies\)
 
 ## 2.3.1 - 2021 / mei / 20
 
-### Aanpassingen
+### Changes
 
 * [LND Connect](/lightning-extensions/lnd-connect) installatie aangepast \(Brie\)
 
 ## 2.3.0 - 2021 / april / 11
 
-### Toevoegingen
+### Additions
 
 * ~~[LND Admin](/lightning-extensions/lnd-admin) \(Lightning Extensies\)~~
 
 ## 2.2.0 - 2021 / april / 11
 
-### Toevoegingen
+### Additions
 
 * Pagina met uitleg van commando's \(Dennis\)
 * [Electrum X updaten](/bitcoin-core-extensions/electrum-x) \(Bitcoin Core Extensies\)
 * [Ride the Lightning updaten](/lightning-extensions/ride-the-lightning) \(Lightning Extensies\)
 
-### Verbeteringen
+### Improvements
 
 * Installeer een specifieke versie van LND \(Lightning\)
 
-### Aanpassingen
+### Changes
 
 * [Verschillende](https://github.com/bitdeal-nl/theroadtonode/pull/74) [fixes](https://github.com/bitdeal-nl/theroadtonode/pull/76) door heel de guide \(Wim\)
 
 ## 2.1.0 - 2021 / april / 02
 
-### Toevoegingen
+### Additions
 
 * Uncomplicated Firewall 🧱
 * Lightning Terminal ⚡️ \(Lightning Extensies\) \(Sebas en Lex\)
 
-### Verbeteringen
+### Improvements
 
-* [Electrum Personal Server](https://github.com/bitdeal-nl/theroadtonode/pull/70) verbeteringen \(Bitcoin Core Extensies\) \(Dirk\)
+* [Electrum Personal Server](https://github.com/bitdeal-nl/theroadtonode/pull/70) Improvements \(Bitcoin Core Extensies\) \(Dirk\)
 * Overal UFW aan toegevoegd.
 
-### Aanpassingen
+### Changes
 
-* De "ik"-vorm verwijderd uit de guide.
+* De "ik"-vorm Deletions uit de guide.
 * ~~Alle URL's veranderd naar "docs.theroadtonode.com".~~
 
 ## 2.0.1 - 2021 / februari / 17
 
-### Toevoegingen
+### Additions
 
 * [Updaten van LND](/lightning/updating) \(Lightning\) \(Dirk\)
 
-### Verbeteringen
+### Improvements
 
 * Bitcoin [configuratie bestand](/bitcoin-core/configure-and-start) aangepast met betrekking tot tor.
 * Verduidelijking wat het RPC [onion-adres](/bitcoin-core/change-tor) doet voor bitcoind.
@@ -156,108 +172,108 @@
 
 ## 2.0.0 - 2021 / januari / 25
 
-### Toevoegingen
+### Additions
 
 * [Updaten van Bitcoin Core](/bitcoin-core/updating) \(Bitcoin Core\) \(Sebas\)
 * [Updaten van BTC RPC Explorer](/bitcoin-core-extensions/btc-rpc-explorer) \(Bitcoin Core Extensies\) \(Dirk\)
 * [Updaten van Electrum Personal Server](/bitcoin-core-extensions/electrum-personal-server) \(Bitcoin Core Extensies\) \(Dirk\)
 * [Updaten van Thunderhub](/lightning-extensions/thunderhub) \(Lightning Extensies\) \(Sebas\)
 
-### Aanpassingen
+### Changes
 
 * Menu structuur de schop op. Reden voor ophogen van major versienummer.
 
 ## 1.7.0 - 2021 / januari / 10
 
-### Toevoegingen
+### Additions
 
 * [Electrum X](/bitcoin-core-extensions/electrum-x) \(Bitcoin Core Extensies\)
 
-### Aanpassingen
+### Changes
 
 * Aan BTC RPC Explorer de mogelijkheid toegevoegd om gebruik te maken van je eigen Electrum X backend.
 
-### Verbeteringen
+### Improvements
 
 * Uniformiteit omtrent commando's.
 
 ## 1.6.0 - 2021 / januari / 09
 
-### Toevoegingen
+### Additions
 
 * [Thunderhub](/lightning-extensions/thunderhub) \(Lightning Extensies\) \(Sebas\)
 * [Port overzicht](/raspberry-pi/port-overview) \(Raspberry Pi\)
 
-### Verbeteringen
+### Improvements
 
 * De homepage aangepast zodat ook Electrum Personal Server en BTC RPC Explorer genoemd worden.
 
 ## 1.5.0 - 2020 / december / 13
 
-### Toevoegingen
+### Additions
 
 * [Zap wallet](/android/zap) \(Android\) \(Dirk\)
 
 ## 1.4.1 - 2020 / december / 03
 
-### Verbeteringen
+### Improvements
 
 * Guide aangepast zodat [vaak terugkomende dependencies](/raspberry-pi/common-dependencies) algemeen gedocumenteerd zijn.
 
 ## 1.4.0 - 2020 / december / 01
 
-### Toevoegingen
+### Additions
 
 * [Electrum Personal Server](/bitcoin-core-extensions/electrum-personal-server) \(Bitcoin Core Extensies\) \(Dirk\)
 * [BTC RPC Explorer](/bitcoin-core-extensions/btc-rpc-explorer) \(Bitcoin Core Extensies\) \(Dirk\)
 
 ## 1.3.0 - 2020 / november / 17
 
-### Verbeteringen
+### Improvements
 
 * Los trekken van Tor installatie en opzet voor Bitcoin Core
-* Het `externalip` veld verwijderd uit `lnd.conf` wegens het verkrijgen van twee tor adressen
+* Het `externalip` veld Deletions uit `lnd.conf` wegens het verkrijgen van twee tor adressen
 * [Boot vanaf SSD](/raspberry-pi/boot-from-ssd) screenshots aangepast met nieuwe benaming in de `raspi-config`
 
-### Toevoegingen
+### Additions
 
 * [Monitoring](/raspberry-pi/monitoring) \(Raspberry Pi\)
 
 ## 1.2.0 - 2020 / november / 15
 
-### Toevoegingen
+### Additions
 
 * [Specter](/bitcoin-core-extensions/specter) \(Bitcoin Core extensies\)
 
 ## 1.1.0 - 2020 / november / 10
 
-### Toevoegingen
+### Additions
 
 * [LND Connect](/lightning-extensions/lnd-connect) \(Lightning extensies\)
 * [Zap](/wallets/zap) \(iOS\)
 * Link naar [Telegram chatgroep](https://t.me/theroadtonode)
 
-### Verbeteringen
+### Improvements
 
 * Alles van "localhost" naar "127.0.0.1"
 
 ## 1.0.0 - 2020 / november / 10
 
-### Toevoegingen
+### Additions
 
 * Logo
 * [Automatiseren](/bitcoin-core/automation) voor bitcoind
 * Het [Lightning \(LND\)](/lightning) hoofdstuk
 * [Ride The Lightning](/lightning-extensions/ride-the-lightning) onderdeel \(Lightning extensies\)
 
-### Verbeteringen
+### Improvements
 
 * [Tijdindicatie](/bitcoin-core/configure-and-start) voor de IBD
 * Wijzigingen in [Tor installatie](/raspberry-pi/install-tor)
 
 ## 0.1.0 - 2020 / november / 07
 
-### Toevoegingen
+### Additions
 
 * [Command line interface](/bitcoin-core/command-line-interface) \(Bitcoin Core\)
 * [Fully Noded](/wallets/fully-noded) \(iOS\)
@@ -265,7 +281,7 @@
 
 ## 0.0.1 - 2020 / november / 06
 
-### Toevoegingen
+### Additions
 
 * Initiële opzet met werkende Tor en Bitcoin Core
 * Nieuwe toekomstige onderwerpen gedefineerd

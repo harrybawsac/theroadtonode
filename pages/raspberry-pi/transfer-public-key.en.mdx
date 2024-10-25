@@ -9,7 +9,7 @@ import Callout from "nextra-theme-docs/callout";
 Transferring your own public key to the Pi makes it easier to log in. For example, when SSHing, you no longer have to type in your password. To do this you need to be on your own machine and open a terminal. The command below will transfer your public key to your Pi. If you don't want to or it doesn't work, it doesn't matter. You can always log in with the `ubuntu:PASSWORD` combination.
 
 ```bash
-ssh-copy-id ubuntu@IP.ADDRESS.OF.YOUR.PI
+ssh-copy-id ubuntu@IP.ADDRESS.OF.PI
 ```
 
 After confirming the public key siphoning with a password, you should now be able to log in without entering your password.
@@ -29,7 +29,7 @@ sudo nano /etc/ssh/sshd_config
 In the screen that opens, you can change the following settings:
 
 * `#PubkeyAuthentication yes` becomes `PubkeyAuthentication yes`.
-* `#PasswordAuthentication yes` becomes `#PasswordAuthentication no`.
+* `#PasswordAuthentication yes` becomes `PasswordAuthentication no`.
 * `UsePAM yes` becomes `UsePAM no`.
 
 Save the file with `Ctrl + X` and confirm with `Y`. After that just restart the SSH service with `sudo service sshd reload` and the new settings are in effect.

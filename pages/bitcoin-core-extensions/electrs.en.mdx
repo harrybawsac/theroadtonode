@@ -6,7 +6,7 @@ import Callout from "nextra-theme-docs/callout";
 	Time: 30 minutes of work, then 12 hours to index.
 </Callout>
 
-The Road to Node gives you a choice between three different implementations of Electrum Server. With all three implementations you achieve the same thing, which is that you host an Electrum Server. They differ in development language, performance, and how public the servers are. [Electrs](https://github.com/romanz/electrs) differs from the rest because it is written in Rust. Performance-wise you should look up the differences between Electrum Personal Server, Elctrum X and Electrs.
+The Road to Node gives you a choice between three different implementations of Electrum Server. With all three implementations you achieve the same thing, which is that you host an Electrum Server. They differ in development language, performance, and how public the servers are. [Electrs](https://github.com/romanz/electrs) differs from the rest because it is written in Rust. Performance-wise you should look up the differences between Electrum Personal Server, Electrum X and Electrs.
 
 Electrs waits for Bitcoin Core to finish synchronizing. So you can't use Electrs until the synchronization is done.
 
@@ -36,7 +36,7 @@ Finally, install Electrs with Cargo.
 cargo build --locked --release
 ```
 
-Test if it works. The expected output is `v0.10.0`.
+Test if it works. The expected output is `v0.10.4`.
 
 ```bash
 ./target/release/electrs --version
@@ -147,7 +147,7 @@ git describe --tags `git rev-list --tags --max-count=1`
 Retrieve the changes from the latest release.
 
 ```bash
-git checkout -f <OUTPUT FROM PREVIOUS STEP> # for example 0.10.0
+git checkout -f <OUTPUT FROM PREVIOUS STEP> # for example 0.10.4
 ```
 
 Install the software.

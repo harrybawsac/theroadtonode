@@ -6,7 +6,7 @@ import Callout from "nextra-theme-docs/callout";
 	Tijd: 15 minuten
 </Callout>
 
-Sinds september 2020 is het officieel mogelijk om je Pi van een SSD op te starten in plaats van de microSD. Opstarten op deze manier geeft [betere performance](https://www.tomshardware.com/news/raspberry-pi-4-ssd-test,39811.html). Daarnaast omzeil je hiermee het gedoe van het mounten en tegen ieder stukje software zeggen dat die van de SSD gebruik moet maken. Aangezien we de SSD toch al hebben, waarom zouden we het dan niet doen?
+Sinds september 2020 is het mogelijk om je Pi van een SSD op te starten in plaats van de microSD. Opstarten op deze manier geeft [betere performance](https://www.tomshardware.com/news/raspberry-pi-4-ssd-test,39811.html). Daarnaast omzeil je hiermee het gedoe van het mounten en tegen ieder stukje software zeggen dat die van de SSD gebruik moet maken. Aangezien we de SSD toch al hebben, waarom zouden we het dan niet doen?
 
 Steek de microSD en netwerkkabel in de Pi waarna je de stroom aansluit. Na ongeveer een minuutje zal de Pi opgestart zijn en een IP-adres krijgen van je router. Log in op je router, want dit IP-adres heb je nodig. De meeste routers kun je in door naar 192.168.1.1 te gaan in je browser, maar hoe jouw netwerk is ingericht weet je zelf het best.
 
@@ -17,10 +17,10 @@ Steek de microSD en netwerkkabel in de Pi waarna je de stroom aansluit. Na ongev
 Open een terminal en typ:
 
 ```bash
-ssh pi@IP-ADRES VAN PI
+ssh pi@IP.ADRES.VAN.PI
 ```
 
-Vervang in het commando `IP-ADRES VAN PI` met iets als `192.168.1.6`. Zodra je op enter drukt zal je een vraag krijgen waar je `YES/NO` op kunt antwoorden. Typ `yes` en druk op enter. Je krijgt nu de opdracht een wachtwoord in te voeren. **Het standaard wachtwoord is `raspberry`.**
+Vervang in het commando `IP.ADRES.VAN.PI` met iets als `192.168.1.6`. Zodra je op enter drukt zal je een vraag krijgen waar je `YES/NO` op kunt antwoorden. Typ `yes` en druk op enter. Je krijgt nu de opdracht een wachtwoord in te voeren. **Het wachtwoord heb je ingesteld tijdens het flashing van de microSD.** Dit is `raspberry`.
 
 Wat hebben we nu net gedaan? Je hebt met het commando aangegeven dat je van SSH gebruik wil maken. Vervolgens specificeer je een gebruikersnaam en een computer. De computer is bereikbaar via een IP-adres.
 
@@ -37,11 +37,7 @@ sudo apt full-upgrade -y
 ```
 
 ```bash
-sudo rpi-update
-```
-
-```bash
-sudo reboot now
+sudo reboot
 ```
 
 Je Pi zal nu opnieuw opstarten waarna je opnieuw erin moet SSH'en.
@@ -51,102 +47,49 @@ Je Pi zal nu opnieuw opstarten waarna je opnieuw erin moet SSH'en.
 De Pi start standaard op vanaf de microSD. De Pi moet anders geconfigureerd worden om op te starten vanaf de SSD. Eerst moet de Pi voorzien worden van de nieuwste firmware. Voer onderstaande commando uit:
 
 ```bash
-sudo rpi-eeprom-update -a
+sudo rpi-update master c8fffcda5ae0f923857a73fedbeb07e81d2eb813
 ```
 
-![Uitvoer van `sudo rpi-eeprom-update -a` commando](/bootfromssd.png)
+Je Pi zal nu zijn firmware updaten waarna je hem moet herstarten.
 
-Als het goed is staat er dat de `BOOTLOADER` up-to-date is en zijn de waardes achter `CURRENT` en `LATEST` gelijk aan elkaar. Mocht je de Pi nog moeten updaten omdat hij niet up-to-date is of omdat `CURRENT` en `LATEST` niet aan elkaar gelijk zijn, herstart dan weer met `sudo reboot now`.
+```bash
+sudo reboot
+```
 
-Dan is het nu tijd om de Pi op zo'n manier te configureren dat we kunnen opstarten van de SSD. Voer het volgende uit:
+SSH opnieuw in op je Pi. Het is tijd om de Pi zo te configureren dat we vanaf de SSD kunnen booten. Voer het volgende uit:
 
 ```bash
 sudo raspi-config
 ```
 
-Er toont zich een scherm waardoor het lijkt alsof je in de jaren '80 beland bent. Kies `6 Advanced Options`.
+Een menu zal verschijnen waarin het lijkt alsof je in de jaren 80 bent beland. Navigeer met de pijltjestoetsen naar `Advanced Options` en druk op enter.
 
-![](/6-advancedoptions.png)
+![Raspi config advanced options selection](/raspi-config-step-1.jpeg)
 
-Kies `A7 Bootloader Version`.
+Ga vervolgens naar `Boot Order`.
 
-![](/a7-bootversion.png)
+![Raspi config boot order selection](/raspi-config-step-2.jpeg)
 
-Kies `E1 Latest`.
+Kies voor `USB Boot` en druk op `Ok`.
 
-![](/e1-latest.png)
+![Raspi config USB boot selection](/raspi-config-step-3.jpeg)
 
-Kies `No` en druk op `Ok`.
+Kies nu voor `Finish` en druk op enter. 
 
-![](/nope.png)
+![Raspi config reboot](/raspi-config-step-5.png)
 
-Kies nog een keer voor `6 Advanced Options`, maar ga dit maal voor `A6 Boot Order`.
-
-![](/a6-bootorder.png)
-
-Kies `USB Boot` en druk op `Ok`.
-
-![](/usbboot.png)
-
-Kies voor `Finish` om de instellingen af te ronden.
-
-![](/finish.png)
-
-En tot slot `Yes` om opnieuw op te starten.
-
-![](/reboot.png)
-
-## Dubbelcheck
-
-Om te controleren of alles goed is gegaan moet je weer de Pi in SSH'en. Voer het volgende uit.
+Je Pi zal nu opnieuw opstarten. Zodra hij weer online is, moet je nog 1 keer de Pi in SSH'en. Je moet namelijk de Pi correct afsluiten. Doe dat als volgt:
 
 ```bash
-vcgencmd bootloader_config
+sudo shutdown now
 ```
 
-Op de onderste regel moet iets staan als **BOOT\_ORDER=0xf14** (het getal kan ook anders zijn, zoals 0xf41). Als er **BOOT\_ORDER=0x0** staat, heb je iets fout gedaan.
-
-![](/check.png)
-
-Sluit de SSD aan. Voer `lsblk` uit om de opslag wat je Pi te zien. Als het goed is zie je het onderstaande scherm verschijnen, of iets dat er heel erg op lijkt. De microSD zal ongeveer `mmcblk0` heten en in dit voorbeeld is `sda` de SSD.
-
-![Uitvoer van `lsblk` commando](/lsblk.png)
-
-We gaan de partities van de SSD "mounten" op de Pi. Doe dat met de volgende vier commando's:
-
-```bash
-sudo mkdir /mnt/boot
-sudo mkdir /mnt/writable
-
-sudo mount /dev/sda1 /mnt/boot
-sudo mount /dev/sda2 /mnt/writable
-```
-
-Als je `lsblk` nog een keer uitvoert zie je een scherm zoals hieronder. Je ziet dat de twee partities van je SSD een plekje hebben gekregen in je Pi (onder het kopje MOUNTPOINT).
-
-![Uitvoer van `lsblk` commando](/mounted.png)
-
-Zodra dat er goed uit ziet, moet je een script draaien op de Pi. Het script wordt binnengehaald met Git, een versiebeheersysteem dat veel gebruikt wordt in deze gids.
-
-```bash
-sudo apt install git -y
-```
-
-Na de installatie van Git wordt het script opgehaald en uitgevoerd.
-
-```bash
-sudo curl https://raw.githubusercontent.com/TheRemote/Ubuntu-Server-raspi4-unofficial/master/BootFix.sh | sudo bash
-```
-
-Zodra je een scherm ziet waarin staat dat het gelukt is, kun je de Pi afsluiten met `sudo shutdown now`.
-
-![Uitvoer van script](/script.png)
 ## Booten
 
-Nu we de bootloader correct hebben ingesteld, kunnen we van de SSD booten. Haal de microSD uit de Pi en sluit de SSD aan. Zet de stroom erop et voilà! Je moet nu je Pi in SSH'en met een andere username en wachtwoord. Doe dat als volgt.
+Nu we de bootloader correct hebben ingesteld, kunnen we van de SSD booten. Haal de microSD uit de Pi en sluit de SSD aan. Zet de stroom erop, et voilà! Je moet nu je Pi in SSH'en met een andere username en wachtwoord. Doe dat als volgt.
 
 ```bash
-ssh ubuntu@IP.ADRES.VAN.JE.PI
+ssh ubuntu@IP.ADRES.VAN.PI
 ```
 
 **Het standaard wachtwoord is `ubuntu`.**
@@ -164,4 +107,4 @@ Someone could be eavesdropping on you right now (man-in-the-middle attack)!
 
 Zoiets is gemakkelijk op te lossen door op je computer het commando `nano .ssh/known_hosts` in te voeren. In het scherm dat volgt staan bekende computers voor jouw computer. Verwijder de regel met het IP-adres van jouw Pi. Sla het bestand op met `Ctrl + X` en bevestig met `Y`. Je hebt nu tegen jouw computer gezegd dat hij de eerdere relatie met de Pi mag vergeten en een nieuwe relatie mag opbouwen.
 
-De eerste keer vraagt Ubuntu om het instellen van een nieuw wachtwoord. Kies een sterk wachtwoord en onthoud deze goed. Het is het wachtwoord voor de gebruiker `ubuntu` en deze gebruiker beheert later alles in de gids.
+De eerste keer vraagt Ubuntu om het instellen van een nieuw wachtwoord. Kies een sterk wachtwoord en onthoud deze goed. Het is het wachtwoord voor de gebruiker `ubuntu` en deze gebruiker beheert later alles in de gids. Als Ubuntu niet vraagt om een nieuw wachtwoord, stel het dan zelf in met `passwd`.

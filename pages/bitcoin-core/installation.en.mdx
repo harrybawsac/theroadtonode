@@ -10,7 +10,6 @@ This part of the guide will take a while, so be prepared. The goal is to compile
 
 * **Install dependencies**, in order to compile Bitcoin Core you'll need some extra software.
 * **Get the source code**, through the use of Git you can get the latest source code.
-* **Install database**
 * **Compile Bitcoin Core**
 
 ## Dependencies
@@ -18,7 +17,7 @@ This part of the guide will take a while, so be prepared. The goal is to compile
 Execute the command below to install all required dependencies. Dependencies are software package other software depends on. Bitcoin Core also depends on other software for its compilation.
 
 ```bash
-sudo apt install git automake autoconf autotools-dev build-essential make pkg-config protobuf-compiler libminiupnpc-dev libprotobuf-dev libdb++-dev libzmq3-dev libsqlite3-dev libboost-thread-dev libboost-test-dev libboost-all-dev libevent-dev libtool libssl-dev libboost-system-dev libboost-filesystem-dev -y
+sudo apt install git automake autoconf autotools-dev build-essential cmake make pkg-config protobuf-compiler libminiupnpc-dev libprotobuf-dev libdb++-dev libzmq3-dev libsqlite3-dev libboost-thread-dev libboost-test-dev libboost-all-dev libevent-dev libtool libssl-dev libboost-system-dev libboost-filesystem-dev -y
 ```
 
 ## Source code
@@ -37,10 +36,10 @@ cd bitcoin
 
 Due to the [git-flow of Bitcoin Core](https://github.com/bitcoin/bitcoin/blob/master/CONTRIBUTING.md#decision-making-process) you could argue that everything inside the `master` branch is correct and functional. The release process of Bitcoin Core cuts off the `master` branch at a certain predefined date. Everything on that branch at that momen, will make it into the release. Everything that is added to the branch afterward, will be included in the new release.
 
-If you'd like to specify a certain release \(which is recommended\), you can execute the command below. At the moment v25.0 is the latest version of Bitcoin Core.
+If you'd like to specify a certain release \(which is recommended\), you can execute the command below. At the moment v28.0 is the latest version of Bitcoin Core.
 
 ```bash
-git checkout v25.0
+git checkout v28.0
 ```
 
 ## Compiling Bitcoin Core
