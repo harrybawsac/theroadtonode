@@ -171,13 +171,13 @@ git describe --tags `git rev-list --tags --max-count=1`
 Retrieve the changes from the latest release.
 
 ```bash
-git checkout -f <OUTPUT FROM PREVIOUS STEP> # for example v0.14.1
+git checkout -f <OUTPUT FROM PREVIOUS STEP> # for example v0.15.1
 ```
 
 Install the software.
 
 ```bash
-npm install --only=prod
+npm install --omit=dev --legacy-peer-deps
 ```
 
 Restart the RTL service.
